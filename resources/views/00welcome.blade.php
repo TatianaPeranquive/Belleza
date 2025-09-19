@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container mx-auto text-center p-10">
-    <h1 class="text-4xl font-bold mb-6">Bienvenido al Proyecto Espejo</h1>
-    <p class="mb-4">Explora las entrevistas, llena tu espejo y conoce más sobre nosotros.</p>
+
+    <p class="mb-4"> las entrevistas, llena tu espejo y conoce más sobre nosotros.</p>
     <nav class="mb-6">
         <ul class="flex flex-col md:flex-row justify-center gap-4">
             <li><a class="text-blue-600 hover:underline" href="{{ route('entrevistas.index') }}">Entrevistas</a></li>
