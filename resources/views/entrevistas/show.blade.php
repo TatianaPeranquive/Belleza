@@ -56,10 +56,10 @@
                         {{ $a["perfil"] }}
                     </p>
                     <ul class="mt-4 text-sm opacity-90 space-y-1">
-                        <!-- <li>
+
                             <span class="font-semibold">Edad:</span>
                             {{ $a["edad"] ?? "—" }}
-                        </li> -->
+                        </li>
                         <li>
                             <span class="font-semibold">Oficio:</span>
                             {{ $a["oficio"] ?? "—" }}
@@ -69,6 +69,7 @@
                             {{ $a["locacion"] ?? "—" }}
                         </li>
                     </ul>
+
                     <br /><br />
 
                     <div class="w-full grid gap-10 items-center">
@@ -96,7 +97,7 @@
         </div>
 
         @else
-        {{-- === MODO UNA SOLA PERSONA (como antes) === --}}
+        {{-- === MODO UNA SOLA PERSONA === --}}
         <div
             class="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-10 items-center"
         >
@@ -109,16 +110,22 @@
                 <h2 class="sr-only">{{ $nombre }}</h2>
                 <p class="text-xl leading-relaxed">{{ $perfil }}</p>
                 <ul class="mt-4 text-sm opacity-80 space-y-1">
-                    <!-- <li><strong>Edad:</strong> {{ $edad ?? "—" }}</li> -->
+                    <li><strong>Edad:</strong> {{ $edad ?? "—" }}</li>
                     <li><strong>Oficio:</strong> {{ $oficio ?? "—" }}</li>
                     <li><strong>Locación:</strong> {{ $locacion ?? "—" }}</li>
+                    <br><br>
+                    <li><p class="bg-gray-200 text-black p-4 rounded">
+                            "Me acuerdo yo mucho que mi mamá, por ejemplo, que era una persona que le gustaba estar muy bien arreglada, siguiera los cánones de la moda. Mi papá también pues era una persona que trabajaba todo el día, pero siempre muy arreglada. Pero nada que digamos fuera discordante con lo que se usaba en el momento."
+                        </p></li>
+
                 </ul>
+
             </div>
         </div>
 
         <br /><br />
         <div class="w-full grid gap-10 items-center">
-            <p>{{ $respuesta ?? "—" }}</p>
+            <p class="bg-gray-200 text-black p-4 rounded">{{ $respuesta ?? "—" }}</p>
         </div>
 
         <div class="max-w-5xl w-full mx-auto mt-10">
