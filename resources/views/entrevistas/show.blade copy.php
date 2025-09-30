@@ -18,6 +18,7 @@
         <li><strong>Oficio:</strong> {{ $oficio ?? '—' }}</li>
         <li><strong>Locación:</strong> {{ $locacion ?? '—' }}</li>
       </ul>
+      <p> {{ $respuesta ?? '—' }} Frase introductoria  </p>
     </div>
   </div>
 
