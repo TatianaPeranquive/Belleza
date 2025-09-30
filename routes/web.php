@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CuraduriaFiltroController;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\DiccionarioController;
+use App\Http\Controllers\HitosController;
 
 Route::get('/theme/{theme}', function (string $theme) {
     $theme = in_array($theme, ['light','dark']) ? $theme : 'light';
@@ -18,7 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/hitos', [HitosController::class, 'index'])->name('hitos.index');
+
 Route::get('/diccionario', [DiccionarioController::class, 'index'])->name('diccionario.index');
+
 Route::get('/diccionario/{palabra}', [DiccionarioController::class, 'buscar'])->name('diccionario.buscar');
 
 Route::prefix('detras-del-espejo')->group(function() {
@@ -31,12 +35,20 @@ Route::prefix('detras-del-espejo')->group(function() {
 
   //  Route::get('/about', function () {return view('usuarios');})->name('usuarios');
 
-Route::prefix('entrevistas')->group(function() {
-    Route::get('/',
-    [EntrevistaController::class, 'index'])->name('entrevistas.index');
-    Route::get('/{slug}',
-    [EntrevistaController::class, 'show'])->name('entrevistas.show');
+Route::prefix('entrevistas')->group(function () {
+    Route::get('/', [EntrevistaController::class, 'index'])->name('entrevistas.index');
+
+    // 1) Rutas específicas primero
+    Route::get('/importar-entrevistas', [EntrevistaController::class, 'create'])
+        ->name('entrevistas.import.create');
+    Route::post('/importar-entrevistas', [EntrevistaController::class, 'store'])
+        ->name('entrevistas.import.store');
+
+    // 2) La "catch-all" SIEMPRE al final
+    Route::get('/{slug}', [EntrevistaController::class, 'show'])
+        ->name('entrevistas.show');
 });
+
 
 Route::prefix('usuarios')->group(function() {
     Route::get('/',
