@@ -5,9 +5,129 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class EntrevistaController extends Controller
 {
+    /* ===========================
+     *  VISTA DE IMPORTACIÓN
+     * =========================== */
+    public function create()
+    {
+        // Blade simple con <input name="table"> y <input type="file" name="file">
+        // Ej: resources/views/entrevistas/import.blade.php
+        return view('entrevistas.import');
+    }
+
+    /* ===========================
+     *  PROCESAR IMPORTACIÓN
+     * =========================== */
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'table' => ['required','string'],
+            'file'  => ['required','file','mimes:csv,txt'], // <- solo csv/txt
+        ]);
+
+        $table = $request->string('table')->trim()->toString();
+        if (!Schema::hasTable($table)) {
+            return back()->withErrors(['table' => "La tabla '{$table}' no existe."]);
+        }
+
+        $path = $request->file('file')->getRealPath();
+        if (!file_exists($path)) {
+            return back()->withErrors(['file' => 'No se pudo abrir el archivo.']);
+        }
+
+        [$headers, $rows] = $this->readCsvWithHeaders($path);
+        if (empty($headers)) {
+            return back()->withErrors(['file' => 'El CSV no tiene encabezados válidos.']);
+        }
+
+        $tableCols = Schema::getColumnListing($table);
+        $usable = array_values(array_intersect($headers, $tableCols));
+        if (empty($usable)) {
+            return back()->withErrors(['file' =>
+                'Ninguna columna del archivo coincide con la tabla. '.
+                'Encabezados: ['.implode(', ', $headers).']; Tabla: ['.implode(', ', $tableCols).']'
+            ]);
+        }
+
+        $batch = []; $inserted = 0; $batchSize = 1000;
+        DB::beginTransaction();
+        try {
+            foreach ($rows as $r) {
+                $row = [];
+                foreach ($usable as $col) {
+                    $row[$col] = $this->normalize($r[$col] ?? null);
+                }
+                if (count(array_filter($row, fn($v)=>!is_null($v))) === 0) continue;
+
+                if (in_array('created_at', $tableCols) && !array_key_exists('created_at', $row)) $row['created_at'] = now();
+                if (in_array('updated_at', $tableCols) && !array_key_exists('updated_at', $row)) $row['updated_at'] = now();
+
+                $batch[] = $row;
+                if (count($batch) >= $batchSize) { DB::table($table)->insert($batch); $inserted += count($batch); $batch=[]; }
+            }
+            if ($batch) { DB::table($table)->insert($batch); $inserted += count($batch); }
+
+            DB::commit();
+            return back()->with('ok', "Importación completada en '{$table}'. Filas insertadas: {$inserted}");
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return back()->withErrors(['file' => 'Error: '.$e->getMessage()]);
+        }
+    }
+
+    private function readCsvWithHeaders(string $path): array
+    {
+        $delimiter = $this->detectDelimiter($path);
+        $h = fopen($path, 'r'); if (!$h) return [[],[]];
+        $headers = []; $rows = []; $line = 0;
+
+        while (($row = fgetcsv($h, 0, $delimiter)) !== false) {
+            $line++;
+            if ($line === 1) {
+                if (isset($row[0])) $row[0] = preg_replace('/^\xEF\xBB\xBF/', '', $row[0]);
+                $headers = array_map(fn($c)=>trim((string)$c), $row);
+                continue;
+            }
+            $assoc = [];
+            foreach ($headers as $i => $hname) {
+                if ($hname === '') continue;
+                $assoc[$hname] = $row[$i] ?? null;
+            }
+            $rows[] = $assoc;
+        }
+        fclose($h);
+        return [$headers, $rows];
+    }
+
+    private function detectDelimiter(string $path): string
+    {
+        $line = ''; $h = fopen($path, 'r'); if ($h) { $line = fgets($h, 8192) ?: ''; fclose($h); }
+        $c = [","=>0,";"=>0,"|"=>0,"\t"=>0]; foreach ($c as $d=>$_) $c[$d] = substr_count($line, $d);
+        arsort($c); $best = array_key_first($c); return ($c[$best] > 0) ? $best : ',';
+    }
+
+    private function normalize($v)
+    {
+        if ($v === null) return null;
+        if (is_string($v)) {
+            $v = trim($v);
+            if ($v === '' || strtoupper($v) === 'NULL') return null;
+            $l = strtolower($v); if ($l==='true') return true; if ($l==='false') return false;
+            if (is_numeric($v)) return (strpos($v,'.')!==false) ? (float)$v : (int)$v;
+        }
+        return $v;
+    }
+
+
+
+    /* ======================================
+     *  OTRAS ACCIONES (index/show/etc.)
+     * ====================================== */
 
     public function index()
     {
@@ -18,9 +138,9 @@ class EntrevistaController extends Controller
             ->orderBy('u.nombre')
             ->get();
 
-        // Paleta según tema activo
-        $theme    = session('theme', config('theme.active'));
-        $palette  = config("theme.palettes.$theme.card_bg");
+        // Paleta según tema activo (ajusta si no usas config theme)
+        $theme    = session('theme', config('theme.active', 'default'));
+        $palette  = config("theme.palettes.$theme.card_bg", ['#f1f5f9','#e2e8f0','#cbd5e1','#94a3b8']);
 
         $cards = $rows->map(function ($r) use ($palette) {
             return [
@@ -29,12 +149,12 @@ class EntrevistaController extends Controller
                 'color' => $r->color ?: $palette[$r->id % count($palette)],
             ];
         })->values()->all();
+
         return view('entrevistas.index', compact('cards'));
     }
 
     public function show($slug)
     {
-        // Buscar por slug calculado desde el nombre (sin columna slug en BD)
         $rows = DB::table('entrevistas as e')
             ->join('usuarios as u', 'u.id', '=', 'e.usuario_id')
             ->join('respuestas as r', 'e.id', '=', 'r.entrevista_id')
@@ -60,7 +180,6 @@ class EntrevistaController extends Controller
         return view('entrevistas.show', $entrevistada);
     }
 
-
     private function armarPerfil(?string $nombre, ?int $edad, ?string $oficio, ?string $locacion): string
     {
         $partes = [];
@@ -71,25 +190,14 @@ class EntrevistaController extends Controller
         return implode(', ', array_filter($partes));
     }
 
-
     public function detrasShow(int $id)
     {
         $u = DB::table('usuarios')
             ->where('id', $id)
-            ->first([
-                'id',
-                'nombre',
-                'color',
-                'foto',
-                'audio',
-                'edad',
-                'oficio',
-                'locacion',
-            ]);
+            ->first(['id','nombre','color','foto','audio','edad','oficio','locacion']);
 
         if (!$u) abort(404);
 
-        // Por si en BD faltara foto/audio
         $foto  = $u->foto  ?: (preg_replace('/\s+/', '', $u->nombre) . '_foto.png');
         $audio = $u->audio ?: ($u->id . '_audio.mp3');
 
@@ -102,12 +210,11 @@ class EntrevistaController extends Controller
             'oficio'   => $u->oficio,
             'locacion' => $u->locacion,
             'perfil'   => $this->armarPerfil($u->nombre, $u->edad, $u->oficio, $u->locacion),
-            'volverRoute' => 'home', //editable
+            'volverRoute' => 'home',
         ];
 
         return view('entrevistas.show', $data);
     }
-
 
     public function detrasShowMany(Request $request)
     {
@@ -119,17 +226,13 @@ class EntrevistaController extends Controller
             ->values()
             ->all();
 
-        if (empty($ids)) {
-            abort(404);
-        }
+        if (empty($ids)) abort(404);
 
         $rows = DB::table('usuarios')
             ->whereIn('id', $ids)
-            ->get(['id', 'nombre', 'color', 'foto', 'audio', 'edad', 'oficio', 'locacion']);
+            ->get(['id','nombre','color','foto','audio','edad','oficio','locacion']);
 
-        if ($rows->isEmpty()) {
-            abort(404);
-        }
+        if ($rows->isEmpty()) abort(404);
 
         $autoras = $rows->map(function ($u) {
             $foto  = $u->foto ?: (preg_replace('/\s+/', '', $u->nombre) . '_foto.png');
