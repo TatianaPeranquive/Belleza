@@ -48,3 +48,10 @@ WHERE categoria_1 = :hito
 ORDER BY categoria_3;
 
 -- y asísucesivamente…
+SELECT DISTINCT categoria_3
+FROM resumen_centralizado
+WHERE categoria_1 = 'Primer hito'
+  AND categoria_2 = 'Familia'
+  AND categoria_3 = 'Influencia'
+  AND categoria_4 = 'Clase'
+ORDER BY categoria_3;
