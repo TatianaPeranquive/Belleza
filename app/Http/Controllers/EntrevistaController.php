@@ -165,9 +165,12 @@ class EntrevistaController extends Controller
         $row = $rows->first(fn($r) => Str::slug($r->nombre, '_') === $slug);
         if (!$row) abort(404);
 
+        $foto  = $row->foto  ?: (preg_replace('/\s+/', '', $row->nombre) . '_foto.png');
+        //$audio = $row->audio ?: ($row->id . '_audio.mp3');
+
         $entrevistada = [
             'nombre'   => $row->nombre,
-            'foto'     => $row->foto,
+            'foto'     => !empty($row->foto)| isset($row->foto) ? $row->foto : $foto,
             'audio'    => $row->audio,
             'color'    => $row->color,
             'edad'     => $row->edad,
