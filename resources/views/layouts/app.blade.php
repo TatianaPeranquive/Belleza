@@ -28,19 +28,21 @@
                             </a>
                         </li>
                         <li class="flex-1">
-                            <a href="#contact"
+                                <a href="{{ route('entrevistas.index') }}"
+
                                 class="block w-full text-center px-4 py-2  rounded border font-bold text-lg hover:underline">
                                 Salón de espejos
                             </a>
                         </li>
                         <li class="flex-1">
-                            <a href="#about"
+                            <a href="{{ route('diccionario.buscar', 'palabra') }}"
+
                                 class="block w-full text-center  px-4 py-2  rounded border font-bold text-lg hover:underline">
                                 Dentro del espejo
                             </a>
                         </li>
                         <li class="flex-1">
-                            <a href="#about2"
+                            <a href="{{ route('detras.many', ['ids' => '11,12']) }} "
                                 class="block w-full text-center  px-4 py-2  rounded border font-bold text-lg hover:underline">
                                 Detrás del espejo
                             </a>
