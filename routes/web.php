@@ -10,6 +10,16 @@ use App\Http\Controllers\DiccionarioController;
 use App\Http\Controllers\HitosController;
 use App\Http\Controllers\ResumenFiltroApiController;
 
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
+Route::get('/theme/{theme}', function (string $theme) {
+    $theme = in_array($theme, ['light','dark']) ? $theme : 'light';
+    session(['theme' => $theme]);
+    return back();
+})->name('theme.switch');
+
 Route::prefix('api/resumen')->group(function () {
     Route::get('/hitos',                  [ResumenFiltroApiController::class, 'hitos']);         // categoria_1
     Route::get('/sub1',                   [ResumenFiltroApiController::class, 'sub1']);          // requiere ?hito=
@@ -18,16 +28,6 @@ Route::prefix('api/resumen')->group(function () {
     Route::get('/buscar',                 [ResumenFiltroApiController::class, 'buscar']);        // trae filas filtradas por lo elegido
     Route::get('/buscar-texto',           [ResumenFiltroApiController::class, 'buscarTexto']);   // full-text en comentario (opcional)
 });
-
-Route::get('/theme/{theme}', function (string $theme) {
-    $theme = in_array($theme, ['light','dark']) ? $theme : 'light';
-    session(['theme' => $theme]);
-    return back();
-})->name('theme.switch');
-
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
 
 Route::get('/hitos', [HitosController::class, 'index'])->name('hitos.index');
 
