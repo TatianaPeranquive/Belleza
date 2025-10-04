@@ -8,6 +8,16 @@ use App\Http\Controllers\CuraduriaFiltroController;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\DiccionarioController;
 use App\Http\Controllers\HitosController;
+use App\Http\Controllers\ResumenFiltroApiController;
+
+Route::prefix('api/resumen')->group(function () {
+    Route::get('/hitos',                  [ResumenFiltroApiController::class, 'hitos']);         // categoria_1
+    Route::get('/sub1',                   [ResumenFiltroApiController::class, 'sub1']);          // requiere ?hito=
+    Route::get('/sub2',                   [ResumenFiltroApiController::class, 'sub2']);          // requiere ?hito=&sub1=
+    Route::get('/sub3',                   [ResumenFiltroApiController::class, 'sub3']);          // requiere ?hito=&sub1=&sub2=
+    Route::get('/buscar',                 [ResumenFiltroApiController::class, 'buscar']);        // trae filas filtradas por lo elegido
+    Route::get('/buscar-texto',           [ResumenFiltroApiController::class, 'buscarTexto']);   // full-text en comentario (opcional)
+});
 
 Route::get('/theme/{theme}', function (string $theme) {
     $theme = in_array($theme, ['light','dark']) ? $theme : 'light';
