@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @vite('resources/css/app.css')
+    <style>
+
+            html,
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+/* a { background-color: rgba(255,0,0,0.2); } */
+            body {
+                overflow-x: hidden;
+            }
+
+            /* cursor principal */
+            body {
+                cursor: url("{{ asset('micursor.cur') }}") 16 16, auto;
+            }
+
+            /* cursor específico en enlaces (fallback pointer) */
+            a, button {
+                cursor: url("{{ asset('micursor.cur') }}") 16 16, pointer;
+            }
+
+            [x-cloak]{display:none!important}
+    </style>
 </head>
 <body class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-white text-[#111827]' }}">
     <header class="fixed top-0 left-0 w-full bg-black z-50">
