@@ -1,8 +1,8 @@
-{{-- resources/views/import/generic.blade.php --}}
 @extends('layouts.app')
 @section('title','Importar (genérico)')
 @section('content')
 <div class="max-w-xl mx-auto p-6 space-y-4">
+    <br><br><br>
   <h1 class="text-xl font-semibold">Importar datos a cualquier tabla</h1>
   <p class="text-sm text-gray-600">
     El archivo debe tener <strong>encabezados</strong>. Los nombres de los encabezados se usan como nombres de columnas en la tabla destino.
