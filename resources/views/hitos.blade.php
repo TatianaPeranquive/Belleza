@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Hitos - Proyecto Espejo (stable height)')
+@section('title', 'Hitos - Proyecto Espejo (peek effect)')
 @section('content')
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -23,6 +23,19 @@ window.hitosUI = function (ds) {
     showResults: false,
     hoveredRes: null,
     activeResId: null,
+// --- getters (reactivos) ---
+get hasSelection(){
+  return !!(this.activeId || this.sub[1].selected || this.sub[2].selected || this.sub[3].selected || this.sub[4].selected);
+},
+get previewChips(){
+  return [
+    this.activeName ? {k:'Hito', v:this.activeName} : null,
+    this.sub[1].selectedTitle ? {k:'N1', v:this.sub[1].selectedTitle} : null,
+    this.sub[2].selectedTitle ? {k:'N2', v:this.sub[2].selectedTitle} : null,
+    this.sub[3].selectedTitle ? {k:'N3', v:this.sub[3].selectedTitle} : null,
+    this.sub[4].selectedTitle ? {k:'N4', v:this.sub[4].selectedTitle} : null,
+  ].filter(Boolean);
+},
 
     ep: {
       get hitos() { return ds.epHitos; },
@@ -181,14 +194,33 @@ window.hitosUI = function (ds) {
         this.loadSub1();
       }
     },
-    choose(lvl, opt){
-      this.sub[lvl].selected      = opt.id;
-      this.sub[lvl].selectedTitle = opt.title || String(opt.id);
-      for(let k=lvl+1;k<=4;k++){ this.sub[k].selected=null; this.sub[k].selectedTitle=''; this.sub[k].options=[]; }
-      if(lvl===1) this.loadSub2();
-      if(lvl===2) this.loadSub3();
-      if(lvl===3) this.loadSub4();
-    },
+choose(lvl, opt){
+  // 1) aplicar selección del nivel actual
+  this.sub[lvl].selected      = opt.id;
+  this.sub[lvl].selectedTitle = opt.title || String(opt.id);
+
+  // 2) resetear niveles inferiores
+  for (let k = lvl + 1; k <= 4; k++) {
+    this.sub[k].selected = null;
+    this.sub[k].selectedTitle = '';
+    this.sub[k].options = [];
+  }
+
+  // 3) ocultar resultados y limpiar el carrusel
+  this.showResults = false;   // <- clave: vuelve a "Vista previa"
+  this.results = [];          // opcional: si prefieres cachear, quita esta línea
+  this.activeResId = null;
+
+  // 4) cargar el siguiente nivel (si aplica)
+  if (lvl === 1) this.loadSub2();
+  if (lvl === 2) this.loadSub3();
+  if (lvl === 3) this.loadSub4();
+
+  // 5) enfocar/scroll al bloque central (opcional, pero útil)
+  this.$nextTick(() => {
+    document.getElementById('resultados')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+},
 
     nextRes(){
       if(!this.results.length) return;
@@ -253,11 +285,10 @@ window.hitosUI = function (ds) {
       const isActive = this.activeResId === id;
       const isHover  = this.hoveredRes === id;
       return [
-        isActive ? 'z-20' : 'z-10',
+        isActive ? 'z-30' : 'z-10',
         'transition-transform transition-opacity duration-300',
-        isActive ? 'opacity-100' : 'opacity-90 hover:opacity-95',
-        (isActive || isHover) ? 'scale-100' : 'scale-[0.98]',
-        'mx-auto w-[680px] max-w-[92vw]',
+        isActive ? 'opacity-100' : 'opacity-80 hover:opacity-90',
+        (isActive || isHover) ? '' : '',
       ].join(' ');
     },
     rCardStyle(id, idx){
@@ -265,14 +296,18 @@ window.hitosUI = function (ds) {
         this.activeResId = this.results[0].id;
       }
       const activeIdx = Math.max(0, this.results.findIndex(i => i.id === this.activeResId));
-      let translateX='0%', rotate=0, scale=1;
+      let tx=0, ty=0, rot=0, scale=1, extra='';
       if(id !== this.activeResId){
         const dir = idx < activeIdx ? -1 : 1;
-        translateX = (dir * 38) + '%';
-        rotate     = dir * -3;
-        scale      = 0.94;
+        tx = dir * 56;   // más desplazamiento para que se vean los bordes
+        rot = dir * -4;  // giro suave
+        scale = 0.90;    // más pequeño atrás
+        ty = dir * 2;    // leve offset vertical
+        extra = 'box-shadow: 0 6px 18px rgba(0,0,0,.12);';
+      } else {
+        extra = 'box-shadow: 0 12px 28px rgba(0,0,0,.20);';
       }
-      return `position:absolute; inset:0; margin:auto; height: 560px; transform: translateX(${translateX}) rotate(${rotate}deg) scale(${scale});`;
+      return `position:absolute; inset:0; margin:auto; width:560px; height:560px; transform: translate(${tx}%, ${ty}px) rotate(${rot}deg) scale(${scale}); ${extra}`;
     }
   }
 }
@@ -296,6 +331,7 @@ window.hitosUI = function (ds) {
     <div class="mb-4 rounded border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700" x-text="error"></div>
   </template>
 
+  <!-- TOP BAR centrada -->
   <section class="mb-6">
     <div class="rounded-xl border bg-white/70 backdrop-blur px-4 py-3">
       <div class="mx-auto flex justify-center gap-3 overflow-x-auto no-scrollbar">
@@ -309,9 +345,20 @@ window.hitosUI = function (ds) {
         </template>
       </div>
     </div>
+     <br>
+         <div class="mb-4 flex items-center justify-center">
+        <button type="button" @click="buscar()"
+          class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50"
+          :disabled="!activeId">
+          Mostrar comentarios
+        </button>
+        <br><br>
+      </div>
   </section>
 
+  <!-- GRID: centro más ancho -->
   <div class="grid grid-cols-1 lg:grid-cols-3 xl:[grid-template-columns:1fr_1.8fr_1fr] gap-8">
+    <!-- Columna izquierda: N1 + N2 -->
     <section class="grid grid-rows-2 gap-8 relative z-10">
       <div>
         <div class="flex items-center justify-between mb-2">
@@ -346,40 +393,69 @@ window.hitosUI = function (ds) {
           </template>
         </div>
       </div>
+
     </section>
 
+    <!-- Centro: botón + carril resultados -->
     <section class="relative z-0">
-      <div class="mb-4 flex items-center justify-center">
-        <button type="button" @click="buscar()"
-          class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50"
-          :disabled="!activeId">
-          Mostrar comentarios
-        </button>
-      </div>
+
+<!-- PREVIEW (antes de buscar) -->
+<div class="lane relative overflow-hidden rounded-xl border bg-white/40 backdrop-blur-sm outline-none"
+     style="height: 420px;"
+     x-show="!showResults && hasSelection">
+  <div class="absolute inset-0 m-auto w-[min(680px,92vw)] h-[360px] rounded-2xl border border-dashed bg-white/70 p-6">
+    <h3 class="text-lg font-semibold text-slate-700">Vista previa</h3>
+    <p class="mt-1 text-sm text-slate-600">
+      Selecciona más filtros o pulsa <strong>“Mostrar comentarios”</strong> para ver coincidencias.
+    </p>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+      <template x-for="chip in previewChips" :key="chip.k">
+        <span class="inline-flex items-center gap-1 rounded-full bg-slate-50 text-slate-700 border border-slate-200 px-2 py-1 text-sm">
+          <strong x-text="chip.k+':'"></strong> <span x-text="chip.v"></span>
+        </span>
+      </template>
+    </div>
+
+    <div class="mt-6 text-xs text-slate-500">
+      Los comentarios no se consultan hasta que presiones el botón.
+    </div>
+  </div>
+</div>
 
       <section id="resultados" class="mt-2 relative isolate">
-        <div class="mb-3 flex items-end justify-between">
-          <h2 class="text-xl font-semibold">
+        <div class="mb-3 flex items-end justify-between"
+            x-show="showResults"
+            x-transition.opacity
+            x-cloak>
+        <h2 class="text-xl font-semibold">
             Comentarios <span class="text-slate-500 text-sm" x-text="`(${results.length})`"></span>
-          </h2>
+        </h2>
         </div>
 
+        <!-- Estado vacío -->
         <div x-show="showResults && results.length === 0" class="rounded-xl border bg-white px-4 py-10 text-center text-slate-500">
           No hay resultados para los filtros seleccionados.
         </div>
 
+        <!-- Carril con máscaras de borde para reforzar la pila -->
         <div class="lane relative overflow-hidden rounded-xl border bg-white/40 backdrop-blur-sm outline-none"
              style="height: 640px;"
              x-show="results.length > 0"
              tabindex="0"
              @keydown.left.prevent="prevRes()"
              @keydown.right.prevent="nextRes()">
+          <!-- edge masks (no bloquean clics) -->
+          <div style="pointer-events:none; position:absolute; left:0; top:0; bottom:0; width:56px; background:linear-gradient(to right, rgba(255,255,255,.92), rgba(255,255,255,0)); z-index:25;"></div>
+          <div style="pointer-events:none; position:absolute; right:0; top:0; bottom:0; width:56px; background:linear-gradient(to left, rgba(255,255,255,.92), rgba(255,255,255,0)); z-index:25;"></div>
+
+          <!-- flechas -->
           <button type="button" @click="prevRes()"
-                  class="absolute left:2 left-2 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/80 border shadow px-3 py-2 hover:bg-white">
+                  class="absolute left-2 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/90 border shadow px-3 py-2 hover:bg-white">
             ←
           </button>
           <button type="button" @click="nextRes()"
-                  class="absolute right:2 right-2 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/80 border shadow px-3 py-2 hover:bg-white">
+                  class="absolute right-2 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/90 border shadow px-3 py-2 hover:bg-white">
             →
           </button>
 
@@ -439,6 +515,7 @@ window.hitosUI = function (ds) {
       </section>
     </section>
 
+    <!-- Columna derecha: N3 + N4 -->
     <section class="grid grid-rows-2 gap-8 relative z-10">
       <div>
         <div class="flex items-center justify-between mb-2">
