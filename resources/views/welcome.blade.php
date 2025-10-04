@@ -22,16 +22,27 @@
 
         <style>
             html,
+
             body {
                 margin: 0;
                 padding: 0;
             }
-
-            /* a { background-color: rgba(255,0,0,0.2); } */
-
+/* a { background-color: rgba(255,0,0,0.2); } */
             body {
                 overflow-x: hidden;
             }
+
+            /* cursor principal */
+            body {
+                cursor: url("{{ asset('micursor.cur') }}") 16 16, auto;
+            }
+
+            /* cursor específico en enlaces (fallback pointer) */
+            a, button {
+                cursor: url("{{ asset('micursor.cur') }}") 16 16, pointer;
+            }
+
+
 
             /* Estados del menú según contraste detectado */
             .menu-on-dark a {
@@ -101,10 +112,23 @@
                 border-color: #000;
                 animation: bounce-in 200ms ease-out;
             }
+            .fade-scroll {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.8s ease-out;
+            }
+
+            /* Cuando entra en vista */
+            .fade-scroll.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
         </style>
     </head>
 
     <body class="overflow-x-hidden">
+
         <section id="home0" class="py-10 bg-black"></section>
         <!-- HERO -->
         <section id="home" class="h-screen flex justify-center items-center text-4xl bg-black text-white">
@@ -595,6 +619,29 @@
         );
 
     });
+
+
+            document.addEventListener("DOMContentLoaded", function() {
+            const faders = document.querySelectorAll('.fade-scroll');
+
+            const appearOptions = {
+                threshold: 0.1
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target); // Deja de observar una vez mostrado
+                }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+            });
+
 </script>
 </body>
 </html>
