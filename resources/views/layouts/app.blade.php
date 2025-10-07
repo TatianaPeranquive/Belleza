@@ -20,12 +20,12 @@
 
             /* cursor principal */
             body {
-                cursor: url("{{ asset('micursor.cur') }}") 16 16, auto;
+                cursor: url("{{ asset('aguja2.cur') }}") 16 16, auto;
             }
 
             /* cursor específico en enlaces (fallback pointer) */
             a, button {
-                cursor: url("{{ asset('micursor.cur') }}") 16 16, pointer;
+                cursor: url("{{ asset('aguja2.cur') }}") 16 16, pointer;
             }
 
             [x-cloak]{display:none!important}
