@@ -1,441 +1,474 @@
-@extends('layouts.app')
-@section('title', 'Dentro del Espejo')
+{{-- Vista mínima: sin Alpine, sin Tailwind build, sin dependencias raras --}}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dibujar sobre imagen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --bar-h: 48px; --subbar-h: 44px; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:#f8fafc;color:#0f172a}
+    .bar{position:sticky;top:0;display:flex;align-items:center;gap:.5rem;height:var(--bar-h);padding:0 .75rem;background:#fff;backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid #e2e8f0;z-index:50}
+    .subbar{position:sticky;top:var(--bar-h);display:flex;align-items:center;gap:.5rem;height:var(--subbar-h);padding:0 .75rem;background:#ffffffcc;border-bottom:1px solid #e2e8f0;z-index:49;overflow-x:auto}
+    .btn{padding:.4rem .7rem;border:1px solid #cbd5e1;border-radius:.6rem;background:#fff;color:#334155;font-size:.9rem;cursor:pointer}
+    .btn[disabled]{opacity:.5;cursor:not-allowed}
+    .btn-primary{border-color:#34d399;color:#065f46;background:#ecfdf5}
+    .chip{padding:.4rem .7rem;border:1px solid #cbd5e1;border-radius:6rem;background:#fff;color:#334155;font-size:.85rem;cursor:pointer;white-space:nowrap}
+    .chip.active{background:#0f172a;color:#fff;border-color:#0f172a}
+    .wrap{max-width:1200px;margin:0 auto;padding:12px}
+    .stage-box{position:relative;background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden}
+    .stage{position:relative;touch-action:none}
+    .bg{display:block;user-select:none;-webkit-user-drag:none}
+    canvas{position:absolute;inset:0;background:transparent;z-index:10}
+    .help{color:#64748b;font-size:.8rem;margin-top:.5rem}
+    .spacer{height:.5rem}
+    .field{display:flex;align-items:center;gap:.4rem}
+    .field input[type="range"]{width:160px}
+  </style>
+</head>
+<body>
 
-@section('content')
+<!-- Barra superior -->
+<div class="bar">
+  <!-- Bloque izquierdo -->
+  <div style="display:flex;align-items:center;gap:.5rem;">
+    <a class="btn" href="javascript:history.back()">← Volver</a>
 
-<div x-data="paintBoard()" x-init="init()" class="min-h-screen bg-slate-50">
-  {{-- Barra fija superior --}}
-{{-- Barra fija superior (navegación principal) --}}
-<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-    <a href="{{ url()->previous() }}" class="text-slate-600 hover:text-slate-900 text-sm">← Volver</a>
-    <h1 class="font-semibold text-slate-800">Dibujar sobre imagen</h1>
+    <label class="btn" style="cursor:pointer">
+      <input id="file" type="file" accept="image/*" style="display:none">
+      Cargar imagen
+    </label>
 
-    <div class="ml-auto flex items-center gap-2 text-sm">
-      <!-- Cargar imagen -->
-      <label class="inline-flex items-center px-3 py-1.5 rounded-xl border border-slate-300 hover:bg-slate-100 cursor-pointer">
-        <input type="file" accept="image/*" class="hidden" @change="onLoadImage($event)">
-        Cargar imagen
-      </label>
-
-      <!-- Descargar -->
-      <button @click="downloadMerged()" class="px-3 py-1.5 rounded-xl border border-emerald-300 text-emerald-700 hover:bg-emerald-50">
-        Descargar
-      </button>
-    </div>
+    <button id="download" class="btn btn-primary">Descargar</button>
   </div>
 
-  {{-- Sub-barra de herramientas (opciones de dibujo) --}}
-  <div class="border-t border-slate-200 bg-white/80">
-    <div class="max-w-6xl mx-auto px-4 py-2 flex items-center gap-3 text-sm overflow-x-auto">
-      <!-- Color -->
-      <label class="flex items-center gap-2 px-2 py-1.5 rounded-xl border border-slate-300 whitespace-nowrap">
-        <span class="text-slate-600">Color</span>
-        <input type="color" x-model="brushColor" class="w-8 h-8 p-0 border-0 outline-none bg-transparent cursor-pointer">
-      </label>
-
-      <!-- Grosor -->
-      <label class="flex items-center gap-2 px-2 py-1.5 rounded-xl border border-slate-300 whitespace-nowrap">
-        <span class="text-slate-600">Grosor</span>
-        <input type="range" min="1" max="60" step="1" x-model.number="brushSize" class="w-32">
-        <span class="tabular-nums w-8 text-right" x-text="brushSize"></span>
-      </label>
-
-      <!-- Modo -->
-      <div class="flex rounded-xl overflow-hidden border border-slate-300">
-        <button @click="setMode('draw')" :class="mode==='draw' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700'"
-                class="px-3 py-1.5">Dibujar</button>
-        <button @click="setMode('erase')" :class="mode==='erase' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700'"
-                class="px-3 py-1.5">Borrar</button>
-      </div>
-    <!-- Pinceles (cosméticos) -->
-    <div class="flex items-center gap-2">
-    <span class="text-slate-600 text-sm">Pincel</span>
-    <div class="flex gap-1">
-        <button @click="setBrush('lipstick')"
-                :class="brush==='lipstick' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-300'"
-                class="px-2.5 py-1.5 rounded-xl text-sm whitespace-nowrap">💄 Labial</button>
-
-     <button @click="setBrush('remover')"
-        :class="brush==='remover' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-300'"
-        class="px-2.5 py-1.5 rounded-xl text-sm whitespace-nowrap">🧴 Desmaquillante</button>
-
-        <button @click="setBrush('shadow')"
-                :class="brush==='shadow' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-300'"
-                class="px-2.5 py-1.5 rounded-xl text-sm whitespace-nowrap">🎨 Sombra</button>
-
-        <button @click="setBrush('eyeliner')"
-                :class="brush==='eyeliner' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-300'"
-                class="px-2.5 py-1.5 rounded-xl text-sm whitespace-nowrap">✒️ Delineador</button>
-
-        <button @click="setBrush('blush')"
-                :class="brush==='blush' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-300'"
-                class="px-2.5 py-1.5 rounded-xl text-sm whitespace-nowrap">🌸 Rubor</button>
-    </div>
-    </div>
-
-
-      <!-- Deshacer / Rehacer -->
-      <button @click="undo()" :disabled="!canUndo"
-              class="px-3 py-1.5 rounded-xl border border-slate-300 disabled:opacity-40 whitespace-nowrap">↶ Deshacer</button>
-      <button @click="redo()" :disabled="!canRedo"
-              class="px-3 py-1.5 rounded-xl border border-slate-300 disabled:opacity-40 whitespace-nowrap">↷ Rehacer</button>
-
-      <!-- Limpiar -->
-      <button @click="clearCanvasConfirm()"
-              class="px-3 py-1.5 rounded-xl border border-rose-300 text-rose-700 hover:bg-rose-50 whitespace-nowrap">Limpiar</button>
-    </div>
-  </div>
-</header>
-
-
-  {{-- Lienzo --}}
-  <main class="max-w-6xl mx-auto px-4 py-6">
-    <div class="relative w-full bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-      <!-- Contenedor que mantiene relación y se ajusta -->
-      <div class="relative w-full" x-ref="stageWrap" @mousedown="pointerDown" @touchstart.passive="pointerDown"
-           @mousemove="pointerMove" @touchmove.passive="pointerMove" @mouseleave="pointerUp" @mouseup="pointerUp" @touchend="pointerUp">
-
-        <!-- Imagen de fondo -->
-        <img x-ref="bg"
-            :src="bgSrc"
-            alt="Imagen de fondo"
-            class="block select-none"
-            @load="onBgLoaded">
-
-        <!-- Canvas (mismo tamaño visual que la imagen)
-        <canvas x-ref="canvas" class="absolute inset-0"></canvas>-->
-        <canvas x-ref="canvas" class="absolute inset-0" style="background: transparent;"></canvas>
-
-        <!-- Placeholders cuando no hay imagen -->
-        <template x-if="!bgLoaded">
-          <div class="absolute inset-0 grid place-items-center text-slate-400 text-sm pointer-events-none">
-            <div class="text-center px-6 py-10">
-              <div class="text-xl mb-2">Cargar una imagen para empezar</div>
-              <div>o dibuja sobre un lienzo en blanco (Descargar combinará fondo y trazos)</div>
-            </div>
-          </div>
-        </template>
-      </div>
-    </div>
-
-    {{-- Ayudas / atajos --}}
-    <div class="mt-4 text-xs text-slate-500 leading-relaxed">
-      <p><span class="font-medium text-slate-700">Atajos:</span> Ctrl+Z (Deshacer), Ctrl+Y / Ctrl+Shift+Z (Rehacer), E (Borrar), D (Dibujar), Ctrl+S (Descargar).</p>
-      <p>Compatibilidad touch: mantén el dedo o stylus para dibujar/borrar.</p>
-    </div>
-  </main>
+  <!-- Título centrado -->
+  <strong style="margin:0 auto;">Dentro Del Espejo</strong>
 </div>
 
-{{-- Alpine.js (si tu layout ya lo incluye, omite esta línea) --}}
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Sub-barra de herramientas -->
+  <div class="subbar">
+    <div class="field">
+      <span>Color</span>
+      <input id="color" type="color" value="#111827">
+    </div>
+    <div class="field">
+      <span>Grosor</span>
+      <input id="size" type="range" min="1" max="60" step="1" value="8"><span id="sizev">8</span>
+    </div>
+
+
+
+    <div class="field">
+      <span>Pincel</span>
+      <button class="chip active" data-brush="lipstick">💄 Labial</button>
+      <button class="chip" data-brush="shadow">🎨 Sombra</button>
+      <button class="chip" data-brush="blush">🌸 Rubor</button>
+      <button class="chip" data-brush="eyeliner">✒️ Delineador</button>
+      <button class="chip" data-brush="remover">🧴 Desmaquillante</button>
+    </div>
+
+    <button id="undo" class="btn">↶ Deshacer</button>
+    <button id="redo" class="btn">↷ Rehacer</button>
+    <button id="clear" class="btn">Limpiar Todo</button>
+
+
+      <button id="modeDraw" style="
+              position:absolute;
+              right:0.75rem;
+              top:50%;
+              transform:translateY(-50%);
+              white-space:nowrap;" class="chip active">Dibujar</button>
+      <button id="modeErase" style="
+              position:absolute;
+              right:5rem;
+              top:50%;
+              transform:translateY(-50%);
+              white-space:nowrap;" class="chip">Borrar</button>
+  </div>
+
+<!-- Tercera sub-barra de preguntas -->
+<div id="quizbar" class="subbar" style="top:calc(var(--bar-h) + var(--subbar-h)); z-index:48;">
+
+  <div style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      position:relative;
+      text-align:center;
+    ">
+    <!-- Pregunta centrada -->
+    <div id="question"
+         style="font-weight:500;
+                color:#0f172a;
+                font-size:1rem;
+                text-align:center;">
+      ¿Qué no estoy mirando?
+    </div>
+
+    <!-- Botón Siguiente al lado derecho -->
+    <button id="nextQ"
+            class="btn btn-primary"
+            style="
+              position:absolute;
+              right:0.75rem;
+              top:50%;
+              transform:translateY(-50%);
+              white-space:nowrap;">
+      Siguiente →
+    </button>
+  </div>
+</div>
+
+
+  <!-- Lienzo -->
+  <div class="wrap">
+    <div class="stage-box">
+      <div id="stage" class="stage">
+        <img id="bg" class="bg" alt="Imagen de fondo">
+        <canvas id="cv"></canvas>
+        <div id="placeholder" style="position:absolute;inset:0;display:grid;place-items:center;color:#94a3b8;text-align:center;pointer-events:none">
+          <div>
+            <div style="font-size:1.1rem;margin-bottom:.25rem">Cargar una imagen para empezar</div>
+            <div>o dibuja sobre un lienzo en blanco</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="help">
+      Atajos: Ctrl+Z / Ctrl+Y, E (Borrar), D (Dibujar), Ctrl+S (Descargar).
+    </div>
+    <div class="spacer"></div>
+  </div>
+
 <script>
-function withAlpha(hexOrRgb, a=1){
-  if(hexOrRgb?.startsWith('#')){
-    const c = hexOrRgb.length===4 ? hexOrRgb.replace('#','').split('').map(ch=>ch+ch).join('')
-                                  : hexOrRgb.replace('#','');
-    const r = parseInt(c.slice(0,2),16), g = parseInt(c.slice(2,4),16), b = parseInt(c.slice(4,6),16);
-    return `rgba(${r},${g},${b},${a})`;
-  }
-  return hexOrRgb?.startsWith('rgb(') ? hexOrRgb.replace('rgb(','rgba(').replace(')',`,`+a+`)`) : hexOrRgb;
-}
+(function(){
+  // —— Refs
+  const file = document.getElementById('file');
+  const downloadBtn = document.getElementById('download');
+  const color = document.getElementById('color');
+  const size = document.getElementById('size');
+  const sizev = document.getElementById('sizev');
+  const modeDraw = document.getElementById('modeDraw');
+  const modeErase = document.getElementById('modeErase');
+  const stage = document.getElementById('stage');
+  const bg = document.getElementById('bg');
+  const cv = document.getElementById('cv');
+  const ph = document.getElementById('placeholder');
+  const undoBtn = document.getElementById('undo');
+  const redoBtn = document.getElementById('redo');
+  const clearBtn = document.getElementById('clear');
 
-function paintBoard() {
-  return {
-    // --- Estado ---
-    canvas:null, ctx:null, bgEl:null, stageWrap:null,
-    bgSrc:'', bgLoaded:false,
-    drawing:false, lastX:0, lastY:0,
-    brushColor:'#111827', brushSize:8, mode:'draw',
-    brush:'lipstick', lastStampX:null, lastStampY:null, stampSpacing:0.35,
+  const ctx = cv.getContext('2d', { willReadFrequently:true });
 
-    history:[], redoStack:[], historyLimit:50,
+  // —— Estado
+  let brushColor = color.value;
+  let brushSize = parseInt(size.value,10);
+  let mode = 'draw';                // 'draw' | 'erase'
+  let brush = 'lipstick';           // 'lipstick' | 'shadow' | 'blush' | 'eyeliner' | 'remover'
+  let bgLoaded = false;
 
-    get canUndo(){ return this.history.length>0; },
-    get canRedo(){ return this.redoStack.length>0; },
+  let drawing = false, lastX=0, lastY=0, lastStampX=0, lastStampY=0, stampSpacing = 0.35;
+  let history=[], redoStack=[], historyLimit=50;
 
-    // --- Init ---
-    init(){
-      this.canvas = this.$refs.canvas;
-      this.ctx = this.canvas.getContext('2d', { willReadFrequently:true });
-      this.bgEl = this.$refs.bg;
-      this.stageWrap = this.$refs.stageWrap;
-
-      this.resizeToWrapper();
-      this.pushHistory();
-
-      // Atajos
-      window.addEventListener('keydown',(e)=>{
-        const k = e.key.toLowerCase();
-        if((e.ctrlKey||e.metaKey) && k==='z'){ e.preventDefault(); return e.shiftKey ? this.redo() : this.undo(); }
-        if((e.ctrlKey||e.metaKey) && k==='y'){ e.preventDefault(); return this.redo(); }
-        if((e.ctrlKey||e.metaKey) && k==='s'){ e.preventDefault(); return this.downloadMerged(); }
-        if(k==='e'){ this.setMode('erase'); }
-        if(k==='d'){ this.setMode('draw'); }
-      });
-
-      window.addEventListener('resize', ()=>this.redrawPreserving(), {passive:true});
-    },
-
-    // --- UI helpers ---
-    setMode(m){ this.mode=m; },
-    setBrush(name){ this.brush=name; },
-
-    // --- Cargar imagen ---
-    onLoadImage(evt){
-      const file = evt.target.files?.[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = () => { this.bgSrc = reader.result; };
-      reader.readAsDataURL(file);
-      this.redoStack = [];
-    },
-    onBgLoaded(){ this.bgLoaded = true; this.redrawPreserving(); },
-
-    // --- Dibujo ---
-    pointerDown(e){
-      const {x,y} = this.eventXY(e);
-      this.drawing = true; this.lastX=x; this.lastY=y; this.lastStampX=x; this.lastStampY=y;
-        this.ctx.shadowBlur = 0;
-        this.ctx.shadowColor = 'transparent';
-      if(this.mode==='erase'){
-        this.ctx.globalCompositeOperation='destination-out';
-        this.ctx.lineCap='round'; this.ctx.lineJoin='round';
-        this.ctx.lineWidth=this.brushSize; this.ctx.strokeStyle='rgba(0,0,0,1)';
-        this.ctx.beginPath(); this.ctx.moveTo(x,y); return;
+  // —— Cursores personalizados (pon tus PNGs en /public/img/cursors/)
+  const cursorBase = '/PROYECTOS/Belleza/public/img/cursors/';
+  function updateCursor(){
+    let path = '';
+    if (mode==='erase') path = cursorBase + 'borrar.png';
+    else {
+      switch (brush){
+        case 'lipstick': path = cursorBase + 'labial.png'; break;
+        case 'shadow': path = cursorBase + 'sombra.png'; break;
+        case 'blush': path = cursorBase + 'rubor.png'; break;
+        case 'eyeliner': path = cursorBase + 'delineador.png'; break;
+        case 'remover': path = cursorBase + 'desmaquillante.png'; break;
+        default: path = '';
       }
+    }
+    if (path) cv.style.cursor = `url("${path}") 16 16, crosshair`;
+    else cv.style.cursor = 'crosshair';
+  }
 
-      this.ctx.globalCompositeOperation='source-over';
+  // —— Util
+  function withAlpha(hex, a=1){
+    if(!hex) return `rgba(0,0,0,${a})`;
+    if(hex.startsWith('#')){
+      const c = hex.length===4 ? hex.replace('#','').split('').map(ch=>ch+ch).join('') : hex.replace('#','');
+      const r = parseInt(c.slice(0,2),16), g = parseInt(c.slice(2,4),16), b = parseInt(c.slice(4,6),16);
+      return `rgba(${r},${g},${b},${a})`;
+    }
+    return hex;
+  }
+  function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
 
-      if(this.brush==='eyeliner'){
-        this.ctx.lineCap='butt'; this.ctx.lineJoin='round';
-        this.ctx.lineWidth=Math.max(1, this.brushSize*0.55);
-        this.ctx.strokeStyle=this.brushColor;
-        this.ctx.beginPath(); this.ctx.moveTo(x,y);
-      } else if(this.brush==='lipstick'){
-        this.ctx.lineCap='round'; this.ctx.lineJoin='round';
-        this.ctx.lineWidth=Math.max(2, this.brushSize*0.9);
-        this.ctx.strokeStyle=withAlpha(this.brushColor,0.85);
-        this.ctx.shadowColor=this.brushColor; this.ctx.shadowBlur=Math.floor(this.brushSize*0.15);
-        this.ctx.beginPath(); this.ctx.moveTo(x,y);
+  // —— Tamaño que no se desborda (85vw x 75% del alto útil)
+  function resize(){
+    const dpr = window.devicePixelRatio || 1;
+    const natW = bg.naturalWidth || 1600;
+    const natH = bg.naturalHeight || 900;
+
+    const headerH = (document.querySelector('.bar')?.getBoundingClientRect().height || 0) +
+                    (document.querySelector('.subbar')?.getBoundingClientRect().height || 0);
+    const maxW_vp = Math.floor(window.innerWidth * 0.85);
+    const maxH_vp = Math.floor((window.innerHeight - headerH) * 0.75);
+
+    const boxRect = stage.parentElement.getBoundingClientRect();
+    const maxW = clamp(Math.min(maxW_vp, boxRect.width), 320, 2000);
+    const maxH = clamp(maxH_vp, 240, 2000);
+
+    const scale = Math.min(maxW / natW, maxH / natH, 1);
+    const dispW = Math.max(1, Math.floor(natW * scale));
+    const dispH = Math.max(1, Math.floor(natH * scale));
+
+    stage.style.width = dispW+'px';
+    stage.style.height = dispH+'px';
+    Object.assign(bg.style, { width:dispW+'px', height:dispH+'px', objectFit:'contain', display:'block' });
+
+    cv.style.width = dispW+'px';
+    cv.style.height = dispH+'px';
+    cv.width = Math.round(dpr * dispW);
+    cv.height = Math.round(dpr * dispH);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  // —— Historial
+  function pushHistory(){
+    try{
+      const snap = ctx.getImageData(0,0,cv.width,cv.height);
+      history.push(snap); if(history.length>historyLimit) history.shift();
+      undoBtn.disabled = history.length===0;
+      redoBtn.disabled = redoStack.length===0;
+    }catch(e){
+      console.warn('Historial deshabilitado (posible CORS).', e);
+    }
+  }
+  function undo(){
+    if(!history.length) return;
+    const curr = ctx.getImageData(0,0,cv.width,cv.height);
+    const prev = history.pop(); if(!prev) return;
+    redoStack.push(curr); ctx.putImageData(prev,0,0);
+    undoBtn.disabled = history.length===0;
+    redoBtn.disabled = redoStack.length===0;
+  }
+  function redo(){
+    if(!redoStack.length) return;
+    const curr = ctx.getImageData(0,0,cv.width,cv.height);
+    const next = redoStack.pop(); if(!next) return;
+    history.push(curr); ctx.putImageData(next,0,0);
+    undoBtn.disabled = history.length===0;
+    redoBtn.disabled = redoStack.length===0;
+  }
+
+  // —— Dibujo
+  function eventXY(e){
+    const rect = cv.getBoundingClientRect();
+    const t = e.touches?.[0];
+    const cx = t ? t.clientX : e.clientX;
+    const cy = t ? t.clientY : e.clientY;
+    const x = (cx - rect.left) * (cv.width / rect.width);
+    const y = (cy - rect.top) * (cv.height / rect.height);
+    return {x,y};
+  }
+
+  function pointerDown(e){
+    ctx.shadowBlur = 0; ctx.shadowColor = 'transparent';
+    const {x,y} = eventXY(e);
+    drawing = true; lastX=x; lastY=y; lastStampX=x; lastStampY=y;
+
+    if(mode==='erase'){
+      ctx.globalCompositeOperation='destination-out';
+      ctx.lineCap='round'; ctx.lineJoin='round';
+      ctx.lineWidth=brushSize; ctx.strokeStyle='rgba(0,0,0,1)';
+      ctx.beginPath(); ctx.moveTo(x,y); return;
+    }
+    ctx.globalCompositeOperation='source-over';
+
+    if(brush==='eyeliner'){
+      ctx.lineCap='butt'; ctx.lineJoin='round';
+      ctx.lineWidth=Math.max(1, brushSize*0.55);
+      ctx.strokeStyle=brushColor;
+      ctx.beginPath(); ctx.moveTo(x,y);
+    }else if(brush==='lipstick'){
+      ctx.lineCap='round'; ctx.lineJoin='round';
+      ctx.lineWidth=Math.max(2, brushSize*0.9);
+      ctx.strokeStyle=withAlpha(brushColor,0.85);
+      ctx.shadowColor=brushColor; ctx.shadowBlur=Math.floor(brushSize*0.15);
+      ctx.beginPath(); ctx.moveTo(x,y);
+    }
+  }
+
+  function pointerMove(e){
+    if(!drawing) return;
+    const {x,y} = eventXY(e);
+
+    if(mode==='erase'){
+      ctx.lineTo(x,y); ctx.stroke(); lastX=x; lastY=y; return;
+    }
+
+    if(brush==='eyeliner' || brush==='lipstick'){
+      ctx.lineTo(x,y); ctx.stroke(); lastX=x; lastY=y; return;
+    }
+
+    // stamps (shadow, blush, remover)
+    const dist = Math.hypot(x-lastStampX, y-lastStampY);
+    const step = brushSize * stampSpacing;
+    if(dist >= step){
+      const n = Math.floor(dist/step);
+      for(let i=1;i<=n;i++){
+        const t=i/n, sx=lastStampX+(x-lastStampX)*t, sy=lastStampY+(y-lastStampY)*t;
+        stamp(sx,sy);
       }
-      // gloss/shadow/blush se hacen por “stamps” en pointerMove
-    },
-
-    pointerMove(e){
-      if(!this.drawing) return;
-      const {x,y} = this.eventXY(e);
-
-      if(this.mode==='erase'){
-        this.ctx.lineTo(x,y); this.ctx.stroke();
-        this.lastX=x; this.lastY=y; return;
-      }
-
-      if(this.brush==='eyeliner' || this.brush==='lipstick'){
-        this.ctx.lineTo(x,y); this.ctx.stroke();
-        this.lastX=x; this.lastY=y; return;
-      }
-
-      // stamps
-      const dist = Math.hypot(x-this.lastStampX, y-this.lastStampY);
-      const step = this.brushSize * this.stampSpacing;
-      if(dist >= step){
-        const n = Math.floor(dist/step);
-        for(let i=1;i<=n;i++){
-          const t=i/n, sx=this.lastStampX+(x-this.lastStampX)*t, sy=this.lastStampY+(y-this.lastStampY)*t;
-          this.stamp(sx,sy);
-        }
-        this.lastStampX=x; this.lastStampY=y;
-      }
-    },
-
-    pointerUp(){
-      if(!this.drawing) return;
-      this.drawing=false;
-      try{ this.ctx.closePath(); }catch(_){}
-      this.ctx.shadowBlur=0;
-      this.pushHistory();
-      this.redoStack=[];
-    },
-
-    eventXY(e){
-      const rect = this.canvas.getBoundingClientRect();
-      const t = e.touches?.[0];
-      const cx = t ? t.clientX : e.clientX;
-      const cy = t ? t.clientY : e.clientY;
-      const x = (cx - rect.left) * (this.canvas.width / rect.width);
-      const y = (cy - rect.top) * (this.canvas.height / rect.height);
-      return {x,y};
-    },
-
-    // --- Stamps (pinceles difusos) ---
-// --- reemplazo total de la función ---
-stamp(x,y){
-  const ctx = this.ctx;
-
-  // ===== SOMBRA (🎨) =====
-  if (this.brush === 'shadow') {
-    const r = this.brushSize * 0.6;
-    const colIn  = withAlpha(this.brushColor, 0.18);
-    const colOut = withAlpha(this.brushColor, 0.00); // <- mismo color, alfa 0 (no negro)
-
-    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, colIn);
-    g.addColorStop(1, colOut);
-
-    const prevOp = ctx.globalCompositeOperation;
-    ctx.globalCompositeOperation = 'lighter'; // suma, no oscurece
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-    ctx.globalCompositeOperation = prevOp;
-    return;
+      lastStampX=x; lastStampY=y;
+    }
   }
 
-  // ===== DESMAQUILLANTE (🧴) =====
-  if (this.brush === 'remover') {
-    const r = this.brushSize * 0.7;
-    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, 'rgba(255,255,255,0.25)');
-    g.addColorStop(0.30, 'rgba(255,255,255,0.10)');
-    g.addColorStop(1,  'rgba(255,255,255,0.00)');
-
-    const prevOp = ctx.globalCompositeOperation;
-    ctx.globalCompositeOperation = 'destination-out'; // borra suave
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-    ctx.globalCompositeOperation = prevOp;
-    return;
+  function pointerUp(){
+    if(!drawing) return;
+    drawing=false; try{ctx.closePath();}catch(_){}
+    ctx.shadowBlur=0;
+    pushHistory(); redoStack=[];
   }
 
-  // ===== (OPCIONAL) GLOSS heredado =====
-  if (this.brush === 'gloss') {
-    const r = this.brushSize * 0.6;
-    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, withAlpha(this.brushColor, 0.28));
-    g.addColorStop(0.60, withAlpha(this.brushColor, 0.15));
-    g.addColorStop(1, withAlpha(this.brushColor, 0.00)); // <- no blanco/negro
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,0.25)';
-    ctx.beginPath(); ctx.ellipse(x - r*0.25, y - r*0.25, r*0.22, r*0.14, 0, 0, Math.PI * 2); ctx.fill();
-    return;
+  function stamp(x,y){
+    // shadow & blush: usar bordes del mismo color con alfa 0, y mezcla 'lighter'
+    if(brush==='shadow'){
+      const r = brushSize*0.6;
+      const g = ctx.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0, withAlpha(brushColor,0.18));
+      g.addColorStop(1, withAlpha(brushColor,0.00));
+      const prev = ctx.globalCompositeOperation;
+      ctx.globalCompositeOperation='lighter';
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation=prev; return;
+    }
+    if(brush==='blush'){
+      const R = brushSize*0.96;
+      const g = ctx.createRadialGradient(x,y,0,x,y,R);
+      g.addColorStop(0, withAlpha(brushColor,0.12));
+      g.addColorStop(1, withAlpha(brushColor,0.00));
+      const prev = ctx.globalCompositeOperation;
+      ctx.globalCompositeOperation='lighter';
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,R,0,Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation=prev; return;
+    }
+    if(brush==='remover'){
+      const r = brushSize*0.7;
+      const g = ctx.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,'rgba(255,255,255,0.25)');
+      g.addColorStop(0.3,'rgba(255,255,255,0.10)');
+      g.addColorStop(1,'rgba(255,255,255,0.00)');
+      const prev = ctx.globalCompositeOperation;
+      ctx.globalCompositeOperation='destination-out';
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+      ctx.globalCompositeOperation=prev; return;
+    }
   }
 
-  // ===== RUBOR (🌸) =====
-  if (this.brush === 'blush') {
-    const R = this.brushSize * 0.96;
-    const colIn  = withAlpha(this.brushColor, 0.12);
-    const colOut = withAlpha(this.brushColor, 0.00); // <- mismo color, alfa 0
+  // —— Acciones
+  file.addEventListener('change', (e)=>{
+    const f = e.target.files?.[0]; if(!f) return;
+    const reader = new FileReader();
+    reader.onload = () => { bg.src = reader.result; };
+    reader.readAsDataURL(f);
+  });
+  bg.addEventListener('load', ()=>{
+    bgLoaded = true; ph.style.display='none'; resize(); pushHistory(); redoStack=[];
+  });
 
-    const g = ctx.createRadialGradient(x, y, 0, x, y, R);
-    g.addColorStop(0, colIn);
-    g.addColorStop(1, colOut);
+  size.addEventListener('input', ()=>{ brushSize = parseInt(size.value,10); sizev.textContent=size.value; });
+  color.addEventListener('input', ()=>{ brushColor = color.value; });
 
-    const prevOp = ctx.globalCompositeOperation;
-    ctx.globalCompositeOperation = 'lighter'; // suma luminosa
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI * 2); ctx.fill();
-    ctx.globalCompositeOperation = prevOp;
-    return;
+  modeDraw.addEventListener('click', ()=>{
+    mode='draw'; modeDraw.classList.add('active'); modeErase.classList.remove('active'); updateCursor();
+  });
+  modeErase.addEventListener('click', ()=>{
+    mode='erase'; modeErase.classList.add('active'); modeDraw.classList.remove('active'); updateCursor();
+  });
+
+  document.querySelectorAll('[data-brush]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('[data-brush]').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      brush = btn.getAttribute('data-brush');
+      updateCursor();
+    });
+  });
+
+  undoBtn.addEventListener('click', undo);
+  redoBtn.addEventListener('click', redo);
+  clearBtn.addEventListener('click', ()=>{
+    if(!confirm('¿Limpiar todos los trazos?')) return;
+    ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height); ctx.restore();
+    pushHistory(); redoStack=[];
+  });
+
+  downloadBtn.addEventListener('click', downloadMerged);
+  function downloadMerged(){
+    const dpr = window.devicePixelRatio || 1;
+    const cssW = parseInt(cv.style.width,10) || cv.width/dpr;
+    const cssH = parseInt(cv.style.height,10) || cv.height/dpr;
+
+    const out = document.createElement('canvas'); out.width=cssW; out.height=cssH;
+    const o = out.getContext('2d');
+    if(bgLoaded) o.drawImage(bg,0,0,cssW,cssH); else { o.fillStyle='#fff'; o.fillRect(0,0,cssW,cssH); }
+    o.drawImage(cv,0,0,cssW,cssH);
+
+    const a = document.createElement('a'); a.download='dibujo.png'; a.href=out.toDataURL('image/png'); a.click();
   }
-},
 
-    // --- Historial ---
-    pushHistory(){
-      try{
-        const snap = this.ctx.getImageData(0,0,this.canvas.width,this.canvas.height);
-        this.history.push(snap); if(this.history.length>this.historyLimit) this.history.shift();
-      }catch(e){ console.warn('Historial no disponible (CORS en imagen).'); }
-    },
-    undo(){
-      if(!this.canUndo) return;
-      const curr = this.ctx.getImageData(0,0,this.canvas.width,this.canvas.height);
-      const prev = this.history.pop(); if(!prev) return;
-      this.redoStack.push(curr); this.ctx.putImageData(prev,0,0);
-    },
-    redo(){
-      if(!this.canRedo) return;
-      const curr = this.ctx.getImageData(0,0,this.canvas.width,this.canvas.height);
-      const next = this.redoStack.pop(); if(!next) return;
-      this.history.push(curr); this.ctx.putImageData(next,0,0);
-    },
-    clearCanvasConfirm(){
-      if(!confirm('¿Limpiar todos los trazos?')) return;
-      this.clearCanvas(); this.pushHistory(); this.redoStack=[];
-    },
-    clearCanvas(){
-      this.ctx.save(); this.ctx.setTransform(1,0,0,1,0,0);
-      this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-      this.ctx.restore();
-    },
+  // —— Eventos pointer
+  stage.addEventListener('mousedown', pointerDown);
+  stage.addEventListener('mousemove', pointerMove);
+  stage.addEventListener('mouseup', pointerUp);
+  stage.addEventListener('mouseleave', pointerUp);
+  stage.addEventListener('touchstart', pointerDown, {passive:true});
+  stage.addEventListener('touchmove', pointerMove, {passive:true});
+  stage.addEventListener('touchend', pointerUp);
 
-    // --- Resize / Redibujo ---
-    redrawPreserving(){
-      const current = this.ctx.getImageData(0,0,this.canvas.width,this.canvas.height);
-      this.resizeToWrapper();
-      const tmp = document.createElement('canvas'); tmp.width=current.width; tmp.height=current.height;
-      tmp.getContext('2d').putImageData(current,0,0);
-      this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-      this.ctx.drawImage(tmp,0,0,this.canvas.width,this.canvas.height);
-      this.pushHistory(); this.redoStack=[];
-    },
- resizeToWrapper(){
-  const dpr = window.devicePixelRatio || 1;
+  // —— Atajos
+  window.addEventListener('keydown',(e)=>{
+    const k = e.key.toLowerCase();
+    if((e.ctrlKey||e.metaKey) && k==='z'){ e.preventDefault(); return undo(); }
+    if((e.ctrlKey||e.metaKey) && k==='y'){ e.preventDefault(); return redo(); }
+    if((e.ctrlKey||e.metaKey) && k==='s'){ e.preventDefault(); return downloadMerged(); }
+    if(k==='e'){ mode='erase'; modeErase.classList.add('active'); modeDraw.classList.remove('active'); updateCursor(); }
+    if(k==='d'){ mode='draw'; modeDraw.classList.add('active'); modeErase.classList.remove('active'); updateCursor(); }
+  });
 
-  // Tamaño natural (o fallback si no hay imagen aún)
-  const natW = (this.bgEl?.naturalWidth)  || 1600;
-  const natH = (this.bgEl?.naturalHeight) || 900;
+  window.addEventListener('resize', ()=>{ resize(); });
 
-  // LÍMITES DUROS relativos a la ventana (no se desborda)
-  const headerH = (document.querySelector('header')?.getBoundingClientRect().height) || 0;
-  const maxW_vp = Math.floor(window.innerWidth  * 0.90);             // 90% del viewport en ancho
-  const maxH_vp = Math.floor((window.innerHeight - headerH) * 0.70);  // 70% del viewport útil en alto
+  // —— Init
+  resize(); updateCursor(); pushHistory();
 
-  // LÍMITE del contenedor blanco (por si es más pequeño)
-  const contRect = this.stageWrap.parentElement.getBoundingClientRect();
-  const maxW_box = Math.floor(contRect.width);
+    // --- Preguntas "quemadas"
+  const preguntas = [
+"¿Cómo crees que cambiaria tu aspecto si hubieras nacido en una familia con mucho dinero?",
+"¿Cómo crees que lucirías si te hubieran educado como a un cuerpo masculino?",
+"¿Cómo crees que lucirías si nunca hubieras hecho ejercicio?",
+"¿Cómo crees que lucirías si hubieras nacido en un país diferente?",
+"¿Cómo crees que lucirías si  te cepillaras los dientes de vez en cuando?",
+"¿Cómo crees que lucirías si la familia de tu mejor amigue te hubiera criado?",
+"¿Cómo crees que lucirías si te hubiera dicho que eras la mujer más hermosa del mundo?",
+"¿Cómo crees que lucirías si nunca hubieras visto a alguien igual que tu en una revista?",
+"¿Cómo crees que lucirías si en la infancia solo hubieras utilizado el color blanco?",
+"¿Cómo crees que lucirías si ni los espejos, ni las máquinas existieran?"
 
-  const maxW = Math.max(320, Math.min(maxW_vp, maxW_box));
-  const maxH = Math.max(240, maxH_vp);
+  ];
+  let indexQ = 0;
+  const qEl = document.getElementById('question');
+  const nextBtn = document.getElementById('nextQ');
 
-  // Escala tipo "contain"
-  const scale = Math.min(maxW / natW, maxH / natH, 1);
+  nextBtn.addEventListener('click', ()=>{
+    indexQ++;
+    if(indexQ >= preguntas.length) indexQ = 0; // vuelve al inicio en bucle
+    qEl.textContent = preguntas[indexQ];
+  });
 
-  const dispW = Math.floor(natW * scale);
-  const dispH = Math.floor(natH * scale);
-
-  // Fijar marco exacto
-  this.stageWrap.style.width  = dispW + 'px';
-  this.stageWrap.style.height = dispH + 'px';
-
-  // Imagen y canvas del mismo tamaño
-  Object.assign(this.bgEl.style, { width: dispW+'px', height: dispH+'px', objectFit: 'contain', display: 'block' });
-  this.canvas.style.width  = dispW + 'px';
-  this.canvas.style.height = dispH + 'px';
-
-  // Resolución real (retina) y sistema de coordenadas
-  this.canvas.width  = Math.round(dpr * dispW);
-  this.canvas.height = Math.round(dpr * dispH);
-  this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-},
-
-    // --- Descarga ---
-    downloadMerged(){
-      const dpr = window.devicePixelRatio || 1;
-      const cssW = parseInt(this.canvas.style.width,10) || this.canvas.width/dpr;
-      const cssH = parseInt(this.canvas.style.height,10) || this.canvas.height/dpr;
-
-      const out = document.createElement('canvas'); out.width=cssW; out.height=cssH;
-      const octx = out.getContext('2d');
-
-      if(this.bgLoaded){ octx.drawImage(this.bgEl,0,0,cssW,cssH); }
-      else { octx.fillStyle='#ffffff'; octx.fillRect(0,0,cssW,cssH); }
-
-      octx.drawImage(this.canvas,0,0,cssW,cssH);
-      const link = document.createElement('a'); link.download='dibujo.png'; link.href=out.toDataURL('image/png'); link.click();
-    },
-  }
-}
+})();
 </script>
-
-@endsection
+</body>
+</html>
