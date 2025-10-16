@@ -59,6 +59,9 @@ Route::prefix('entrevistas')->group(function () {
         ->name('entrevistas.show');
 });
 
+Route::get('/espejo/paint', function () {
+    return view('paint'); // resources/views/paint.blade.php
+})->name('espejo.paint');
 
 Route::prefix('usuarios')->group(function() {
     Route::get('/',

@@ -153,6 +153,14 @@ class EntrevistaController extends Controller
         return view('entrevistas.index', compact('cards'));
     }
 
+    public function limpiarHtml($texto) {
+        return preg_replace(
+            '/<script\b[^>]*>(.*?)<\/script>/is',
+            '',
+            strip_tags($texto, '<p><strong><em><b><i><u><br>')
+        );
+    }
+
     public function show($slug)
     {
         $rows = DB::table('entrevistas as e')

@@ -20,12 +20,12 @@
 
             /* cursor principal */
             body {
-                cursor: url("{{ asset('aguja2.cur') }}") 16 16, auto;
+                cursor: url("{{ asset('micursor.cur') }}") 16 16, auto;
             }
 
             /* cursor específico en enlaces (fallback pointer) */
             a, button {
-                cursor: url("{{ asset('aguja2.cur') }}") 16 16, pointer;
+                cursor: url("{{ asset('micursor.cur') }}") 16 16, pointer;
             }
 
             [x-cloak]{display:none!important}
@@ -60,11 +60,19 @@
                             </a>
                         </li>
                         <li class="flex-1">
-                            <a href="{{ route('diccionario.buscar', 'palabra') }}"
-
+                            <a href="{{ route('espejo.paint') }}"
                                 class="block w-full text-center  px-4 py-2  rounded border font-bold text-lg hover:underline">
                                 Dentro del espejo
                             </a>
+
+                        </li>
+                        <li class="flex-1">
+                            <a href="{{ route('diccionario.buscar', 'palabra') }}"
+
+                                class="block w-full text-center  px-4 py-2  rounded border font-bold text-lg hover:underline">
+                                Diccionario
+                            </a>
+
                         </li>
                         <li class="flex-1">
                             <a href="{{ route('detras.many', ['ids' => '11,12']) }} "
