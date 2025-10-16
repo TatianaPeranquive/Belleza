@@ -24,6 +24,7 @@
             hoveredRes: null,
             activeResId: null,
             // --- Grafico ALUBIAL ---
+            portPad: 2, // <- largo del whisker (en px). Sube/baja este número a tu gusto
             palette: ['#5B8DEF', '#22C55E', '#F59E0B', '#EC4899', '#06B6D4', '#10B981', '#F43F5E', '#8B5CF6'],
             colorFor(id) { if (!id) return '#5B8DEF'; const i = Math.abs(parseInt(id, 10) || 0); return this.palette[(i - 1) % this.palette.length]; },
 
@@ -41,10 +42,42 @@
                 };
             },
             makePathStroke(a, b) {
-                // Curva cúbica: desde el centro-derecha de A al centro-izquierda de B
-                const dx = Math.max(80, Math.abs(b.left - a.right) * 0.6);
-                return `M ${a.right} ${a.midY}
-          C ${a.right + dx} ${a.midY},
+                // a y b son {left, right, midY, ...} relativos a flowWrap
+                const lane = document.querySelector('#resultados .lane');
+                const obs = lane ? lane.getBoundingClientRect() : null;
+                const wrap = this.$refs.flowWrap.getBoundingClientRect();
+
+                if (obs) {
+                    const obstacle = {
+                        left: obs.left - wrap.left,
+                        right: obs.right - wrap.left,
+                        top: obs.top - wrap.top,
+                        bottom: obs.bottom - wrap.top,
+                        midY: (obs.top + obs.bottom) / 2 - wrap.top
+                    };
+
+                    const crosses =
+                        a.right < obstacle.left && b.left > obstacle.right && // cruza el “centro”
+                        a.midY > obstacle.top && a.midY < obstacle.bottom;     // a la misma banda vertical
+
+                    if (crosses) {
+                        // rodea por arriba (puedes cambiar a abajo usando bottom + gap)
+                        const gap = 28; // margen respecto al borde del carril
+                        const yTop = obstacle.top - gap;
+                        const dx1 = Math.max(80, (obstacle.left - a.right) * 0.6);
+                        const dx2 = Math.max(80, (b.left - obstacle.right) * 0.6);
+
+                        // dos curvas: a -> borde izq. carril (arriba) -> b
+                        return `M ${a.right} ${a.midY}C ${a.right + dx1} ${a.midY},
+          ${obstacle.left - dx1} ${yTop},
+          ${obstacle.left} ${yTop} S ${obstacle.right + dx2} ${yTop},
+          ${b.left} ${b.midY}`;
+                    }
+                }
+
+                // camino directo (curva cúbica normal)
+                const dx = Math.max(80, Math.abs(b.left - a.right) * 0.35);
+                return `M ${a.right} ${a.midY} C ${a.right + dx} ${a.midY},
             ${b.left - dx} ${b.midY},
             ${b.left} ${b.midY}`;
             },
@@ -57,7 +90,7 @@
                 path.setAttribute('fill', 'none');
                 path.setAttribute('stroke', color);
                 path.setAttribute('stroke-linecap', 'round');
-                path.setAttribute('stroke-opacity', '0.9');
+                path.setAttribute('stroke-opacity', '0.6');
                 path.setAttribute('stroke-width', String(width));
                 path.style.transition = 'stroke-dashoffset 420ms ease';
                 this.$refs.flowSvg.appendChild(path);
@@ -84,10 +117,10 @@
                 const n4 = this.getEl('.n4.is-selected');
 
                 // vincula pares consecutivos
-                if (hito && n1) this.addRibbon(hito, n1, color, 18);
-                if (n1 && n2) this.addRibbon(n1, n2, color, 16);
-                if (n2 && n3) this.addRibbon(n2, n3, color, 14);
-                if (n3 && n4) this.addRibbon(n3, n4, color, 12);
+                if (hito && n1) this.addRibbon(hito, n1, color, 10);
+                if (n1 && n2) this.addRibbon(n1, n2, color, 8);
+                if (n2 && n3) this.addRibbon(n2, n3, color, 4);
+                if (n3 && n4) this.addRibbon(n3, n4, color, 2);
             },
             scheduleDraw() {
                 // pequeño debounce para esperar reflow
@@ -428,33 +461,29 @@
     </template>
 
     <!-- TOP BAR centrada -->
-    <section class="mb-6">
-        <div class="rounded-xl border bg-white/70 backdrop-blur px-4 py-3">
-            <div class="mx-auto flex justify-center gap-3 overflow-x-auto no-scrollbar">
-                <template x-for="it in items" :key="it.id">
-                    <button type="button" @click="selectHito(it.id)"
-                        class="hitoBtn shrink-0 rounded-full border px-4 py-2 text-sm bg-white hover:shadow focus:outline-none transition"
-                        :class="{'is-selected ring-2 ring-indigo-500': activeId === it.id}">
-                        <span class="font-medium text-center" x-text="it.title"></span>
-                    </button>
-                </template>
-            </div>
-        </div>
-    </section>
-
-    <!-- GRID: centro más ancho -->
     <div x-ref="flowWrap" class="relative">
         <svg x-ref="flowSvg" class="pointer-events-none absolute inset-0 w-full h-full" style="z-index: 30;"
             preserveAspectRatio="none"></svg>
-        <!--<div class="relative grid grid-cols-1 lg:grid-cols-3 xl:[grid-template-columns:1fr_1.8fr_1fr] gap-8"
-     x-ref="flowWrap">
- Capa SVG para las cintas
-  <svg x-ref="flowSvg"
-       class="pointer-events-none absolute inset-0"
-       style="z-index:6"
-       preserveAspectRatio="none"></svg>-->
+        <section class="mb-6">
+            <div class="rounded-xl border bg-white/70 backdrop-blur px-4 py-3">
+                <div class="mx-auto flex justify-center gap-3 overflow-x-auto no-scrollbar">
+                    <template x-for="it in items" :key="it.id">
+                        <button type="button" @click="selectHito(it.id)"
+                            class="hitoBtn shrink-0 rounded-full border px-4 py-2 text-sm bg-white hover:shadow focus:outline-none transition"
+                            :class="{'is-selected ring-2 ring-indigo-500': activeId === it.id}">
+                            <span class="font-medium text-center" x-text="it.title"></span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <!-- GRID: centro más ancho -->
+
         <!-- Columna izquierda: N1 + N2 -->
-        <section class="grid grid-rows-2 gap-8 relative z-index:6">
+
+        <section class="grid grid-rows-2 gap-8 relative z-[6] w-[90%] mx-auto px-9">
+
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <h2 class="text-sm font-semibold text-slate-600">Nivel 1</h2>
@@ -489,9 +518,9 @@
                 </div>
             </div>
 
-        </section>
+        </section><br><br>
 
-        <!-- Centro: botón + carril resultados -->
+        <!-- Centro: carril resultados -->
         <section class="relative z-index:6">
 
             <!-- PREVIEW (antes de buscar) -->
@@ -614,11 +643,12 @@
                 </div>
             </section>
         </section>
-
-        <!-- Columna derecha: N3 + N4 -->
-        <section class="grid grid-rows-2 gap-8 relative z-index:6">
+        <br>
+        <!-- Columna derecha: N3 + N4 + Botón -->
+        <section class="grid grid-rows-2 gap-8 relative z-[6] w-[90%] mx-auto px-9">
             <div>
                 <div class="flex items-center justify-between mb-2">
+
                     <h2 class="text-sm font-semibold text-slate-600">Nivel 3</h2>
                     <span class="text-xs text-slate-500"
                         x-text="sub[3].selectedTitle ? 'Sel.: '+ sub[3].selectedTitle : ''"></span>
@@ -650,7 +680,7 @@
                     </template>
                 </div>
             </div>
-            <br>
+
             <div class="mb-4 flex items-center justify-center">
                 <button type="button" @click="buscar()"
                     class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50"
@@ -666,7 +696,7 @@
         <div class="mt-6 text-sm text-slate-500">Cargando…</div>
     </template>
 </div>
-
+<div>
 
 </div>
 @endsection
