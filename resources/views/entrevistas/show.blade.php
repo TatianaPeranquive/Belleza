@@ -1,4 +1,3 @@
-{{-- resources/views/entrevistas/show.blade.php --}}
 @extends('layouts.app') @section('title')
 {{ $tituloPagina ?? ($nombre ?? "Entrevista") }}
 @endsection @section('content')
@@ -53,10 +52,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                             <span class="font-semibold">Oficio:</span>
                             {{ $a["oficio"] ?? "—" }}
                         </li>
-                        <li>
-                            <span class="font-semibold">Locación:</span>
-                            {{ $a["locacion"] ?? "—" }}
-                        </li>
                     </ul>
 
                     <br /><br />
@@ -90,7 +85,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                 <ul class="mt-4 text-sm opacity-80 space-y-1">
                     <li><strong>Edad:</strong> {{ $edad ?? "—" }}</li>
                     <li><strong>Oficio:</strong> {{ $oficio ?? "—" }}</li>
-                    <li><strong>Locación:</strong> {{ $locacion ?? "—" }}</li>
                     <br><br>
                 </ul>
             </div>
@@ -100,13 +94,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             {!! strip_tags($respuesta, '<p><strong><em><b><i><br>') !!}
         </div>
 
-
-        <div class="max-w-5xl w-full mx-auto mt-10">
-            <audio controls class="w-full ring-1 ring-white/10 rounded-lg">
-                <source src="{{ asset($audio) }}" type="audio/mpeg" />
-                Tu navegador no soporta audio HTML5.
-            </audio>
-        </div>
         @endif
     </div>
 </section>
