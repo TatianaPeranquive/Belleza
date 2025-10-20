@@ -1,6 +1,20 @@
-{{-- Vista mínima: sin Alpine, sin Tailwind build, sin dependencias raras --}}
+
 <!DOCTYPE html>
 <html lang="es">
+
+@extends('layouts.app') @section('title')
+{{ $tituloPagina ?? ($nombre ?? "Entrevista") }}
+@endsection @section('content')
+{{-- Barra fija de "Volver" SIEMPRE por encima del header global --}}
+<nav
+    class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-black/80 backdrop-blur pointer-events-auto">
+    <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-white font-bold text-lg">&larr; Volver</a>
+</nav>
+
+{{-- SPACER: empuja TODO por debajo de lo que tape arriba.
+Si tu header global también es fijo, este tamaño grande evita solapes.
+Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
+<div class="h-[160px] md:h-[100px]"></div>
 <head>
   <meta charset="UTF-8">
   <title>Dibujar sobre imagen</title>
