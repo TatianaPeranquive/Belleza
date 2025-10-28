@@ -124,6 +124,15 @@
                 transform: translateY(0);
             }
 
+   /* barra sólida clara / oscura */
+.nav-light { background: rgba(255,255,255,.88); color:#0f172a; backdrop-filter: blur(6px); border-bottom:1px solid rgba(0,0,0,.06); }
+.nav-solid { background: rgba(17,24,39,.85);  color:#fff;     backdrop-filter: blur(6px); border-bottom:1px solid rgba(255,255,255,.08); }
+/* variantes de contraste según fondo */
+.menu-on-light { color:#0f172a; }
+.menu-on-dark  { color:#fff; }
+
+        </style>
+
         </style>
     </head>
 
@@ -136,6 +145,9 @@
             <video src="EspejoPortada1.mp4" controls poster="EspejoPortada.png"
                 class="w-full h-auto max-h-screen object-cover">
             </video>
+            <!-- al final del hero/video -->
+            <div id="hero-sentinel" style="position: relative; height: 1px;"></div>
+
             <br><br> <br><br>
             <!-- MENÚ FIJO -->
         </section>
@@ -486,163 +498,153 @@
 </section>
 <br><br><br>
 <script>
-    const opciones = document.querySelectorAll('#opciones1 .opcion');
-    const respuesta = document.getElementById('respuesta');
+document.addEventListener('DOMContentLoaded', () => {
+  // -------------------------------
+  // 1) Clicks en opciones (bloques de preguntas/respuestas simples)
+  // -------------------------------
+  const opciones = document.querySelectorAll('#opciones1 .opcion');
+  const respuesta = document.getElementById('respuesta');
 
-    opciones.forEach(op => {
-        op.addEventListener('click', e => {
-            e.preventDefault();
-
-            // quitar selección de todos
-            opciones.forEach(o => o.classList.remove('selected'));
-
-            // marcar la opción clicada
-            op.classList.add('selected');
-
-            // mostrar el texto de la opción en el párrafo
-            respuesta.textContent = `${op.textContent.trim()}`;
-        });
+  opciones.forEach(op => {
+    op.addEventListener('click', e => {
+      e.preventDefault();
+      opciones.forEach(o => o.classList.remove('selected'));
+      op.classList.add('selected');
+      if (respuesta) respuesta.textContent = op.textContent.trim();
     });
+  });
 
-    const opciones2 = document.querySelectorAll('#opciones2 .opcion2');
-    const respuesta2 = document.getElementById('respuesta2');
+  const opciones2 = document.querySelectorAll('#opciones2 .opcion2');
+  const respuesta2 = document.getElementById('respuesta2');
 
-    opciones2.forEach(op => {
-        op.addEventListener('click', e => {
-            e.preventDefault();
-
-            // quitar selección de todas
-            opciones2.forEach(o => o.classList.remove('selected'));
-
-            // marcar clicada
-            op.classList.add('selected');
-
-            // mostrar el valor elegido
-            respuesta2.textContent = `${op.textContent.trim()}.`;
-        });
+  opciones2.forEach(op => {
+    op.addEventListener('click', e => {
+      e.preventDefault();
+      opciones2.forEach(o => o.classList.remove('selected'));
+      op.classList.add('selected');
+      if (respuesta2) respuesta2.textContent = op.textContent.trim() + '.';
     });
+  });
 
-    const menu = document.getElementById('menu');
-    const hero = document.getElementById('home');
+  // -------------------------------
+  // 2) Menú: mostrar/ocultar + contraste según lo que haya detrás
+  // -------------------------------
+  const menu = document.getElementById('menu');                 // <-- el header del layout
+  const sentinel = document.getElementById('hero-sentinel');    // <-- pon esto al final del hero
 
-    // 1) Mostrar/ocultar el menú cuando SALES del hero (sin mágicos "80px")
-    const io = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-            // Hero visible → ocultar menú
-            menu.classList.remove('opacity-100', 'pointer-events-auto');
-            menu.classList.add('opacity-0', 'pointer-events-none');
-        } else {
-            // Hero NO visible → mostrar menú
-            menu.classList.remove('opacity-0', 'pointer-events-none');
-            menu.classList.add('opacity-100', 'pointer-events-auto');
-        }
+  if (menu && sentinel) {
+    menu.style.zIndex = 1200;
+
+    // Cambia transparente ↔ sólido cuando sales del hero
+    const navObserver = new IntersectionObserver(([entry]) => {
+      const onHero = entry.isIntersecting;
+      if (onHero) {
+        menu.classList.remove('nav-light','nav-solid','opacity-100','pointer-events-auto');
+        menu.classList.add('bg-transparent','text-white','opacity-0','pointer-events-none');
+      } else {
+        menu.classList.remove('bg-transparent','text-white','opacity-0','pointer-events-none');
+        // elige un estilo base al bajar; por defecto claro
+        menu.classList.add('nav-light','opacity-100','pointer-events-auto');
+      }
+      // Recalcula contraste al cambiar de estado
+      requestAnimationFrame(adjustMenuContrast);
     }, { threshold: 0.05 });
-    io.observe(hero);
 
-    // 2) Utilidades para detectar el color de fondo "efectivo" bajo el nav
+    navObserver.observe(sentinel);
+
+    // ---- contraste dinámico (claro/oscuro) ----
     function parseRGB(rgbStr) {
-        const m = rgbStr && rgbStr.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?\)/);
-        if (!m) return { r: 255, g: 255, b: 255, a: 1 };
-        return { r: +m[1], g: +m[2], b: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
+      const m = rgbStr && rgbStr.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?\)/);
+      if (!m) return { r: 255, g: 255, b: 255, a: 1 };
+      return { r: +m[1], g: +m[2], b: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
     }
-    function relativeLuminance(r, g, b) {
-        const s = [r, g, b].map(v => {
-            v /= 255;
-            return (v <= 0.03928) ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-        });
-        return 0.2126 * s[0] + 0.7152 * s[1] + 0.0722 * s[2];
+    function relativeLuminance(r,g,b){
+      const s=[r,g,b].map(v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);});
+      return 0.2126*s[0]+0.7152*s[1]+0.0722*s[2];
     }
-    function getEffectiveBgColor(el) {
-        let e = el;
-        while (e && e !== document.documentElement) {
-            const cs = getComputedStyle(e);
-            const { r, g, b, a } = parseRGB(cs.backgroundColor);
-            if (a > 0) return { r, g, b }; // en cuanto no sea transparente, devolvemos
-            e = e.parentElement;
-        }
-        const { r, g, b } = parseRGB(getComputedStyle(document.body).backgroundColor || 'rgb(255,255,255)');
-        return { r, g, b };
+    function getEffectiveBgColor(el){
+      let e=el;
+      while(e&&e!==document.documentElement){
+        const cs=getComputedStyle(e);
+        const {r,g,b,a}=parseRGB(cs.backgroundColor);
+        if(a>0) return {r,g,b};
+        e=e.parentElement;
+      }
+      const {r,g,b}=parseRGB(getComputedStyle(document.body).backgroundColor||'rgb(255,255,255)');
+      return {r,g,b};
     }
 
-    // 3) Detecta qué hay debajo del nav y aplica clase de contraste
-    function adjustMenuContrast() {
-        // Punto de muestra: centro horizontal, un poco debajo del tope del nav
+    let rafId = null;
+    function adjustMenuContrast(){
+      if (rafId) { cancelAnimationFrame(rafId); }
+      rafId = requestAnimationFrame(() => {
         const navH = menu.getBoundingClientRect().height || 56;
         const x = window.innerWidth / 2;
         const y = Math.max(8, navH + 1);
-
-        // Ignoramos el propio nav para "ver" lo de atrás
         const oldPE = menu.style.pointerEvents;
         menu.style.pointerEvents = 'none';
-        const behind = document.elementFromPoint(x, y) || document.body;
+        const behind = document.elementFromPoint(x,y) || document.body;
         menu.style.pointerEvents = oldPE;
-
-        // Color efectivo del fondo y luminancia
-        const { r, g, b } = getEffectiveBgColor(behind);
-        const L = relativeLuminance(r, g, b);
-        const onLight = L >= 0.5; // umbral: >= 0.5 lo tratamos como fondo claro
-
+        const { r,g,b } = getEffectiveBgColor(behind);
+        const L = relativeLuminance(r,g,b);
+        const onLight = L >= 0.5;
         menu.classList.toggle('menu-on-light', onLight);
         menu.classList.toggle('menu-on-dark', !onLight);
+      });
     }
 
-    // Recalcular en scroll/resize/load
-    window.addEventListener('scroll', adjustMenuContrast, { passive: true });
+    window.addEventListener('scroll', adjustMenuContrast, { passive:true });
     window.addEventListener('resize', adjustMenuContrast);
-    window.addEventListener('load', () => {
-        // Animaciones iniciales del hero
-        gsap.from("h1", { opacity: 0, y: -50, duration: 1, ease: "power2.out" });
-        gsap.from("p", { opacity: 0, y: 20, duration: 1, delay: 0.5, ease: "power2.out" });
+    adjustMenuContrast();
+  }
 
-        // Estado inicial
-        adjustMenuContrast();
-    });
+  // -------------------------------
+  // 3) Animaciones (opcionales) GSAP
+  // -------------------------------
+  if (window.gsap) {
+    gsap.registerPlugin && gsap.registerPlugin(window.ScrollTrigger || {});
+    // Hero text (si existen)
+    if (document.querySelector('h1')) {
+      gsap.from("h1", { opacity: 0, y: -50, duration: 1, ease: "power2.out" });
+    }
+    if (document.querySelector('p')) {
+      gsap.from("p", { opacity: 0, y: 20, duration: 1, delay: 0.5, ease: "power2.out" });
+    }
+    // Tarjetas en cascada
+    if (gsap.utils && document.getElementById('cards-container')) {
+      gsap.fromTo(".card",
+        { y: 80, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 1, ease: "power3.out", stagger: 0.3,
+          scrollTrigger: {
+            trigger: "#cards-container",
+            start: "top 85%",
+            end: "bottom 60%",
+            toggleActions: "play none none none",
+          }
+        }
+      );
+    }
+  }
 
-    gsap.registerPlugin(ScrollTrigger);
-
-    gsap.utils.toArray(".card").forEach((card, i) => {
-        gsap.fromTo(".card",
-            { y: 80, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 1,
-                ease: "power3.out",
-                stagger: 0.3, // retraso entre tarjetas
-                scrollTrigger: {
-                    trigger: "#cards-container",
-                    start: "top 85%",
-                    end: "bottom 60%",
-                    toggleActions: "play none none none",
-                }
-            }
-        );
-
-    });
-
-
-            document.addEventListener("DOMContentLoaded", function() {
-            const faders = document.querySelectorAll('.fade-scroll');
-
-            const appearOptions = {
-                threshold: 0.1
-            };
-
-            const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-                entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                    observer.unobserve(entry.target); // Deja de observar una vez mostrado
-                }
-                });
-            }, appearOptions);
-
-            faders.forEach(fader => {
-                appearOnScroll.observe(fader);
-            });
-            });
-
+  // -------------------------------
+  // 4) Fade-on-scroll (IntersectionObserver)
+  // -------------------------------
+  const faders = document.querySelectorAll('.fade-scroll');
+  if (faders.length) {
+    const appearOnScroll = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    faders.forEach(f => appearOnScroll.observe(f));
+  }
+});
 </script>
+
 </body>
 </html>
 </div>
