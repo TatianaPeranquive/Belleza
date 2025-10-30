@@ -45,6 +45,29 @@ public function buscar($palabra)
     ]);
 }
 
+
+public function show(Request $request)
+{
+    $palabra = trim((string) $request->query('palabra', ''));
+    if ($palabra === '') {
+        return response()->json(['found' => false, 'msg' => 'Palabra vacía'], 400);
+    }
+
+    // Búsqueda case-insensitive
+    $row = Diccionario::whereRaw('LOWER(palabra) = LOWER(?)', [$palabra])->first();
+
+    if (!$row) {
+        return response()->json(['found' => false, 'palabra' => $palabra]);
+    }
+
+    return response()->json([
+        'found'      => true,
+        'palabra'    => $row->palabra,
+        'definicion' => $row->definicion,
+    ]);
+}
+
+
 // public function buscar($palabra)
 // {
 //     $url = "https://es.wiktionary.org/w/api.php";

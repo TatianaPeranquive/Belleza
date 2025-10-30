@@ -468,9 +468,9 @@
             <div class="rounded-xl border bg-white/70 backdrop-blur px-4 py-3">
                 <div class="mx-auto flex justify-center gap-3 overflow-x-auto no-scrollbar">
                     <template x-for="it in items" :key="it.id">
-                        <button type="button" @click="selectHito(it.id)"
-                            class="hitoBtn shrink-0 rounded-full border px-4 py-2 text-sm bg-white hover:shadow focus:outline-none transition"
-                            :class="{'is-selected ring-2 ring-indigo-500': activeId === it.id}">
+                        <button type="button" @click="selectHito(it.id); $nextTick(() => $store.float.openFor($el, (it.palabra ?? it.slug ?? it.title)?.toString().trim()))"
+                                class="hitoBtn shrink-0 rounded-full border px-4 py-2 text-sm bg-white hover:shadow focus:outline-none transition"
+                                :class="{'is-selected ring-2 ring-indigo-500': activeId === it.id}">
                             <span class="font-medium text-center" x-text="it.title"></span>
                         </button>
                     </template>
@@ -492,11 +492,13 @@
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2">
                     <template x-for="opt in sub[1].options" :key="opt.id">
-                        <button type="button" @click="choose(1,opt)"
+                        <button type="button"
+                            @click="choose(1,opt); $nextTick(() => $store.float.openFor($el, (opt.palabra ?? opt.slug ?? opt.title)?.toString().trim()))"
                             class="n1 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
                             :class="{'is-selected ring-2 ring-indigo-500': sub[1].selected === opt.id}">
-                            <span class="font-medium" x-text="opt.title"></span>
+                        <span class="font-medium" x-text="opt.title"></span>
                         </button>
+
                     </template>
                 </div>
             </div>
@@ -509,16 +511,69 @@
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2">
                     <template x-for="opt in sub[2].options" :key="opt.id">
-                        <button type="button" @click="choose(2,opt)"
+                        <button type="button"
+                            @click="choose(2,opt); $nextTick(() => $store.float.openFor($el, (opt.palabra ?? opt.slug ?? opt.title)?.toString().trim()))"
                             class="n2 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
                             :class="{'is-selected ring-2 ring-indigo-500': sub[2].selected === opt.id}">
-                            <span class="font-medium" x-text="opt.title"></span>
+                        <span class="font-medium" x-text="opt.title"></span>
                         </button>
+
+                    </template>
+                </div>
+            </div>
+            <br>
+        </section>
+        <!-- Columna derecha: N3 + N4 + Botón -->
+        <section class="grid grid-rows-2 gap-8 relative z-[6] w-[90%] mx-auto px-9">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+
+                    <h2 class="text-sm font-semibold text-slate-600">Nivel 3</h2>
+                    <span class="text-xs text-slate-500"
+                        x-text="sub[3].selectedTitle ? 'Sel.: '+ sub[3].selectedTitle : ''"></span>
+                </div>
+                <div class="grid gap-3 sm:grid-cols-2">
+                    <template x-for="opt in sub[3].options" :key="opt.id">
+                        <button type="button"
+                            @click="choose(3,opt); $nextTick(() => $store.float.openFor($el, (opt.palabra ?? opt.slug ?? opt.title)?.toString().trim()))"
+                            class="n3 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
+                            :class="{'is-selected ring-2 ring-indigo-500': sub[3].selected === opt.id}">
+                        <span class="font-medium" x-text="opt.title"></span>
+                        </button>
+
                     </template>
                 </div>
             </div>
 
-        </section><br><br>
+            <div x-show="sub[4].options.length > 0">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-sm font-semibold text-slate-600">Nivel 4</h2>
+                    <span class="text-xs text-slate-500"
+                        x-text="sub[4].selectedTitle ? 'Sel.: '+ sub[4].selectedTitle : ''"></span>
+                </div>
+                <div class="grid gap-3 sm:grid-cols-2">
+                    <template x-for="opt in sub[4].options" :key="opt.id">
+                        <button type="button"
+                            @click="choose(4,opt); $nextTick(() => $store.float.openFor($el, (opt.palabra ?? opt.slug ?? opt.title)?.toString().trim()))"
+                            class="n4 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
+                            :class="{'is-selected ring-2 ring-indigo-500': sub[4].selected === opt.id}">
+                        <span class="font-medium" x-text="opt.title"></span>
+                        </button>
+
+                    </template>
+                </div>
+            </div>
+
+            <div class="mb-4 flex items-center justify-center">
+                <button type="button" @click="buscar()"
+                    class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50"
+                    :disabled="!activeId">
+                    Mostrar comentarios
+                </button>
+                <br><br>
+            </div>
+        </section>
+        <br>
 
         <!-- Centro: carril resultados -->
         <section class="relative z-index:6">
@@ -644,52 +699,7 @@
             </section>
         </section>
         <br>
-        <!-- Columna derecha: N3 + N4 + Botón -->
-        <section class="grid grid-rows-2 gap-8 relative z-[6] w-[90%] mx-auto px-9">
-            <div>
-                <div class="flex items-center justify-between mb-2">
 
-                    <h2 class="text-sm font-semibold text-slate-600">Nivel 3</h2>
-                    <span class="text-xs text-slate-500"
-                        x-text="sub[3].selectedTitle ? 'Sel.: '+ sub[3].selectedTitle : ''"></span>
-                </div>
-                <div class="grid gap-3 sm:grid-cols-2">
-                    <template x-for="opt in sub[3].options" :key="opt.id">
-                        <button type="button" @click="choose(3,opt)"
-                            class="n3 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
-                            :class="{'is-selected ring-2 ring-indigo-500': sub[3].selected === opt.id}">
-                            <span class="font-medium" x-text="opt.title"></span>
-                        </button>
-                    </template>
-                </div>
-            </div>
-
-            <div x-show="sub[4].options.length > 0">
-                <div class="flex items-center justify-between mb-2">
-                    <h2 class="text-sm font-semibold text-slate-600">Nivel 4</h2>
-                    <span class="text-xs text-slate-500"
-                        x-text="sub[4].selectedTitle ? 'Sel.: '+ sub[4].selectedTitle : ''"></span>
-                </div>
-                <div class="grid gap-3 sm:grid-cols-2">
-                    <template x-for="opt in sub[4].options" :key="opt.id">
-                        <button type="button" @click="choose(4,opt)"
-                            class="n4 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
-                            :class="{'is-selected ring-2 ring-indigo-500': sub[4].selected === opt.id}">
-                            <span class="font-medium" x-text="opt.title"></span>
-                        </button>
-                    </template>
-                </div>
-            </div>
-
-            <div class="mb-4 flex items-center justify-center">
-                <button type="button" @click="buscar()"
-                    class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50"
-                    :disabled="!activeId">
-                    Mostrar comentarios
-                </button>
-                <br><br>
-            </div>
-        </section>
     </div>
 
     <template x-if="loading">
