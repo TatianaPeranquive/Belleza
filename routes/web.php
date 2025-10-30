@@ -31,9 +31,13 @@ Route::prefix('api/resumen')->group(function () {
 
 Route::get('/hitos', [HitosController::class, 'index'])->name('hitos.index');
 
-Route::get('/diccionario', [DiccionarioController::class, 'index'])->name('diccionario.index');
-
-Route::get('/diccionario/{palabra}', [DiccionarioController::class, 'buscar'])->name('diccionario.buscar');
+Route::controller(DiccionarioController::class)
+    ->prefix('diccionario')
+    ->group(function () {
+        Route::get('/', 'index')->name('diccionario.index');
+        Route::get('/buscar', 'show');  // si usas ?palabra= en query
+        Route::get('/{palabra}', 'buscar')->name('diccionario.buscar');
+    });
 
 Route::prefix('detras-del-espejo')->group(function() {
     Route::get('/', [EntrevistaController::class, 'detrasShowMany'])
