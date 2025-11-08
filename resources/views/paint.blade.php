@@ -298,6 +298,88 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         display:grid;                /* Nos permite centrar el placeholder */
         place-items:center;
         }
+/* Fondo oscuro bloqueante */
+.warn-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;  /* encima de todo */
+}
+
+/* Tarjeta central del aviso */
+.warn-modal {
+  background: #fff;
+  border: 2px solid #dc2626;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  padding: 1.5rem;
+  width: min(90vw, 420px);
+  text-align: center;
+}
+
+/* Oculto por defecto (si ya aceptó antes) */
+.hidden { display: none !important; }
+
+
+/* Utilidad para ocultar */
+.hidden { display: none !important; }
+
+/* Overlay bloqueante */
+.warn-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, .55); /* fondo oscuro */
+  backdrop-filter: blur(2px);
+  display: grid;
+  place-items: center;
+  z-index: 9999;        /* por encima de todo */
+}
+
+/* Caja del modal */
+.warn-modal{
+  width: min(560px, 92vw);
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow:
+    0 18px 36px rgba(2,6,23,.14),
+    0 4px 12px rgba(2,6,23,.06);
+  padding: 20px;
+}
+
+/* (Opcional) Si usas .q-fly de antes, mantiene estilo */
+.q-fly{
+  background:#fff;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  box-shadow: 0 12px 24px rgba(2,6,23,.06), 0 2px 6px rgba(2,6,23,.03);
+  padding:12px;
+  color:#0f172a;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* Botones base (si no los tienes ya) */
+.btn{
+  padding:.45rem .8rem;
+  border:1px solid #cbd5e1;
+  border-radius:.6rem;
+  background:#fff;
+  color:#334155;
+  font-size:.95rem;
+  cursor:pointer;
+}
+.btn-primary{
+  border-color:#34d399;
+  color:#065f46;
+  background:#ecfdf5;
+}
 
     </style>
 </head>
@@ -385,32 +467,60 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
 
     <!-- Lienzo -->
-    <div class="stage-box" style="display:flex; align-items:stretch; gap:20px;">
-        <!-- Columna izquierda: TARJETA lateral (misma altura que el lienzo) -->
-        <aside style="flex:0 0 300px;">
-            <!-- contenedor que tomará EXACTAMENTE la altura del lienzo vía JS -->
-            <div id="qFly" class="q-fly hidden">
-                <div class="q-head">
-                    <strong>Pregunta</strong>
-                    <br>
-                </div>
+<div class="stage-box" style="display:flex; align-items:stretch; gap:20px;">
+  <!-- Columna izquierda: TARJETA lateral (misma altura que el lienzo) -->
+  <aside style="flex:0 0 300px;">
+    <!-- Tu tarjeta de preguntas (qFly) arranca oculta -->
+    <div id="qFly" class="q-fly hidden">
+      <div class="q-head">
+        <strong>Pregunta</strong>
+      </div>
 
-                <div id="qText" class="q-body" style="font-weight:500;">¿Cuál es tu color favorito?</div>
+      <div id="qText" class="q-body" style="font-weight:500;">
+        ¿Cuál es tu color favorito?
+      </div>
 
-                <!-- Respuesta del usuario -->
-                <label style="font-size:.8rem;color:#64748b;">Tu respuesta</label>
-                <textarea id="qInput" rows="4"
-                    style="resize:vertical;width:100%;border:1px solid #e2e8f0;border-radius:10px;padding:8px;outline:none;font:inherit;"
-                    placeholder="Escribe aquí..."></textarea>
+      <label style="font-size:.8rem;color:#64748b;">Tu respuesta</label>
+      <textarea id="qInput" rows="4"
+        style="resize:vertical;width:100%;border:1px solid #e2e8f0;border-radius:10px;padding:8px;outline:none;font:inherit;"
+        placeholder="Escribe aquí..."></textarea>
 
-                <!-- Botonera al pie -->
-                <div class="q-foot" style="margin-top:8px;display:flex;gap:8px;justify-content:space-between;">
-                    <button id="qDownload" class="btn">⬇️ Descargar</button>
-                    <button id="qNext" class="btn btn-primary">Siguiente →</button>
-                </div>
-            </div>
+      <div class="q-foot" style="margin-top:8px;display:flex;gap:8px;justify-content:space-between;">
+        <button id="qDownload" class="btn">⬇️ Descargar</button>
+        <button id="qNext" class="btn btn-primary">Siguiente →</button>
+      </div>
+    </div>
+  </aside>
 
-        </aside>
+  <!-- Columna derecha: LIENZO / STAGE (lo que ya tienes) -->
+
+
+<!-- ==== AVISO BLOQUEANTE (modal con overlay) ==== -->
+<div id="warnOverlay" class="warn-overlay" aria-modal="true" role="dialog">
+  <div class="warn-modal" role="document">
+    <h2 style="color:#dc2626; font-weight:800; font-size:1.4rem; text-transform:uppercase; text-align:center; margin-bottom:.75rem;">
+      ⚠️ AVISO
+    </h2>
+
+    <p style="line-height:1.5; color:#0f172a; text-align:center; margin-bottom:1rem;">
+      Algunas de las preguntas a continuación podrían afectar sensibilidades.<br>
+      Presione <strong>Continuar</strong> para ver las preguntas o <strong>Anterior</strong> para volver al Salón de Espejos.
+    </p>
+
+    <label style="display:flex; gap:.5rem; align-items:center; justify-content:center; font-size:.9rem; color:#334155; margin:.75rem 0 1rem;">
+      <input id="warnDontShow" type="checkbox">
+      No volver a mostrar este aviso
+    </label>
+
+    <div style="display:flex; justify-content:space-between; gap:.75rem;">
+      <button id="btnWarnBack" class="btn" style="flex:1;">← Anterior</button>
+      <button id="btnWarnContinue" class="btn btn-primary" style="flex:1;">Continuar →</button>
+    </div>
+  </div>
+</div>
+
+
+
 
         <!-- ============ ESCENARIO ============ -->
         <div id="stage" class="stage" style="flex:1 1 auto; min-width:0; position:relative; overflow:hidden;">
@@ -445,10 +555,48 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
         <!-- ============ /ESCENARIO ============ -->
 
-        <!-- Columna derecha: LIENZO -->
-
         <script>
             (function () {
+
+                 // —— Aviso inicial ↔ preguntas
+document.addEventListener('DOMContentLoaded', () => {
+  // ---- Cache de nodos (ids deben coincidir con tu HTML) ----
+  const warnOverlay     = document.getElementById('warnOverlay');
+  const btnWarnBack     = document.getElementById('btnWarnBack');
+  const btnWarnContinue = document.getElementById('btnWarnContinue');
+  const warnDontShowEl  = document.getElementById('warnDontShow');
+  const qFlyPanel       = document.getElementById('qFly'); // tu panel de preguntas
+
+  // Si no existe el modal, no seguimos (evita TypeError)
+  if (!warnOverlay) return;
+
+  // ---- Mostrar/Ocultar según preferencia guardada ----
+  try {
+    const ok = localStorage.getItem('mirrorConsent');
+    if (ok === 'yes') warnOverlay.classList.add('hidden');
+  } catch (_) {
+    // si el navegador bloquea storage de terceros, seguimos sin guardar preferencia
+  }
+
+  // ---- Botón “Anterior” ----
+  if (btnWarnBack) {
+    btnWarnBack.addEventListener('click', () => {
+      // Ajusta la ruta a tu “Salón de Espejos”
+      window.location.href = "{{ route('entrevistas.index') }}";
+    });
+  }
+
+  // ---- Botón “Continuar” ----
+  if (btnWarnContinue) {
+    btnWarnContinue.addEventListener('click', () => {
+      if (warnDontShowEl?.checked) {
+        try { localStorage.setItem('mirrorConsent','yes'); } catch {}
+      }
+      warnOverlay.classList.add('hidden');
+      qFlyPanel?.classList.remove('hidden'); // muestra la tarjeta/preguntas si la tenías oculta
+    });
+  }
+});
                 // —— Refs
                 const file = document.getElementById('file');
                 const color = document.getElementById('color');
@@ -464,6 +612,9 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                 const redoBtn = document.getElementById('redo');
                 const clearBtn = document.getElementById('clear');
                 const ctx = cv.getContext('2d', { willReadFrequently: true });
+
+                // --- Modal de advertencia bloqueante ---
+
 
                 // —— Estado
                 let brushColor = color.value;
@@ -1026,6 +1177,47 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
                 // texto inicial por si las moscas
                 qText.textContent = Q[qIdx];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const warnOverlay     = document.getElementById('warnOverlay');
+  const btnWarnBack     = document.getElementById('btnWarnBack');
+  const btnWarnContinue = document.getElementById('btnWarnContinue');
+  const warnDontShowEl  = document.getElementById('warnDontShow');
+  const qFlyPanel       = document.getElementById('qFly');
+
+  // Si no existe el overlay, salimos sin romper nada
+  if (!warnOverlay) return;
+
+  // Mostrar/ocultar según preferencia guardada
+  try {
+    const ok = localStorage.getItem('mirrorConsent');
+    if (ok === 'yes') {
+      warnOverlay.classList.add('hidden');
+      // Si tu lógica quiere mostrar el panel al cargar, quita hidden:
+      qFlyPanel?.classList.remove('hidden');
+    }
+  } catch(e) {
+    // ignorar si storage está bloqueado
+  }
+
+  // Botón “Anterior” → vuelve al "Salón de Espejos"
+  if (btnWarnBack) {
+    btnWarnBack.addEventListener('click', () => {
+      window.location.href = "{{ route('entrevistas.index') }}";
+    });
+  }
+
+  // Botón “Continuar” → oculta modal y muestra preguntas
+  if (btnWarnContinue) {
+    btnWarnContinue.addEventListener('click', () => {
+      if (warnDontShowEl?.checked) {
+        try { localStorage.setItem('mirrorConsent', 'yes'); } catch {}
+      }
+      warnOverlay.classList.add('hidden');
+      qFlyPanel?.classList.remove('hidden');
+    });
+  }
+});
 
             })();
         </script>
