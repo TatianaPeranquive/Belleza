@@ -419,10 +419,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         <div class="field">
             <span>Pincel</span>
             <button class="chip active" data-brush="lipstick">💄 Labial</button>
-            <button class="chip" data-brush="shadow">🎨 Sombra</button>
-            <button class="chip" data-brush="blush">🌸 Rubor</button>
-            <button class="chip" data-brush="eyeliner">✒️ Delineador</button>
-            <button class="chip" data-brush="remover">🧴 Desmaquillante</button>
         </div>
 
         <button id="undo" class="btn">↶ Deshacer</button>
