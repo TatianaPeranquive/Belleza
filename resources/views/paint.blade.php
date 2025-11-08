@@ -229,13 +229,14 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         }
 
         /* mensaje arriba */
-        #frame {
-            z-index: 20 !important;
+        /* marco en medio */
+        :root {
+        --mirror-shift-x: 25%; /* Ajusta según necesites */
         }
 
-        /* marco en medio */
-        .bg {
-            z-index: 0 !important;
+        #frame,
+        #bg {
+        transform: translateX(var(--mirror-shift-x));
         }
 
         /* fondo abajo */
@@ -284,6 +285,35 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             z-index: 30;
             pointer-events: none;
         }
+        /* Inset del vidrio (TOP RIGHT BOTTOM LEFT). Ajusta a tu PNG. */
+        :root{
+        /* Ejemplo para el tocador clásico: */
+        --glass-inset: 14% 13% 17% 13%;
+        }
+
+        #stage{ position:relative; overflow:hidden; }
+
+        /* Región del vidrio alineada con el hueco del marco */
+        .glass{
+        position:absolute;
+        inset: var(--glass-inset);
+        z-index:10;
+        overflow:hidden;             /* Para que no se pinte fuera del vidrio (opcional) */
+        display:grid;                /* Nos permite centrar el placeholder */
+        place-items:center;
+        }
+
+        /* Placeholder centrado solo dentro del vidrio */
+        .glass-placeholder{
+        position:absolute;
+        inset:0;
+        display:grid;
+        place-items:center;
+        color:#94a3b8;
+        z-index:20;
+        pointer-events:none;
+        }
+
     </style>
 </head>
 
@@ -398,30 +428,34 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         </aside>
 
         <!-- ============ ESCENARIO ============ -->
-        <div id="stage" class="stage" style="flex:1 1 auto; min-width:0;">
-            <!-- Marco (arriba de todo, sin eventos) -->
-            <img id="frame" src="{{ asset('img/tocador.png') }}" alt="Marco" loading="eager" decoding="sync" style="position:absolute; inset:0; width:100%; height:100%;
-              object-fit:contain; z-index:20; pointer-events:none;">
+        <div id="stage" class="stage" style="flex:1 1 auto; min-width:0; position:relative; overflow:hidden;">
 
-            <!-- Vidrio: aquí adentro va la imagen de fondo + el canvas de dibujo -->
-            <div id="glass" style="position:absolute; inset:0; z-index:10; overflow:hidden;">
-                <!-- Imagen de fondo (selfie o la que cargues) -->
-                <img id="bg" class="bg" alt="Imagen de fondo" style="position:absolute; inset:0; width:100%; height:100%;
-                object-fit:cover; user-select:none; -webkit-user-drag:none;">
-                <!-- Canvas de dibujo (pintas aquí) -->
-                <canvas id="cv" style="position:absolute; inset:0; width:100%; height:100%;
-                           pointer-events:auto; touch-action:none; display:block;"></canvas>
+        <!-- Imagen de fondo (selfie u otra). Mantiene proporción -->
+        <img id="bg" alt="Imagen de fondo"
+            style="position:absolute; inset:0; width:100%; height:100%;
+                    object-fit:contain; z-index:5; user-select:none; -webkit-user-drag:none;">
+
+        <!-- 🧿 AQUI: Región del vidrio (misma abertura del marco) -->
+        <div id="glass" class="glass">
+            <!-- Canvas de pintura DENTRO del vidrio -->
+            <canvas id="cv" style="position:absolute; inset:0; width:100%; height:100%;
+                                z-index:10; pointer-events:auto; touch-action:none; display:block;"></canvas>
+
+            <!-- Placeholder centrado dentro del vidrio -->
+            <div id="placeholder" class="glass-placeholder">
+            <div style="text-align:center;">
+                <div style="font-size:1.1rem;margin-bottom:.25rem">Cargar una imagen para empezar</div>
+                <div>o dibuja sobre un lienzo en blanco</div>
             </div>
-
-            <!-- Placeholder por encima -->
-            <div id="placeholder" style="position:absolute; inset:0; display:grid; place-items:center;
-              text-align:center; color:#94a3b8; z-index:30; pointer-events:none">
-                <div>
-                    <div style="font-size:1.05rem;margin-bottom:.25rem">Cargar una imagen para empezar</div>
-                    <div>o dibuja sobre un lienzo en blanco</div>
-                </div>
             </div>
         </div>
+
+        <!-- Marco por encima (no bloquea eventos) -->
+        <img id="frame" src="{{ asset('img/tocador.png') }}" alt="Marco"
+            style="position:absolute; inset:0; width:100%; height:100%;
+                    object-fit:contain; z-index:15; pointer-events:none;">
+        </div>
+
         <!-- ============ /ESCENARIO ============ -->
 
         <!-- Columna derecha: LIENZO -->
@@ -526,6 +560,17 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                     cv.width = Math.round(dpr * dispW);
                     cv.height = Math.round(dpr * dispH);
                     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                    // const dpr = window.devicePixelRatio || 1;
+
+                    // Medimos el vidrio (NO el stage) para la resolución real del canvas
+                    const glass = document.getElementById('glass');
+                    const rect = glass.getBoundingClientRect();
+
+                    // El canvas ya llena el vidrio con CSS (inset:0), aquí solo resolvemos en píxeles
+                    cv.width  = Math.max(1, Math.round(rect.width  * dpr));
+                    cv.height = Math.max(1, Math.round(rect.height * dpr));
+                    ctx.setTransform(dpr,0,0,dpr,0,0);
 
                     const qFly = document.getElementById('qFly');
                     if (qFly) qFly.style.height = dispH + 'px';
