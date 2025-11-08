@@ -64,6 +64,7 @@ public function show(Request $request)
         'found'      => true,
         'palabra'    => $row->palabra,
         'definicion' => $row->definicion,
+        'ejemplo'    => $row->ejemplo,   // <-- ¡nuevo!
     ]);
 }
 
