@@ -447,6 +447,15 @@
             }
         }
     }
+      const btnWarnBack     = document.getElementById('btnWarnBack');
+      //  window.location.href = "{{ route('entrevistas.index') }}";
+        document.addEventListener('DOMContentLoaded', () => {
+        const btnWarnBack = document.getElementById('btnWarnBack');
+        btnWarnBack.addEventListener('click', () => {
+            window.location.href = "{{ route('espejo.paint') }}";
+        });
+        });
+
 </script>
 
 <div id="hitos-top" x-data="hitosUI($el.dataset)" data-ep-hitos="{{ url('/api/resumen/hitos') }}"
@@ -696,6 +705,15 @@
                         </div>
                     </template>
                 </div>
+                <br><br>
+                <div class="mb-4 flex items-center justify-center">
+                    <button id="btnWarnBack" type="button"
+                        class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50">
+                        Mirate al Espejo
+                    </button>
+                    <br><br>
+                </div>
+
             </section>
         </section>
         <br>
