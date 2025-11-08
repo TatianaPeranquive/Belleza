@@ -230,22 +230,20 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
         /* mensaje arriba */
         /* marco en medio */
-        :root {
-        --mirror-shift-x: 25%; /* Ajusta según necesites */
-        }
+    :root {
+    --mirror-shift-x: 25%; /* Ajusta según necesites */
+    }
 
-        #frame,
-        #bg {
-        transform: translateX(var(--mirror-shift-x));
-        }
+    #frame,
+    #bg {
+    transform: translateX(var(--mirror-shift-x));
+    }
 
         /* fondo abajo */
 
         /* --- Corrección de capas y eventos --- */
         /* Capas dentro del stage */
-        #stage {
-            position: relative;
-        }
+
 
         #bg {
             position: absolute;
@@ -254,14 +252,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             height: 100%;
             object-fit: contain;
             z-index: 0;
-        }
-
-        #cv {
-            z-index: 10;
-        }
-
-        #frame {
-            z-index: 20;
         }
 
         #cv {
@@ -276,13 +266,19 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             display: block;
         }
 
+        #frame {
+            z-index: 20;
+        }
+
+
+
         #placeholder {
             position: absolute;
-            inset: 0;
+            inset: var(--glass-inset);
             display: grid;
-            text-align: center;
+            text-align: left;
             color: #94a3b8;
-            z-index: 30;
+            z-index: 10;
             pointer-events: none;
         }
         /* Inset del vidrio (TOP RIGHT BOTTOM LEFT). Ajusta a tu PNG. */
@@ -301,17 +297,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         overflow:hidden;             /* Para que no se pinte fuera del vidrio (opcional) */
         display:grid;                /* Nos permite centrar el placeholder */
         place-items:center;
-        }
-
-        /* Placeholder centrado solo dentro del vidrio */
-        .glass-placeholder{
-        position:absolute;
-        inset:0;
-        display:grid;
-        place-items:center;
-        color:#94a3b8;
-        z-index:20;
-        pointer-events:none;
         }
 
     </style>
@@ -443,8 +428,10 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
             <!-- Placeholder centrado dentro del vidrio -->
             <div id="placeholder" class="glass-placeholder">
-            <div style="text-align:center;">
-                <div style="font-size:1.1rem;margin-bottom:.25rem">Cargar una imagen para empezar</div>
+            <div style="text-align:left; width:100%; max-width:300px;">
+                <div style="font-size:1.1rem; margin-bottom:.25rem;">
+                Cargar una imagen para empezar
+                </div>
                 <div>o dibuja sobre un lienzo en blanco</div>
             </div>
             </div>
@@ -546,6 +533,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                     const scale = Math.min(maxW / natW, maxH / natH, 1);
                     const dispW = Math.max(1, Math.floor(natW * scale));
                     const dispH = Math.max(1, Math.floor(natH * scale));
+
 
                     stage.style.width = dispW + 'px';
                     stage.style.height = dispH + 'px';
