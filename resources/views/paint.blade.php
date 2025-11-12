@@ -785,9 +785,9 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
   z-index: 1;
   margin: 0 auto;
 
-  /* 🔧 más angosto y un poco más alto */
-  width: min(55vw, 750px);         /* antes 65vw */
-  max-height: min(70vh, 680px);    /* antes 60vh */
+   width: min(45vw, 640px);
+  max-height: min(70vh, 680px);
+  transform: translateY(20vh);  /* baja todo el bloque unos 3% del alto de pantalla */
 
   overflow-y: auto;
   padding: 2.8rem 3.2rem;
@@ -801,7 +801,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
   backdrop-filter: blur(2px);
 }
-
 
 
 /* Forzar que nada adentro se auto-estreche (prose, container, max-w-*, etc.) */
@@ -874,7 +873,7 @@ body.modal-open{ overflow: hidden !important; }
   width: 100vw;
   height: 100vh;
   background-color: #fff;
-  background-image: url("/PROYECTOS/Belleza/public/img/tocador.png"); /* ← tu marco PNG */
+  background-image: url("/PROYECTOS/Belleza/public/img/tocador2.png"); /* ← tu marco PNG */
   background-repeat: no-repeat;
   background-size: cover; /* se estira al tamaño completo */
   background-position: center;
@@ -987,13 +986,15 @@ body.modal-open{ overflow: hidden !important; }
 #finalOverlay .modal-body{
   position:relative; z-index:1;
   margin:0 auto;
-  width:80vw;          /* texto dentro del marco */
-  max-height:70vh;     /* alto controlado */
+  width:56vw;          /* texto dentro del marco */
+  max-height:65vh;     /* alto controlado */
   overflow:auto;
   padding:2rem 3rem;
   background:rgba(255,255,255,.88);
   border-radius:12px;
   box-shadow:0 6px 18px rgba(0,0,0,.15);
+transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantalla */
+
 }
 
 /* Footer con el botón fijo abajo */
@@ -1147,12 +1148,9 @@ body.modal-open{ overflow: hidden !important; }
 <div id="finalOverlay" class="overlay hidden">
   <div class="modal-full">
     <!-- Marco imagen: capa de fondo que NO bloquea clics/scroll -->
-    <img src="{{ asset('img/tocador.png') }}"alt="" class="modal-frame">
+    <img src="{{ asset('img/tocador2.png') }}"alt="" class="modal-frame">
 
     <!-- Contenido -->
-    <header class="modal-header">
-      <h2 class="modal-title">Espejito, espejito</h2>
-    </header>
 
     <section class="modal-body">
       <div class="fc-reset">
@@ -1166,7 +1164,7 @@ body.modal-open{ overflow: hidden !important; }
     </section>
 
     <footer class="modal-footer">
-      <button id="btnContinuarFinal" class="btn">Continuar →</button>
+      <button id="btnContinuarFinal" class="btn">Continuar </button>
     </footer>
   </div>
 </div>
