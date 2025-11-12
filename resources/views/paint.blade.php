@@ -751,7 +751,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 #finalOverlay{
   position: fixed !important;
   inset: 0 !important;
-  z-index: 10000 !important;
+  z-index: 7000 !important;
   background: rgba(0,0,0,.55) !important;
   backdrop-filter: blur(3px);
 }
@@ -780,16 +780,29 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 }
 
 /* Cuerpo con scroll vertical y sin límites de ancho */
-#finalOverlay .modal-body{
-  flex: 1 1 auto !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 24px clamp(16px, 5vw, 64px) !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  text-align: left !important;
+#finalOverlay .modal-body {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+
+  /* 🔧 más angosto y un poco más alto */
+  width: min(55vw, 750px);         /* antes 65vw */
+  max-height: min(70vh, 680px);    /* antes 60vh */
+
+  overflow-y: auto;
+  padding: 2.8rem 3.2rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #111;
+
+  backdrop-filter: blur(2px);
 }
+
+
 
 /* Forzar que nada adentro se auto-estreche (prose, container, max-w-*, etc.) */
 #finalOverlay .modal-body :is(.prose, .container, .mx-auto, [class*="max-w"], [class*="container"]){
@@ -820,6 +833,196 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
 /* Bloquea el scroll del fondo cuando está abierto */
 body.modal-open{ overflow: hidden !important; }
+
+
+
+
+.modal-frame{
+  position:fixed;
+  inset:0;
+  max-width:100vh;
+   max-height:100vh;
+  object-fit:cover;
+  z-index:0;
+}
+#finalOverlay .modal{
+  position:relative;
+  z-index:1;
+  background:rgba(255,255,255,0.8);
+  backdrop-filter:blur(2px);
+}
+.modal-frame{
+  position:fixed;
+  inset:0;
+  max-width:100vh;
+  max-height:100vh;
+  object-fit:cover;
+  z-index:0;
+}
+#finalOverlay .modal{
+  position:relative;
+  z-index:1;
+  background:rgba(255,255,255,0.8);
+  backdrop-filter:blur(2px);
+}
+
+/* imagen fondo reflexion*/
+/* Fondo de la modal (mantiene todo fullscreen) */
+#finalOverlay .modal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  background-image: url("/PROYECTOS/Belleza/public/img/tocador.png"); /* ← tu marco PNG */
+  background-repeat: no-repeat;
+  background-size: cover; /* se estira al tamaño completo */
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Cuerpo scrollable con espacio para el marco */
+#finalOverlay .modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 80px clamp(5vw, 8vw, 120px); /* agrega margen para no tapar texto */
+  color: #111;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  background: rgba(255,255,255,0.7); /* leve velo para legibilidad */
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+/* Header y footer ajustados */
+#finalOverlay .modal-header,
+#finalOverlay .modal-footer {
+  background: transparent;
+  border: none;
+}
+
+#finalOverlay .modal-footer {
+  position: sticky;
+  bottom: 0;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#finalOverlay .btn {
+  padding: .6rem 1.2rem;
+  font-weight: 600;
+  border: 1px solid #111;
+  border-radius: 9999px;
+  background: #fff;
+  color: #111;
+}
+#finalOverlay .btn:active {
+  background: #000;
+  color: #fff;
+}
+/* Capa oscura */
+/* === POP-UP FINAL CON MARCO A PANTALLA COMPLETA === */
+#finalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  z-index: 10000;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+#finalOverlay.hidden { display: none; }
+
+/* Contenedor general: grid header-body-footer */
+#finalOverlay .modal-full {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* --- Imagen del marco --- */
+#finalOverlay .modal-frame{
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:auto;          /* no se deforma */
+  height:auto;
+  max-width:100vw;     /* ocupa todo el ancho disponible */
+  max-height:100vh;    /* o todo el alto, lo que llegue primero */
+  object-fit:contain;  /* mantiene proporciones */
+  pointer-events:none;
+  z-index:0;
+}
+
+/* --- Contenido encima del marco --- */
+#finalOverlay .modal-header,
+#finalOverlay .modal-body,
+#finalOverlay .modal-footer {
+  position: relative;
+  z-index: 1;
+  color: #111;
+}
+
+/* Header arriba */
+#finalOverlay .modal-header {
+  padding: 1rem 2rem;
+}
+#finalOverlay .modal-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #111;
+}
+
+/* Body con scroll */
+#finalOverlay .modal-body{
+  position:relative; z-index:1;
+  margin:0 auto;
+  width:80vw;          /* texto dentro del marco */
+  max-height:70vh;     /* alto controlado */
+  overflow:auto;
+  padding:2rem 3rem;
+  background:rgba(255,255,255,.88);
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+
+/* Footer con el botón fijo abajo */
+#finalOverlay .modal-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 1rem 2rem;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(4px);
+  border-top-left-radius: 12px;
+}
+
+/* Botón */
+#finalOverlay .btn {
+  padding: .6rem 1.2rem;
+  font-weight: 600;
+  border: 1px solid #111;
+  border-radius: 9999px;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+#finalOverlay .btn:active {
+  background: #000;
+  color: #fff;
+}
+
 
     </style>
 </head>
@@ -934,11 +1137,6 @@ body.modal-open{ overflow: hidden !important; }
                     Salón de Espejos.
                 </p>
 
-                <!-- <label style="display:flex; gap:.5rem; align-items:center; justify-content:center; font-size:.9rem; color:#334155; margin:.75rem 0 1rem;">
-                <input id="warnDontShow" type="checkbox">
-                No volver a mostrar este aviso
-                </label> -->
-
                 <div style="display:flex; justify-content:space-between; gap:.75rem;">
                     <button id="btnWarnBack" class="btn" style="flex:1;">← Volver</button>
                     <button id="btnWarnContinue" class="btn btn-primary" style="flex:1;">Continuar →</button>
@@ -947,13 +1145,16 @@ body.modal-open{ overflow: hidden !important; }
         </div>
 
 <div id="finalOverlay" class="overlay hidden">
-  <div class="modal">
+  <div class="modal-full">
+    <!-- Marco imagen: capa de fondo que NO bloquea clics/scroll -->
+    <img src="{{ asset('img/tocador.png') }}"alt="" class="modal-frame">
+
+    <!-- Contenido -->
     <header class="modal-header">
-      <h2 class="modal-title"> Espejito, espejito</h2>
+      <h2 class="modal-title">Espejito, espejito</h2>
     </header>
 
     <section class="modal-body">
-      <!--  WRAPPER que resetea estilos externos -->
       <div class="fc-reset">
             <p class="modal-desc">  Gracias por verte en este espejo.</p>
             <p class="modal-desc">Aunque la belleza no sea lo más importante para ti, está en todas partes: en tu elección de ropa para la entrevista de trabajo, en arreglarse para una cita romántica o para verse con las amigas. Piensa en las historias de las mujeres que leíste y en los hilos que la conforman. Los factores son múltiples y se enredan entre sí.</p>
@@ -969,8 +1170,6 @@ body.modal-open{ overflow: hidden !important; }
     </footer>
   </div>
 </div>
-
-
 
         <!-- ============ ESCENARIO ============ -->
         <div id="stage" class="stage" style="flex:1 1 auto; min-width:0; position:relative; overflow:hidden;">
@@ -1674,12 +1873,13 @@ function nextQuestion() {
                 //==== REFLEXION  FINAL POP UP ========
 
 function showFinalModal(){
-  const overlay = document.getElementById('finalOverlay');
-  overlay.classList.remove('hidden');
-  document.getElementById('btnContinuarFinal').onclick = () => {
-    window.location.href = "{{ route('espejo.paint') }}";
-  };
+  document.getElementById('finalOverlay').classList.remove('hidden');
+  document.body.classList.add('modal-open');
 }
+document.getElementById('btnContinuarFinal').onclick = () => {
+  document.body.classList.remove('modal-open');
+  window.location.href = "/netrevistas";
+};
                 function cleanQ(s) {
                     return String(s || '').replace(/\s*CONTINUAR\s*$/i, '').trim();
                 }
@@ -1700,7 +1900,7 @@ function showFinalModal(){
 
                 document.getElementById('btnContinuarFinal').onclick = () => {
                     document.body.classList.remove('modal-open');
-                    window.location.href = "/netrevistas";
+                    window.location.href = "{{ route('espejo.paint') }}";
                 };
                 }
 
