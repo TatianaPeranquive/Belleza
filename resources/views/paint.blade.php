@@ -7,7 +7,8 @@
 {{-- Barra fija de "Volver" SIEMPRE por encima del header global --}}
 <nav
     class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-black/80 backdrop-blur pointer-events-auto">
-    <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-white font-bold text-lg">&larr; Volver</a>
+    <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-white font-bold text-lg">&larr; Espejito,
+        espejito</a>
 </nav>
 
 {{-- SPACER: empuja TODO por debajo de lo que tape arriba.
@@ -50,18 +51,62 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             z-index: 50
         }
 
+        /* === Barra de herramientas === */
         .subbar {
-            position: sticky;
-            top: var(--bar-h);
             display: flex;
             align-items: center;
             gap: .5rem;
-            height: var(--subbar-h);
-            padding: 0 .75rem;
-            background: #ffffffcc;
-            border-bottom: 1px solid #e2e8f0;
-            z-index: 49;
-            overflow-x: auto
+            padding: 0.2rem 0.5rem;
+            min-height: 7px;
+            background: transparent !important;
+            border: none !important;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Distribución */
+        .subbar .left {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .subbar .center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .subbar .right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .field {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        /* === Botones generales === */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.42rem 0.75rem;
+            border: 1px solid #111;
+            border-radius: 9999px;
+            background: #fff;
+            color: #111;
+            font-weight: 600;
+            line-height: 1;
+            white-space: nowrap;
+            box-shadow: inset 0 -2px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            transition: transform 0.05s ease, background 0.15s ease, color 0.15s ease;
         }
 
         .btn {
@@ -79,8 +124,86 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             cursor: not-allowed
         }
 
+        /* Clic → negro */
+        .btn:active,
+        .chip:active {
+            background: #000;
+            color: #fff;
+            transform: translateY(1px);
+        }
+
+        /* Estado activo (si el JS aplica .active) */
+        .btn.active,
+        .chip.active {
+            background: #f4f4f5;
+        }
+
+        /* === Botón “Cargar imagen” === */
+        .btn--upload {
+            font-size: 1.05rem;
+            padding: 0.7rem 1.4rem;
+            background: #ffdce9;
+            border-color: #d7a9bb;
+            box-shadow: inset 0 -3px rgba(0, 0, 0, 0.07);
+            animation: pulseUpload 2.2s ease-in-out 0s 20;
+            /* ← solo 3 veces */
+        }
+
+        .btn--upload:hover {
+            filter: brightness(1.05);
+        }
+
+        .btn--upload:active {
+            background: #000;
+            color: #fff;
+            animation: none;
+            /* detiene el pulso al hacer clic */
+        }
+
+        /* Animación de pulso suave */
+        @keyframes pulseUpload {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 #D9CCE7;
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 8px 4px #BEB7DF;
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 #34113F;
+            }
+        }
+
+        /* Oculta el input real */
+        #file {
+            display: none;
+        }
+
+        /* Asegura que “chip” herede el mismo estilo */
+        .chip {
+            all: unset;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.42rem 0.75rem;
+            border: 1px solid #111;
+            border-radius: 9999px;
+            background: #fff;
+            color: #111;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: inset 0 -2px rgba(0, 0, 0, 0.06);
+            transition: transform 0.05s ease, background 0.15s ease, color 0.15s ease;
+        }
+
+
+
         .btn-primary {
-            border-color: #34d399;
+            border-color: #d4f2d2;
             color: #065f46;
             background: #ecfdf5
         }
@@ -230,14 +353,15 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
         /* mensaje arriba */
         /* marco en medio */
-    :root {
-    --mirror-shift-x: 25%; /* Ajusta según necesites */
-    }
+        :root {
+            --mirror-shift-x: 25%;
+            /* Ajusta según necesites */
+        }
 
-    #frame,
-    #bg {
-    transform: translateX(var(--mirror-shift-x));
-    }
+        #frame,
+        #bg {
+            transform: translateX(var(--mirror-shift-x));
+        }
 
         /* fondo abajo */
 
@@ -281,105 +405,421 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             z-index: 10;
             pointer-events: none;
         }
+
         /* Inset del vidrio (TOP RIGHT BOTTOM LEFT). Ajusta a tu PNG. */
-        :root{
-        /* Ejemplo para el tocador clásico: */
-        --glass-inset: 14% 13% 17% 13%;
+        :root {
+            /* Ejemplo para el tocador clásico: */
+            --glass-inset: 14% 13% 17% 13%;
         }
 
-        #stage{ position:relative; overflow:hidden; }
+        #stage {
+            position: relative;
+            overflow: hidden;
+        }
 
         /* Región del vidrio alineada con el hueco del marco */
-        .glass{
-        position:absolute;
-        inset: var(--glass-inset);
-        z-index:10;
-        overflow:hidden;             /* Para que no se pinte fuera del vidrio (opcional) */
-        display:grid;                /* Nos permite centrar el placeholder */
-        place-items:center;
+        .glass {
+            position: absolute;
+            inset: var(--glass-inset);
+            z-index: 10;
+            overflow: hidden;
+            /* Para que no se pinte fuera del vidrio (opcional) */
+            display: grid;
+            /* Nos permite centrar el placeholder */
+            place-items: center;
         }
-/* Fondo oscuro bloqueante */
-.warn-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(2px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;  /* encima de todo */
+
+        /* Fondo oscuro bloqueante */
+        .warn-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            /* encima de todo */
+        }
+
+        /* Tarjeta central del aviso */
+        .warn-modal {
+            background: #fff;
+            border: 2px solid #dc2626;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            padding: 1.5rem;
+            width: min(90vw, 420px);
+            text-align: center;
+        }
+
+        /* Oculto por defecto (si ya aceptó antes) */
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* Utilidad para ocultar */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Overlay bloqueante */
+        .warn-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .55);
+            /* fondo oscuro */
+            backdrop-filter: blur(2px);
+            display: grid;
+            place-items: center;
+            z-index: 9999;
+            /* por encima de todo */
+        }
+
+        /* Caja del modal */
+        .warn-modal {
+            width: min(560px, 92vw);
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow:
+                0 18px 36px rgba(2, 6, 23, .14),
+                0 4px 12px rgba(2, 6, 23, .06);
+            padding: 20px;
+        }
+
+        /* (Opcional) Si usas .q-fly de antes, mantiene estilo */
+        .q-fly {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(2, 6, 23, .06), 0 2px 6px rgba(2, 6, 23, .03);
+            padding: 12px;
+            color: #0f172a;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Botones base (si no los tienes ya) */
+        .btn {
+            padding: .45rem .8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: .6rem;
+            background: #fff;
+            color: #334155;
+            font-size: .95rem;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            border-color: #34d399;
+            color: #065f46;
+            background: #ecfdf5;
+        }
+
+        /* --- Reflexión al final del lienzo --- */
+        .reflection-section {
+            margin-top: 40px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+            padding: 20px;
+            max-width: 900px;
+            margin-inline: auto;
+        }
+
+        .reflection-title {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #0f172a;
+            margin-bottom: .5rem;
+        }
+
+        .reflection-desc {
+            color: #334155;
+            line-height: 1.5;
+            margin-bottom: .75rem;
+        }
+
+        .reflection-textarea {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 10px;
+            font: inherit;
+            resize: vertical;
+            min-height: 120px;
+            color: #0f172a;
+        }
+
+        .reflection-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: .75rem;
+            margin-top: 10px;
+        }
+
+        /* --- Reflexión final --- */
+        .hidden {
+            display: none !important;
+        }
+
+        .reflection-section {
+            margin-top: 40px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+            padding: 20px;
+            max-width: 900px;
+            margin-inline: auto;
+        }
+
+        .reflection-title {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #0f172a;
+            margin-bottom: .5rem;
+        }
+
+        .reflection-desc {
+            color: #334155;
+            line-height: 1.5;
+            margin-bottom: .75rem;
+        }
+
+        .reflection-textarea {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 10px;
+            font: inherit;
+            resize: vertical;
+            min-height: 120px;
+            color: #0f172a;
+        }
+
+        .reflection-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: .75rem;
+            margin-top: 10px;
+        }
+
+        /* Contenedor que agrupa botón y tooltip */
+        .tooltip-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Tooltip visual */
+        .tooltip-text {
+            position: absolute;
+            bottom: 125%;
+            /* justo encima del botón */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            color: #f8fafc;
+            text-align: center;
+            font-size: 0.85rem;
+            line-height: 1.2;
+            padding: 8px 10px;
+            border-radius: 8px;
+            width: max-content;
+            max-width: 240px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            white-space: normal;
+            z-index: 999;
+        }
+
+        /* Triángulo del tooltip */
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
+        }
+
+        /* Mostrar tooltip al pasar el mouse */
+        .tooltip-wrap:hover .tooltip-text {
+            opacity: 1;
+            transform: translate(-50%, -4px);
+        }
+
+        /* En pantallas táctiles puedes mantener el tooltip visible al tocar */
+        @media (hover: none) {
+            .tooltip-text {
+                display: none;
+            }
+        }
+
+        /* Tarjeta de instrucciones (delgada, fuera de la subbar) */
+        .instructions-card {
+            max-width: 1024px;
+            margin: .4rem auto 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: rgba(249, 250, 251, .75);
+            /* gris MUY leve y semitransparente */
+            overflow: hidden;
+        }
+
+        /* Quita el triángulo por defecto y estiliza el header */
+        .instructions-card>summary {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .55rem .85rem;
+            cursor: pointer;
+            font-weight: 700;
+            user-select: none;
+        }
+
+        .instructions-card>summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .instructions-card .marker {
+            display: inline-flex;
+            width: 1.35rem;
+            height: 1.35rem;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            border: 1px solid #111;
+            font-size: .9rem;
+            line-height: 1;
+            background: #fff;
+            color: #111;
+        }
+
+        .instructions-card .hint {
+            margin-left: auto;
+            font-weight: 600;
+            font-size: .85rem;
+            color: #6b7280;
+        }
+
+        /* Contenido */
+        .instructions-content {
+            padding: .75rem .95rem 1rem;
+            font-size: .95rem;
+            line-height: 1.45;
+            color: #111;
+
+        }
+
+        /* (Opcional) Animación de abrir/cerrar suave */
+        .instructions-card .instructions-content {
+            max-height: 600px;
+            opacity: 1;
+            transition: max-height .25s ease, opacity .25s ease;
+        }
+
+        .instructions-card:not([open]) .instructions-content {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            overflow: hidden;
+        }
+
+        .overlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+        background:rgba(0,0,0,.55); backdrop-filter:blur(2px); z-index:1000; }
+        .overlay.hidden{ display:none; }
+        .modal{ background:#fff; border-radius:12px; padding:1.4rem 1.8rem; max-width:1000px; text-align:center; }
+        .modal-title{ font-size:1.25rem; font-weight:800; margin-bottom:.6rem; }
+        .modal-desc{ color:#333; margin-bottom:1rem; }
+
+
+        /* Fondo Reflexión Fullscreen real: ancho completo */
+
+/* === FULLSCREEN A PRUEBA DE FRAMEWORKS para el modal final === */
+#finalOverlay{
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10000 !important;
+  background: rgba(0,0,0,.55) !important;
+  backdrop-filter: blur(3px);
 }
 
-/* Tarjeta central del aviso */
-.warn-modal {
+/* La modal se pega a los 4 bordes del viewport */
+#finalOverlay .modal{
+  position: fixed !important;
+  left: 0 !important; top: 0 !important; right: 0 !important; bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-shadow: none !important;
+}
+
+/* Header fijo arriba (opcional) */
+#finalOverlay .modal-header{
+  position: sticky; top: 0; z-index: 2;
   background: #fff;
-  border: 2px solid #dc2626;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-  padding: 1.5rem;
-  width: min(90vw, 420px);
-  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding: 12px 20px;
 }
 
-/* Oculto por defecto (si ya aceptó antes) */
-.hidden { display: none !important; }
+/* Cuerpo con scroll vertical y sin límites de ancho */
+#finalOverlay .modal-body{
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 24px clamp(16px, 5vw, 64px) !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
 
+/* Forzar que nada adentro se auto-estreche (prose, container, max-w-*, etc.) */
+#finalOverlay .modal-body :is(.prose, .container, .mx-auto, [class*="max-w"], [class*="container"]){
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
 
-/* Utilidad para ocultar */
-.hidden { display: none !important; }
-
-/* Overlay bloqueante */
-.warn-overlay{
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, .55); /* fondo oscuro */
+/* Footer fijo abajo con botón visible */
+#finalOverlay .modal-footer{
+  position: sticky; bottom: 0; z-index: 2;
+  background: rgba(255,255,255,.96);
   backdrop-filter: blur(2px);
-  display: grid;
-  place-items: center;
-  z-index: 9999;        /* por encima de todo */
+  border-top: 1px solid #eee;
+  padding: 10px 16px;
+  display: flex; justify-content: flex-end; gap: .5rem;
 }
 
-/* Caja del modal */
-.warn-modal{
-  width: min(560px, 92vw);
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  box-shadow:
-    0 18px 36px rgba(2,6,23,.14),
-    0 4px 12px rgba(2,6,23,.06);
-  padding: 20px;
+/* Botón */
+#finalOverlay .btn{
+  padding: .6rem 1.2rem; font-weight: 600;
+  border: 1px solid #111; border-radius: 9999px; background:#fff; color:#111;
 }
+#finalOverlay .btn:active{ background:#000; color:#fff; }
 
-/* (Opcional) Si usas .q-fly de antes, mantiene estilo */
-.q-fly{
-  background:#fff;
-  border:1px solid #e2e8f0;
-  border-radius:12px;
-  box-shadow: 0 12px 24px rgba(2,6,23,.06), 0 2px 6px rgba(2,6,23,.03);
-  padding:12px;
-  color:#0f172a;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-/* Botones base (si no los tienes ya) */
-.btn{
-  padding:.45rem .8rem;
-  border:1px solid #cbd5e1;
-  border-radius:.6rem;
-  background:#fff;
-  color:#334155;
-  font-size:.95rem;
-  cursor:pointer;
-}
-.btn-primary{
-  border-color:#34d399;
-  color:#065f46;
-  background:#ecfdf5;
-}
+/* Bloquea el scroll del fondo cuando está abierto */
+body.modal-open{ overflow: hidden !important; }
 
     </style>
 </head>
@@ -389,163 +829,175 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
     <!-- Barra superior -->
     <div class="bar">
         <!-- Bloque izquierdo -->
-        <div style="display:flex;align-items:center;gap:.5rem;">
-            <a class="btn" href="javascript:history.back()">← Volver</a>
+        <strong style="margin:0 auto;" class="text-3xl font-bold mb-12">Tocador</strong>
+    </div>
+    <!-- Instrucciones (fuera de la barra) -->
+    <details id="inst" class="instructions-card" open>
+        <summary>
+            <span class="marker"></span>
+            Instrucciones
+            <span class="hint">(clic para mostrar / ocultar)</span>
+        </summary>
 
-            <label class="btn" style="cursor:pointer">
-                <input id="file" type="file" accept="image/*" style="display:none">
-                Cargar imagen
+        <div class="instructions-content" display: flex, justify-content: center>
+            <p> <strong>Invirtamos los roles;</strong> este espejo te hará un par de preguntas que aparecen con solo ubicar el labial en el lienzo. </p><p> Te advierto que <strong> no existe una respuesta
+                correcta;</strong> es más bien una invitación a reflexionar sobre tu alrededor y el entramado social. Recuerda que esta sección es para ti y tus propias reflexiones.La información que escribas aquí no será
+                almacenada ni recolectada. </p> <br>
+            <p> <strong>1)</strong> Te pediré que te tomes una selfie que nunca compartirías con alguien y cargarla usando el botón
+                <strong>“Cargar selfie"</strong>.</p> <br>
+            <p> <strong>2)</strong> Utiliza el labial para marcar tu selfie según las indicaciones de las preguntas en cada caso. Puedes hacer dibujos,
+                símbolos o escribir alguna palabra o mensaje. No tienes que ser una artista; solo responde a cada
+                pregunta indicando qué parte cambiarías. </p>
+        </div>
+    </details>
+    <!-- Sub-barra de herramientas -->
+    <div class="subbar">
+
+        <div class="left">
+            <div class="field">
+                <span>Color</span>
+                <input id="color" type="color" value="#ff1f6d">
+            </div>
+
+            <div class="field">
+                <span>Grosor</span>
+                <input id="size" type="range" min="1" max="60" step="1" value="8">
+                <span id="sizev">8</span>
+            </div>
+
+            <button id="undo" class="btn">↶ Deshacer</button>
+            <button id="redo" class="btn">↷ Rehacer</button>
+            <label for="file" class="btn btn--upload" style="cursor:pointer">
+                <input id="file" type="file" accept="image/*">
+                Cargar selfie
             </label>
         </div>
 
-        <!-- Título centrado -->
-        <strong style="margin:0 auto;">Dentro Del Espejo</strong>
+        <div class="right">
+            <button id="modeDraw" class="btn chip active">Rayar</button>
+            <button id="modeErase" class="btn chip">Borrar</button>
+            <button id="clear" class="btn chip">Limpiar Todo</button>
+        </div>
+
     </div>
 
 
-    <!-- Sub-barra de herramientas -->
-    <div class="subbar">
-        <div class="field">
-            <span>Color</span>
-            <input id="color" type="color" value="#ff1f6d">
-        </div>
-        <div class="field">
-            <span>Grosor</span>
-            <input id="size" type="range" min="1" max="60" step="1" value="8"><span id="sizev">8</span>
-        </div>
 
 
 
-        <div class="field">
-            <span>Pincel</span>
-            <button class="chip active" data-brush="lipstick">💄 Labial</button>
-        </div>
-
-        <button id="undo" class="btn">↶ Deshacer</button>
-        <button id="redo" class="btn">↷ Rehacer</button>
-        <button id="clear" class="btn">Limpiar Todo</button>
-
-
-        <button id="modeDraw" style="
-              position:absolute;
-              right:0.75rem;
-              top:50%;
-              transform:translateY(-50%);
-              white-space:nowrap;" class="chip active">Dibujar</button>
-        <button id="modeErase" style="
-              position:absolute;
-              right:5rem;
-              top:50%;
-              transform:translateY(-50%);
-              white-space:nowrap;" class="chip">Borrar</button>
-    </div>
-
-    <!-- Tercera sub-barra de preguntas -->
-    <div id="quizbar" class="subbar" style="top:calc(var(--bar-h) + var(--subbar-h)); z-index:48;">
-
-        <div style="
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      width:100%;
-      position:relative;
-      text-align:center;
-    ">
-            <!-- Pregunta centrada -->
-            <div id="question" style="font-weight:500;
-                color:#0f172a;
-                font-size:1rem;
-                text-align:center;">
-            </div>
-
-        </div>
-    </div>
 
 
     <!-- Lienzo -->
-<div class="stage-box" style="display:flex; align-items:stretch; gap:20px;">
-  <!-- Columna izquierda: TARJETA lateral (misma altura que el lienzo) -->
-  <aside style="flex:0 0 300px;">
-    <!-- Tu tarjeta de preguntas (qFly) arranca oculta -->
-    <div id="qFly" class="q-fly hidden">
-      <div class="q-head">
-        <strong>Pregunta</strong>
+    <div class="stage-box" style="display:flex; align-items:stretch; gap:20px;">
+        <!-- Columna izquierda: TARJETA lateral (misma altura que el lienzo) -->
+        <aside style="flex:0 0 300px;">
+            <!-- Tu tarjeta de preguntas (qFly) arranca oculta -->
+            <div id="qFly" class="q-fly hidden">
+                <div class="q-head">
+                    <strong>Pregunta</strong>
+                </div>
+
+                <div id="qText" class="q-body" style="font-weight:500;">
+                    ¿Cuál es tu color favorito?
+                </div>
+
+                <label style="font-size:.8rem;color:#64748b;">Tu respuesta</label>
+                <textarea id="qInput" rows="4"
+                    style="resize:vertical;width:100%;border:1px solid #e2e8f0;border-radius:10px;padding:8px;outline:none;font:inherit;"
+                    placeholder="Escribe aquí..."></textarea>
+
+                <div class="q-foot" style="margin-top:8px;display:flex;gap:8px;justify-content:space-between;">
+                    <button hidden id="qDownload" class="btn">⬇️ Descargar</button>
+                    <button id="qNext" class="btn btn-primary">Continuar →</button>
+
+                </div>
+            </div>
+
+
+        </aside>
+
+        <!-- Columna derecha: LIENZO / STAGE (lo que ya tienes) -->
+
+
+        <!-- ==== AVISO BLOQUEANTE (modal con overlay) ==== -->
+        <div id="warnOverlay" class="warn-overlay" aria-modal="true" role="dialog">
+            <div class="warn-modal" role="document">
+                <h2
+                    style="color:#dc2626; font-weight:800; font-size:1.4rem; text-transform:uppercase; text-align:center; margin-bottom:.75rem;">
+                     Advertencia de contenido
+                </h2>
+
+                <p style="line-height:1.5; color:#0f172a; text-align:center; margin-bottom:1rem;">
+                    Este ejercicio contiene preguntas sobre modificación facial, cirugía plástica e inseguridades. Si no
+                    te sientes en la condición de hablar sobre estos temas, te recomiendo que saltes esta sección.<br>
+                    Presione <strong>Continuar</strong> para ver las preguntas o <strong>Volver</strong> para ir al
+                    Salón de Espejos.
+                </p>
+
+                <!-- <label style="display:flex; gap:.5rem; align-items:center; justify-content:center; font-size:.9rem; color:#334155; margin:.75rem 0 1rem;">
+                <input id="warnDontShow" type="checkbox">
+                No volver a mostrar este aviso
+                </label> -->
+
+                <div style="display:flex; justify-content:space-between; gap:.75rem;">
+                    <button id="btnWarnBack" class="btn" style="flex:1;">← Volver</button>
+                    <button id="btnWarnContinue" class="btn btn-primary" style="flex:1;">Continuar →</button>
+                </div>
+            </div>
+        </div>
+
+<div id="finalOverlay" class="overlay hidden">
+  <div class="modal">
+    <header class="modal-header">
+      <h2 class="modal-title"> Espejito, espejito</h2>
+    </header>
+
+    <section class="modal-body">
+      <!--  WRAPPER que resetea estilos externos -->
+      <div class="fc-reset">
+            <p class="modal-desc">  Gracias por verte en este espejo.</p>
+            <p class="modal-desc">Aunque la belleza no sea lo más importante para ti, está en todas partes: en tu elección de ropa para la entrevista de trabajo, en arreglarse para una cita romántica o para verse con las amigas. Piensa en las historias de las mujeres que leíste y en los hilos que la conforman. Los factores son múltiples y se enredan entre sí.</p>
+            <p class="modal-desc">El proyecto quiere informarte, no juzgarte. Espero que la información de esta página te sirva para redefinir lo que tú quieres con la belleza y negociar tu proceso de embellecimiento en los momentos que consideres. Tomes la decisión que tomes, serás juzgada: es parte de la paradoja de la belleza. Pierdes si quieres ser bella, pierdes si no lo quieres. Sin embargo, quiero dar un paso más allá para romper el blanco y negro y ver el enredo en el que tienes que vivir. </p>
+            <p class="modal-desc">Espero que encuentres aquí un lugar para pensar la belleza desde una resistencia colectiva. Existirán muchas presiones a lo largo de tu vida y probablemente más con las innovaciones tecnológicas. La belleza es una moneda de cambio tanto por sus beneficios como desventajas. Así que, al igual que tú decides cómo negociar con ella, si aspiras a pasar inadvertida, a la diferenciación o la notoriedad; abraza la incoherencia que viene con ello, mírate al espejo y pregúntale: “Espejito, espejito, ¿de dónde viene este enredo?”</p>
+            <p class="modal-desc">Tómate un momento, cuando quieras, continúa. </p>
+
       </div>
+    </section>
 
-      <div id="qText" class="q-body" style="font-weight:500;">
-        ¿Cuál es tu color favorito?
-      </div>
-
-      <label style="font-size:.8rem;color:#64748b;">Tu respuesta</label>
-      <textarea id="qInput" rows="4"
-        style="resize:vertical;width:100%;border:1px solid #e2e8f0;border-radius:10px;padding:8px;outline:none;font:inherit;"
-        placeholder="Escribe aquí..."></textarea>
-
-      <div class="q-foot" style="margin-top:8px;display:flex;gap:8px;justify-content:space-between;">
-        <button id="qDownload" class="btn">⬇️ Descargar</button>
-        <button id="qNext" class="btn btn-primary">Siguiente →</button>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Columna derecha: LIENZO / STAGE (lo que ya tienes) -->
-
-
-<!-- ==== AVISO BLOQUEANTE (modal con overlay) ==== -->
-<div id="warnOverlay" class="warn-overlay" aria-modal="true" role="dialog">
-  <div class="warn-modal" role="document">
-    <h2 style="color:#dc2626; font-weight:800; font-size:1.4rem; text-transform:uppercase; text-align:center; margin-bottom:.75rem;">
-      ⚠️ AVISO
-    </h2>
-
-    <p style="line-height:1.5; color:#0f172a; text-align:center; margin-bottom:1rem;">
-      Algunas de las preguntas a continuación podrían afectar sensibilidades.<br>
-      Presione <strong>Continuar</strong> para ver las preguntas o <strong>Anterior</strong> para volver al Salón de Espejos.
-    </p>
-
-    <label style="display:flex; gap:.5rem; align-items:center; justify-content:center; font-size:.9rem; color:#334155; margin:.75rem 0 1rem;">
-      <input id="warnDontShow" type="checkbox">
-      No volver a mostrar este aviso
-    </label>
-
-    <div style="display:flex; justify-content:space-between; gap:.75rem;">
-      <button id="btnWarnBack" class="btn" style="flex:1;">← Anterior</button>
-      <button id="btnWarnContinue" class="btn btn-primary" style="flex:1;">Continuar →</button>
-    </div>
+    <footer class="modal-footer">
+      <button id="btnContinuarFinal" class="btn">Continuar →</button>
+    </footer>
   </div>
 </div>
-
 
 
 
         <!-- ============ ESCENARIO ============ -->
         <div id="stage" class="stage" style="flex:1 1 auto; min-width:0; position:relative; overflow:hidden;">
 
-        <!-- Imagen de fondo (selfie u otra). Mantiene proporción -->
-        <img id="bg" alt="Imagen de fondo"
-            style="position:absolute; inset:0; width:100%; height:100%;
+            <!-- Imagen de fondo (selfie u otra). Mantiene proporción -->
+            <img id="bg" alt="Imagen de fondo" style="position:absolute; inset:0; width:100%; height:100%;
                     object-fit:contain; z-index:5; user-select:none; -webkit-user-drag:none;">
 
-        <!-- 🧿 AQUI: Región del vidrio (misma abertura del marco) -->
-        <div id="glass" class="glass">
-            <!-- Canvas de pintura DENTRO del vidrio -->
-            <canvas id="cv" style="position:absolute; inset:0; width:100%; height:100%;
+            <!-- Región del vidrio (misma abertura del marco) -->
+            <div id="glass" class="glass">
+                <!-- Canvas de pintura DENTRO del vidrio -->
+                <canvas id="cv" style="position:absolute; inset:0; width:100%; height:100%;
                                 z-index:10; pointer-events:auto; touch-action:none; display:block;"></canvas>
 
-            <!-- Placeholder centrado dentro del vidrio -->
-            <div id="placeholder" class="glass-placeholder">
-            <div style="text-align:left; width:100%; max-width:300px;">
-                <div style="font-size:1.1rem; margin-bottom:.25rem;">
-                Cargar una imagen para empezar
+                <!-- Placeholder centrado dentro del vidrio -->
+                <div id="placeholder" class="glass-placeholder">
+                    <div style="text-align:left; width:100%; max-width:300px;">
+                        <div style="font-size:1.1rem; margin-bottom:.25rem;">
+                            Cargar una imagen para empezar
+                        </div>
+                        <div>o dibuja sobre un lienzo en blanco</div>
+                    </div>
                 </div>
-                <div>o dibuja sobre un lienzo en blanco</div>
             </div>
-            </div>
-        </div>
 
-        <!-- Marco por encima (no bloquea eventos) -->
-        <img id="frame" src="{{ asset('img/tocador.png') }}" alt="Marco"
-            style="position:absolute; inset:0; width:100%; height:100%;
+            <!-- Marco por encima (no bloquea eventos) -->
+            <img id="frame" src="{{ asset('img/tocador.png') }}" alt="Marco" style="position:absolute; inset:0; width:100%; height:100%;
                     object-fit:contain; z-index:15; pointer-events:none;">
         </div>
 
@@ -554,45 +1006,45 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         <script>
             (function () {
 
-                 // —— Aviso inicial ↔ preguntas
-document.addEventListener('DOMContentLoaded', () => {
-  // ---- Cache de nodos (ids deben coincidir con tu HTML) ----
-  const warnOverlay     = document.getElementById('warnOverlay');
-  const btnWarnBack     = document.getElementById('btnWarnBack');
-  const btnWarnContinue = document.getElementById('btnWarnContinue');
-  const warnDontShowEl  = document.getElementById('warnDontShow');
-  const qFlyPanel       = document.getElementById('qFly'); // tu panel de preguntas
+                // —— Aviso inicial ↔ preguntas
+                document.addEventListener('DOMContentLoaded', () => {
+                    // ---- Cache de nodos (ids deben coincidir con tu HTML) ----
+                    const warnOverlay = document.getElementById('warnOverlay');
+                    const btnWarnBack = document.getElementById('btnWarnBack');
+                    const btnWarnContinue = document.getElementById('btnWarnContinue');
+                    const warnDontShowEl = document.getElementById('warnDontShow');
+                    const qFlyPanel = document.getElementById('qFly'); // tu panel de preguntas
 
-  // Si no existe el modal, no seguimos (evita TypeError)
-  if (!warnOverlay) return;
+                    // Si no existe el modal, no seguimos (evita TypeError)
+                    if (!warnOverlay) return;
 
-  // ---- Mostrar/Ocultar según preferencia guardada ----
-  try {
-    const ok = localStorage.getItem('mirrorConsent');
-    if (ok === 'yes') warnOverlay.classList.add('hidden');
-  } catch (_) {
-    // si el navegador bloquea storage de terceros, seguimos sin guardar preferencia
-  }
+                    // ---- Mostrar/Ocultar según preferencia guardada ----
+                    try {
+                        const ok = localStorage.getItem('mirrorConsent');
+                        if (ok === 'yes') warnOverlay.classList.add('hidden');
+                    } catch (_) {
+                        // si el navegador bloquea storage de terceros, seguimos sin guardar preferencia
+                    }
 
-  // ---- Botón “Anterior” ----
-  if (btnWarnBack) {
-    btnWarnBack.addEventListener('click', () => {
-      // Ajusta la ruta a tu “Salón de Espejos”
-      window.location.href = "{{ route('entrevistas.index') }}";
-    });
-  }
+                    // ---- Botón “Anterior” ----
+                    if (btnWarnBack) {
+                        btnWarnBack.addEventListener('click', () => {
+                            // Ajusta la ruta a tu “Salón de Espejos”
+                            window.location.href = "{{ route('entrevistas.index') }}";
+                        });
+                    }
 
-  // ---- Botón “Continuar” ----
-  if (btnWarnContinue) {
-    btnWarnContinue.addEventListener('click', () => {
-      if (warnDontShowEl?.checked) {
-        try { localStorage.setItem('mirrorConsent','yes'); } catch {}
-      }
-      warnOverlay.classList.add('hidden');
-      qFlyPanel?.classList.remove('hidden'); // muestra la tarjeta/preguntas si la tenías oculta
-    });
-  }
-});
+                    // ---- Botón “Continuar” ----
+                    if (btnWarnContinue) {
+                        btnWarnContinue.addEventListener('click', () => {
+                            if (warnDontShowEl?.checked) {
+                                try { localStorage.setItem('mirrorConsent', 'yes'); } catch { }
+                            }
+                            warnOverlay.classList.add('hidden');
+                            qFlyPanel?.classList.remove('hidden'); // muestra la tarjeta/preguntas si la tenías oculta
+                        });
+                    }
+                });
                 // —— Refs
                 const file = document.getElementById('file');
                 const color = document.getElementById('color');
@@ -665,7 +1117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Si hay una imagen de fondo y quieres que *también* ajuste, puedes
                     // cambiar a Math.max(fw, bg.naturalWidth) / Math.max(fh, bg.naturalHeight),
                     // pero para el marco fijo, fw/fh es lo correcto.
-                    const natW = Math.max(fw, bg.naturalWidth) ;
+                    const natW = Math.max(fw, bg.naturalWidth);
                     const natH = Math.max(fh, bg.naturalHeight);
 
                     const headerH = (document.querySelector('.bar')?.getBoundingClientRect().height || 0) +
@@ -703,9 +1155,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const rect = glass.getBoundingClientRect();
 
                     // El canvas ya llena el vidrio con CSS (inset:0), aquí solo resolvemos en píxeles
-                    cv.width  = Math.max(1, Math.round(rect.width  * dpr));
+                    cv.width = Math.max(1, Math.round(rect.width * dpr));
                     cv.height = Math.max(1, Math.round(rect.height * dpr));
-                    ctx.setTransform(dpr,0,0,dpr,0,0);
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
                     const qFly = document.getElementById('qFly');
                     if (qFly) qFly.style.height = dispH + 'px';
@@ -907,17 +1359,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // --- Preguntas "quemadas"
                 const Q = [
-                    "¿Cómo crees que cambiaria tu aspecto si hubieras nacido en una familia con mucho dinero?",
-                    "¿Cómo crees que lucirías si te hubieran educado como a un cuerpo masculino?",
-                    "¿Cómo crees que lucirías si nunca hubieras hecho ejercicio?",
-                    "¿Cómo crees que lucirías si hubieras nacido en un país diferente?",
-                    "¿Cómo crees que lucirías si  te cepillaras los dientes de vez en cuando?",
-                    "¿Cómo crees que lucirías si la familia de tu mejor amigue te hubiera criado?",
-                    "¿Cómo crees que lucirías si te hubiera dicho que eras la mujer más hermosa del mundo?",
-                    "¿Cómo crees que lucirías si nunca hubieras visto a alguien igual que tu en una revista?",
-                    "¿Cómo crees que lucirías si en la infancia solo hubieras utilizado el color blanco?",
-                    "¿Cómo crees que lucirías si ni los espejos, ni las máquinas existieran?"
-
+                    "Si pudieras modificar cualquier cosa de tu rostro sin dolor o secuelas, ¿qué cambiarías? Señala en la imagen. CONTINUAR",
+                    "Ahora puedes cambiar cosas, pero tienes que hacerte un procedimiento radical. ¿Qué cosas intervendrías con cirugías? Señala en la imagen. CONTINUAR",
+                    "Solo puedes utilizar tratamientos no invasivos para cambiar tu rostro: desde plantas, minerales, productos y tratamientos. ¿Qué cosas cambiarías con eso? Señala tu imagen. CONTINUAR",
+                    "¿Alguna vez has recurrido a estos procesos radicales o no invasivos? Si es así, ¿por qué? Si no es el caso, ¿por qué no? Raya tu selfie. CONTINUAR",
+                    "¿Qué cosas intervienen en tus decisiones y bajo qué condiciones? Si tu entorno fuera diferente, ¿cambiarias tu razonamiento? Raya tu selfie. CONTINUAR"
                 ];
 
                 let qIdx = 0;
@@ -1120,51 +1566,61 @@ document.addEventListener('DOMContentLoaded', () => {
                     downloadCurrentQA();
                 });
 
-                // --- Siguiente: salida -> cambio texto -> entrada (sin ocultar por hover) ---
-                function nextQuestion() {
-                    clearTimeout(hideTimer);
-                    overCard = true;
-                    // mientras haces click, cuenta como “encima de la tarjeta”
-                    if (!qVisible) showQ();
+// --- Siguiente: salida -> cambio texto -> entrada (sin ocultar por hover) ---
 
-                    if (isAnimating) return;
-                    // evita doble disparo
-                    isAnimating = true;
-                    qNext.disabled = true;
+function nextQuestion() {
+  clearTimeout(hideTimer);
+  overCard = true;
+  if (!qVisible) showQ();
+  if (isAnimating) return;
 
-                    cancelAllAnims();
-                    qFly.animate(
-                        [
-                            { transform: 'translateX(0) scale(1)', opacity: 1, filter: 'blur(0)' },
-                            { transform: 'translateX(-80px) scale(.95)', opacity: 0, filter: 'blur(4px)' }
-                        ],
-                        { duration: 200, easing: EASE_OUT, fill: 'forwards' }
-                    ).onfinish = () => {
-                        // actualizar texto
-                        qIdx = (qIdx + 1) % Q.length;
-                        qText.textContent = Q[qIdx];
+  isAnimating = true;
+  qNext.disabled = true;
 
-                        qInput.value = answers[qIdx] || '';
-                        qInput.addEventListener('input', () => {
-                            answers[qIdx] = qInput.value;
-                        });
+  // animación de salida (la que ya usas)
+  qFly.animate(
+    [
+      { transform: 'translateX(0) scale(1)', opacity: 1, filter: 'blur(0)' },
+      { transform: 'translateX(-80px) scale(.95)', opacity: 0, filter: 'blur(4px)' }
+    ],
+    { duration: 240, easing: EASE_OUT, fill: 'forwards' }
+  ).onfinish = () => {
+    // si esta era la última, no avances; muestra conclusión
+    if (isLast()) {
+      showFinalModal();
+      // opcional: mantén visible la tarjeta o escóndela
+      // hideQ();
+      isAnimating = false;
+      qNext.disabled = false;
+      return;
+    }
 
-                        cancelAllAnims();
-                        qFly.classList.remove('hidden'); // asegurar visible
-                        qFly.animate(
-                            [
-                                { transform: 'translateX(-100px) scale(.92)', opacity: 0, filter: 'blur(4px)' },
-                                { transform: 'translateX(0) scale(1)', opacity: 1, filter: 'blur(0)' }
-                            ],
-                            { duration: 460, easing: SPRING_IN, fill: 'both' }
-                        ).onfinish = () => {
-                            isAnimating = false;
-                            qNext.disabled = false;
-                            // después del cambio, si el cursor no está sobre lienzo ni tarjeta, puedes ocultar
-                            if (!overStage && !overCard) scheduleHide();
-                        };
-                    };
-                }
+    // avanzar índice y renderizar la siguiente
+    qIdx = Math.min(qIdx + 1, Q.length - 1);
+    qText.textContent = cleanQ(Q[qIdx]);
+    // Guarda la respuesta actual antes de avanzar
+    answers[qIdx - 1] = (qInput.value || '').trim();
+
+    // Limpia o restaura según corresponda
+    qInput.value = answers[qIdx] || '';
+
+    // animación de entrada
+    qFly.animate(
+      [
+        { transform: 'translateX(100px) scale(.92)', opacity: 0, filter: 'blur(4px)' },
+        { transform: 'translateX(0) scale(1)', opacity: 1, filter: 'blur(0)' }
+      ],
+      { duration: 420, easing: SPRING_IN, fill: 'both' }
+    ).onfinish = () => {
+      isAnimating = false;
+      qNext.disabled = false;
+
+      // Si ahora estamos en la última, puedes cambiar el texto del botón:
+      // qNext.textContent = 'Finalizar';
+    };
+  };
+}
+
 
                 qNext.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1174,46 +1630,81 @@ document.addEventListener('DOMContentLoaded', () => {
                 // texto inicial por si las moscas
                 qText.textContent = Q[qIdx];
 
-document.addEventListener('DOMContentLoaded', () => {
-  const warnOverlay     = document.getElementById('warnOverlay');
-  const btnWarnBack     = document.getElementById('btnWarnBack');
-  const btnWarnContinue = document.getElementById('btnWarnContinue');
-  const warnDontShowEl  = document.getElementById('warnDontShow');
-  const qFlyPanel       = document.getElementById('qFly');
+                document.addEventListener('DOMContentLoaded', () => {
+                    const warnOverlay = document.getElementById('warnOverlay');
+                    const btnWarnBack = document.getElementById('btnWarnBack');
+                    const btnWarnContinue = document.getElementById('btnWarnContinue');
+                    const warnDontShowEl = document.getElementById('warnDontShow');
+                    const qFlyPanel = document.getElementById('qFly');
 
-  // Si no existe el overlay, salimos sin romper nada
-  if (!warnOverlay) return;
+                    // Si no existe el overlay, salimos sin romper nada
+                    if (!warnOverlay) return;
 
-  // Mostrar/ocultar según preferencia guardada
-  try {
-    const ok = localStorage.getItem('mirrorConsent');
-    if (ok === 'yes') {
-      warnOverlay.classList.add('hidden');
-      // Si tu lógica quiere mostrar el panel al cargar, quita hidden:
-      qFlyPanel?.classList.remove('hidden');
-    }
-  } catch(e) {
-    // ignorar si storage está bloqueado
-  }
+                    // Mostrar/ocultar según preferencia guardada
+                    try {
+                        const ok = localStorage.getItem('mirrorConsent');
+                        if (ok === 'yes') {
+                            warnOverlay.classList.add('hidden');
+                            // Si tu lógica quiere mostrar el panel al cargar, quita hidden:
+                            qFlyPanel?.classList.remove('hidden');
+                        }
+                    } catch (e) {
+                        // ignorar si storage está bloqueado
+                    }
 
-  // Botón “Anterior” → vuelve al "Salón de Espejos"
-  if (btnWarnBack) {
-    btnWarnBack.addEventListener('click', () => {
-      window.location.href = "{{ route('entrevistas.index') }}";
-    });
-  }
+                    // Botón “Anterior” → vuelve al "Salón de Espejos"
+                    if (btnWarnBack) {
+                        btnWarnBack.addEventListener('click', () => {
+                            window.location.href = "{{ route('entrevistas.index') }}";
+                        });
+                    }
 
-  // Botón “Continuar” → oculta modal y muestra preguntas
-  if (btnWarnContinue) {
-    btnWarnContinue.addEventListener('click', () => {
-      if (warnDontShowEl?.checked) {
-        try { localStorage.setItem('mirrorConsent', 'yes'); } catch {}
-      }
-      warnOverlay.classList.add('hidden');
-      qFlyPanel?.classList.remove('hidden');
-    });
-  }
-});
+                    // Botón “Continuar” → oculta modal y muestra preguntas
+                    if (btnWarnContinue) {
+                        btnWarnContinue.addEventListener('click', () => {
+                            if (warnDontShowEl?.checked) {
+                                try { localStorage.setItem('mirrorConsent', 'yes'); } catch { }
+                            }
+                            warnOverlay.classList.add('hidden');
+                            qFlyPanel?.classList.remove('hidden');
+                        });
+                    }
+                });
+
+                //==== REFLEXION  FINAL POP UP ========
+
+function showFinalModal(){
+  const overlay = document.getElementById('finalOverlay');
+  overlay.classList.remove('hidden');
+  document.getElementById('btnContinuarFinal').onclick = () => {
+    window.location.href = "{{ route('espejo.paint') }}";
+  };
+}
+                function cleanQ(s) {
+                    return String(s || '').replace(/\s*CONTINUAR\s*$/i, '').trim();
+                }
+
+                function renderQ() {
+                    qText.textContent = cleanQ(Q[qIdx]);
+
+                }
+                function isLast() {
+                    return qIdx >= Q.length - 1;
+                }
+
+
+                function showFinalModal(){
+                const overlay = document.getElementById('finalOverlay');
+                overlay.classList.remove('hidden');
+                document.body.classList.add('modal-open');
+
+                document.getElementById('btnContinuarFinal').onclick = () => {
+                    document.body.classList.remove('modal-open');
+                    window.location.href = "/netrevistas";
+                };
+                }
+
+
 
             })();
         </script>
