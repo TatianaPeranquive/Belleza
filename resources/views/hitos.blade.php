@@ -1,11 +1,12 @@
 @extends('layouts.app')
-@section('title', 'Hitos - Proyecto Espejo (peek effect)')
+@section('title', 'Hitos - Espejito, espejito (peek effect)')
 @section('content')
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <script>
     window.hitosUI = function (ds) {
         const useMock = (ds.mock && ds.mock.toString() === 'true');
+
         return {
             loading: false,
             error: '',
@@ -261,20 +262,39 @@
             },
             async loadSub3() {
                 if (!this.activeId || !this.sub[1].selected || !this.sub[2].selected) return;
-                this.loading = true; this.error = '';
+                this.loading = true;
+                this.error = '';
                 try {
                     let j;
-                    if (useMock) { j = [{ id: 1, title: 'Clase' }, { id: 2, title: 'Costumbres' }]; } else {
-                        const r = await fetch(this.ep.sub3(this.activeId, this.sub[1].selected, this.sub[2].selected), { headers: { 'Accept': 'application/json' } });
-                        if (!r.ok) throw new Error('HTTP ' + r.status);
+                    if (useMock) {
+                        j = [
+                            { id: 1, title: 'Clase' },
+                            { id: 2, title: 'Costumbres' }
+                        ];
+                    } else {
+                        const r = await fetch(
+                            this.ep.sub3(this.activeId, this.sub[1].selected, this.sub[2].selected),
+                            { headers: { 'Accept': 'application/json' } }
+                        );
+                        if (r.status === 404) {
+                            console.info('Nivel 3 no disponible para este hito (OK).');
+                            this.sub[3].options = [];
+                            return;
+                        }
+                        if (!r.ok) {
+                            throw new Error('HTTP ' + r.status);
+                        }
                         j = await r.json();
                     }
                     const arr = this.toArrayFromAny(j);
                     this.sub[3].options = this.normalizeList(arr);
+
                 } catch (e) {
                     this.error = 'Error nivel 3: ' + e.message;
                     this.sub[3].options = [];
-                } finally { this.loading = false; }
+                } finally {
+                    this.loading = false;
+                }
             },
             async loadSub4() {
                 if (!(ds.epSub4) || !this.activeId) return;
@@ -446,25 +466,35 @@
                 return `position:absolute; inset:0; margin:auto; width:560px; height:560px; transform: translate(${tx}%, ${ty}px) rotate(${rot}deg) scale(${scale}); ${extra}`;
             }
         }
-    }
-      const btnWarnBack     = document.getElementById('btnWarnBack');
-      //  window.location.href = "{{ route('entrevistas.index') }}";
-        document.addEventListener('DOMContentLoaded', () => {
-        const btnWarnBack = document.getElementById('btnWarnBack');
-        btnWarnBack.addEventListener('click', () => {
-            window.location.href = "{{ route('espejo.paint') }}";
-        });
-        });
 
+// }  y borrar la flor
+            const btnWarnBack     = document.getElementById('btnWarnBack');
+            const btnWarnBack2    = document.getElementById('btnWarnBack2');
+        //  window.location.href = "{{ route('entrevistas.index') }}";
+            document.addEventListener('DOMContentLoaded', () => {
+            const btnWarnBack = document.getElementById('btnWarnBack');
+            btnWarnBack.addEventListener('click', () => {
+                window.location.href = "{{ route('espejo.paint') }}";
+            });
+            });
+            document.addEventListener('DOMContentLoaded', () => {
+            const btnWarnBack2 = document.getElementById('btnWarnBack2');
+            btnWarnBack2.addEventListener('click', () => {
+                window.location.href = "{{ route('entrevistas.index') }}";
+            });
+            });
+} // esta es la flor
+window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
 </script>
 
 <div id="hitos-top" x-data="hitosUI($el.dataset)" data-ep-hitos="{{ url('/api/resumen/hitos') }}"
     data-ep-sub1="{{ url('/api/resumen/sub1') }}" data-ep-sub2="{{ url('/api/resumen/sub2') }}"
-    data-ep-sub3="{{ url('/api/resumen/sub3') }}" {{-- data-ep-sub4="{{ url('/api/resumen/sub4') }}" --}}
+    data-ep-sub3="{{ url('/api/resumen/sub3') }}"
+    data-ep-sub4="{{ url('/api/resumen/sub4') }}"
     data-ep-buscar="{{ url('/api/resumen/buscar') }}" data-mock="false" x-init="init()"
     class="mx-auto max-w-7xl px-4 pt-20 pb-12">
-    <h1 class="mb-4 text-3xl font-extrabold tracking-tight uppercase">HITOS</h1>
-
+    <h1 class="mb-4 text-center text-3xl font-extrabold tracking-tight uppercase">Entramado</h1>
+    <br>
     <template x-if="error">
         <div class="mb-4 rounded border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700" x-text="error"></div>
     </template>
@@ -473,19 +503,63 @@
     <div x-ref="flowWrap" class="relative">
         <svg x-ref="flowSvg" class="pointer-events-none absolute inset-0 w-full h-full" style="z-index: 30;"
             preserveAspectRatio="none"></svg>
-        <section class="mb-6">
-            <div class="rounded-xl border bg-white/70 backdrop-blur px-4 py-3">
-                <div class="mx-auto flex justify-center gap-3 overflow-x-auto no-scrollbar">
-                    <template x-for="it in items" :key="it.id">
-                        <button type="button" @click="selectHito(it.id); $nextTick(() => $store.float.openFor($el, (it.palabra ?? it.slug ?? it.title)?.toString().trim()))"
-                                class="hitoBtn shrink-0 rounded-full border px-4 py-2 text-sm bg-white hover:shadow focus:outline-none transition"
-                                :class="{'is-selected ring-2 ring-indigo-500': activeId === it.id}">
-                            <span class="font-medium text-center" x-text="it.title"></span>
-                        </button>
-                    </template>
+
+                <!-- selectHito -->
+            <section class="mb-8">
+            <div class="rounded-2xl border border-[#ABA9BF]/70 bg-[#f8f8fa]/80 backdrop-blur px-6 py-4 shadow-md">
+               <div class="mx-auto w-full max-w-5xl grid grid-cols-1 sm:grid-cols-3 gap-20">
+                <template x-for="it in items" :key="it.id">
+               <button
+                type="button"
+                    @click="selectHito(it.id); $nextTick(() => $store.float.openFor($el, (it.palabra ?? it.slug ?? it.title)?.toString().trim()))"
+                    class="hitoBtn w-full rounded-full border border-[#ABA9BF]/70 px-6 py-3 text-base
+                        bg-white/90 hover:shadow-lg hover:-translate-y-[1px]
+                        focus:outline-none transition-all duration-200 ease-out
+                        text-[#34113F] font-semibold tracking-wide"
+                    :class="{
+                    'is-selected ring-8 ring-offset-4 ring-[#BEB7DF] shadow-[0_0_45px_18px_#beb7df80] scale-[1.04]':
+                    activeId === it.id
+                    }">
+                    <span class="block text-center" x-text="it.title"></span>
+                </button>
+
+                </template>
                 </div>
             </div>
-        </section>
+            </section>
+<!-- CLIC INICIO-->
+<div x-data="{ showHint: true }"
+     x-init="setTimeout(() => { showHint = false }, 3500)">
+
+  <div
+    x-show="showHint"
+    x-transition.opacity
+    class="fixed inset-0 z-[9980] bg-black/70 backdrop-blur-sm
+           flex items-center justify-center">
+
+    <div class="w-[min(92vw,680px)] max-w-3xl
+                bg-white/95 rounded-[32px] shadow-2xl border border-slate-200
+                px-12 py-12 text-center">
+
+      <h2 class="text-4xl font-extrabold text-slate-900 mb-6 tracking-wide">
+        ¡Da clic en el Hito!
+      </h2>
+
+      <p class="text-xl text-slate-800 leading-relaxed mb-8">
+        Para continuar, selecciona el
+        <span class="font-bold">Hito</span> en la parte superior.
+        Este paso es necesario para mostrar el contenido correspondiente.
+      </p>
+
+      <p class="text-sm text-slate-500">
+        Este mensaje desaparecerá automáticamente.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+
 
         <!-- GRID: centro más ancho -->
 
@@ -495,7 +569,6 @@
 
             <div>
                 <div class="flex items-center justify-between mb-2">
-                    <h2 class="text-sm font-semibold text-slate-600">Nivel 1</h2>
                     <span class="text-xs text-slate-500"
                         x-text="sub[1].selectedTitle ? 'Sel.: '+ sub[1].selectedTitle : ''"></span>
                 </div>
@@ -503,8 +576,12 @@
                     <template x-for="opt in sub[1].options" :key="opt.id">
                         <button type="button"
                             @click="choose(1,opt); $nextTick(() => $store.float.openFor($el, (opt.palabra ?? opt.slug ?? opt.title)?.toString().trim()))"
-                            class="n1 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
-                            :class="{'is-selected ring-2 ring-indigo-500': sub[1].selected === opt.id}">
+                            class="n1 rounded-lg border bg-[#f8f8fa] px-3 py-2 text-center text-sm hover:shadow focus:outline-none"
+                            :class="{
+  'is-selected ring-8 ring-offset-2 ring-[#BEB7DF] shadow-[0_0_45px_20px_#beb7df55]':
+  sub[1].selected === opt.id
+                            }">
+
                         <span class="font-medium" x-text="opt.title"></span>
                         </button>
 
@@ -514,7 +591,6 @@
 
             <div>
                 <div class="flex items-center justify-between mb-2">
-                    <h2 class="text-sm font-semibold text-slate-600">Nivel 2</h2>
                     <span class="text-xs text-slate-500"
                         x-text="sub[2].selectedTitle ? 'Sel.: '+ sub[2].selectedTitle : ''"></span>
                 </div>
@@ -522,8 +598,11 @@
                     <template x-for="opt in sub[2].options" :key="opt.id">
                         <button type="button"
                             @click="choose(2,opt); $nextTick(() => $store.float.openFor($el, (opt.palabra ?? opt.slug ?? opt.title)?.toString().trim()))"
-                            class="n2 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
-                            :class="{'is-selected ring-2 ring-indigo-500': sub[2].selected === opt.id}">
+                            class="n2 rounded-lg border bg-[#f8f8fa] px-3 py-2 text-center text-sm hover:shadow focus:outline-none"
+                            :class="{
+  'is-selected ring-8 ring-offset-2 ring-[#BEB7DF] shadow-[0_0_45px_20px_#beb7df55]':
+  sub[2].selected === opt.id
+}">
                         <span class="font-medium" x-text="opt.title"></span>
                         </button>
 
@@ -536,8 +615,6 @@
         <section class="grid grid-rows-2 gap-8 relative z-[6] w-[90%] mx-auto px-9">
             <div>
                 <div class="flex items-center justify-between mb-2">
-
-                    <h2 class="text-sm font-semibold text-slate-600">Nivel 3</h2>
                     <span class="text-xs text-slate-500"
                         x-text="sub[3].selectedTitle ? 'Sel.: '+ sub[3].selectedTitle : ''"></span>
                 </div>
@@ -545,8 +622,12 @@
                     <template x-for="opt in sub[3].options" :key="opt.id">
                         <button type="button"
                             @click="choose(3,opt); $nextTick(() => $store.float.openFor($el, (opt.palabra ?? opt.slug ?? opt.title)?.toString().trim()))"
-                            class="n3 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
-                            :class="{'is-selected ring-2 ring-indigo-500': sub[3].selected === opt.id}">
+                            class="n3 rounded-lg border bg-[#f8f8fa] px-3 py-2 text-center text-sm hover:shadow focus:outline-none"
+:class="{
+  'is-selected ring-8 ring-offset-2 ring-[#BEB7DF] shadow-[0_0_45px_20px_#beb7df55]':
+  sub[3].selected === opt.id
+}"
+>
                         <span class="font-medium" x-text="opt.title"></span>
                         </button>
 
@@ -564,8 +645,11 @@
                     <template x-for="opt in sub[4].options" :key="opt.id">
                         <button type="button"
                             @click="choose(4,opt); $nextTick(() => $store.float.openFor($el, (opt.palabra ?? opt.slug ?? opt.title)?.toString().trim()))"
-                            class="n4 rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
-                            :class="{'is-selected ring-2 ring-indigo-500': sub[4].selected === opt.id}">
+                            class="n4 rounded-lg border bg-[#f8f8fa] px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
+:class="{
+  'is-selected ring-8 ring-offset-2 ring-[#BEB7DF]/100 shadow-[0_0_70px_35px_#beb7df88]':
+  sub[4].selected === opt.id
+}">
                         <span class="font-medium" x-text="opt.title"></span>
                         </button>
 
@@ -575,9 +659,16 @@
 
             <div class="mb-4 flex items-center justify-center">
                 <button type="button" @click="buscar()"
-                    class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50"
+                        class="inline-flex items-center gap-3 rounded-3xl px-10 py-4 text-lg font-bold
+                            text-white
+                            bg-[#34113F]
+                            hover:bg-[#BEB7DF] hover:text-[#34113F]
+                            focus:outline-none
+                            focus:ring-4 focus:ring-[#D9CCE7]
+                            transition-all duration-200
+                            disabled:opacity-50"
                     :disabled="!activeId">
-                    Mostrar comentarios
+                    Mostrar relatos
                 </button>
                 <br><br>
             </div>
@@ -588,13 +679,13 @@
         <section class="relative z-index:6">
 
             <!-- PREVIEW (antes de buscar) -->
-            <div class="lane relative overflow-hidden rounded-xl border bg-white/40 backdrop-blur-sm outline-none"
+            <div class="lane relative overflow-hidden rounded-xl border bg-[#f8f8fa]/40 backdrop-blur-sm outline-none"
                 style="height: 420px;" x-show="!showResults && hasSelection">
                 <div
-                    class="absolute inset-0 m-auto w-[min(680px,92vw)] h-[360px] rounded-2xl border border-dashed bg-white/70 p-6">
+                    class="absolute inset-0 m-auto w-[min(680px,92vw)] h-[360px] rounded-2xl border border-dashed bg-[#f8f8fa]/70 p-6">
                     <h3 class="text-lg font-semibold text-slate-700">Vista previa</h3>
                     <p class="mt-1 text-sm text-slate-600">
-                        Selecciona más filtros o pulsa <strong>“Mostrar comentarios”</strong> para ver coincidencias.
+                        Selecciona más filtros o pulsa <strong>“Mostrar relatos”</strong> para ver coincidencias.
                     </p>
 
                     <div class="mt-4 flex flex-wrap gap-2">
@@ -607,7 +698,7 @@
                     </div>
 
                     <div class="mt-6 text-xs text-slate-500">
-                        Los comentarios no se consultan hasta que presiones el botón.
+                        Los relatos no se consultan hasta que presiones el botón.
                     </div>
                 </div>
             </div>
@@ -621,12 +712,12 @@
 
                 <!-- Estado vacío -->
                 <div x-show="showResults && results.length === 0"
-                    class="rounded-xl border bg-white px-4 py-10 text-center text-slate-500">
+                    class="rounded-xl border bg-[#f8f8fa] px-4 py-10 text-center text-slate-500">
                     No hay resultados para los filtros seleccionados.
                 </div>
 
                 <!-- Carril con máscaras de borde para reforzar la pila -->
-                <div class="lane relative overflow-hidden rounded-xl border bg-white/40 backdrop-blur-sm outline-none"
+                <div class="lane relative overflow-hidden rounded-xl border bg-[#f8f8fa]/40 backdrop-blur-sm outline-none"
                     style="height: 640px;" x-show="results.length > 0" tabindex="0" @keydown.left.prevent="prevRes()"
                     @keydown.right.prevent="nextRes()">
                     <!-- edge masks (no bloquean clics) -->
@@ -639,11 +730,11 @@
 
                     <!-- flechas -->
                     <button type="button" @click="prevRes()"
-                        class="absolute left-2 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/90 border shadow px-3 py-2 hover:bg-white">
+                        class="absolute left-2 top-1/2 -translate-y-1/2 z-30 rounded-full bg-[#f8f8fa]/90 border shadow px-3 py-2 hover:bg-[#34113F]">
                         ←
                     </button>
                     <button type="button" @click="nextRes()"
-                        class="absolute right-2 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/90 border shadow px-3 py-2 hover:bg-white">
+                        class="absolute right-2 top-1/2 -translate-y-1/2 z-30 rounded-full bg-[#f8f8fa]/90 border shadow px-3 py-2 hover:bg-[#34113F]">
                         →
                     </button>
 
@@ -652,52 +743,58 @@
                             class="absolute inset-0 mx-auto cursor-pointer select-none" :style="rCardStyle(r.id, idx)"
                             :class="rCardClasses(r.id)">
                             <div
-                                class="w-full h-full rounded-2xl border bg-white shadow-md transition p-5 overflow-hidden flex flex-col">
+                                class="w-full h-full rounded-2xl border bg-[#f8f8fa] shadow-md transition p-5 overflow-hidden flex flex-col">
                                 <div class="flex items-start justify-between gap-3">
                                     <div class="min-w-0">
-                                        <div class="text-xs uppercase tracking-wide text-slate-500">Usuario</div>
-                                        <div class="text-xl font-extrabold text-indigo-700 leading-tight"
-                                            x-text="r.user || '—'"></div>
+                                        <div class="hidden uppercase tracking-wide text-slate-500">Usuario</div>
+                                        <div class="text-xs uppercase tracking-wide text-slate-500">Narradora</div>
+                                        <div class="text-xl font-extrabold text-[#34113F] leading-tight"
+                                            x-text="r.user || ''"></div>
+
                                     </div>
                                     <div class="shrink-0 text-right">
-                                        <div class="text-xs text-slate-500">Reunión</div>
-                                        <div class="text-sm font-semibold text-slate-700" x-text="r.meeting || '—'">
+                                        <div class="hidden text-slate-500">Reunión</div>
+                                        <div class="text-sm font-semibold text-slate-700" x-text="r.meeting">
                                         </div>
                                     </div>
                                 </div>
                                 <h3 class="mt-2 text-sm font-semibold text-slate-800 truncate" x-text="r.title"></h3>
                                 <div class="mt-2 flex-1 overflow-auto pr-2" style="max-height: 28rem;"
                                     class="text-sm text-gray-900 whitespace-pre-line"
-                                    x-text="r.text && r.text.trim() !== '' ? r.text : 'Sin comentario'"></div>
+                                    x-text="r.text && r.text.trim() !== '' ? r.text : 'Sin relato'"></div>
                                 <div class="mt-3 flex flex-wrap gap-2 text-xs">
                                     <template x-if="applied.hito">
                                         <span
-                                            class="inline-flex items-center gap-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-1">
+                                            class="inline-flex items-center gap-1 rounded-full
+                                                    bg-[#D9CCE7]
+                                                    text-[#34113F]
+                                                    border border-[#BEB7DF]
+                                                    px-2 py-1">
                                             <strong>Hito:</strong> <span x-text="applied.hito"></span>
                                         </span>
                                     </template>
                                     <template x-if="applied.sub1">
                                         <span
                                             class="inline-flex items-center gap-1 rounded-full bg-slate-50 text-slate-700 border border-slate-200 px-2 py-1">
-                                            <strong>N1:</strong> <span x-text="applied.sub1"></span>
+                                            <span x-text="applied.sub1"></span>
                                         </span>
                                     </template>
                                     <template x-if="applied.sub2">
                                         <span
                                             class="inline-flex items-center gap-1 rounded-full bg-slate-50 text-slate-700 border border-slate-200 px-2 py-1">
-                                            <strong>N2:</strong> <span x-text="applied.sub2"></span>
+                                            <span x-text="applied.sub2"></span>
                                         </span>
                                     </template>
                                     <template x-if="applied.sub3">
                                         <span
                                             class="inline-flex items-center gap-1 rounded-full bg-slate-50 text-slate-700 border border-slate-200 px-2 py-1">
-                                            <strong>N3:</strong> <span x-text="applied.sub3"></span>
+                                            <span x-text="applied.sub3"></span>
                                         </span>
                                     </template>
                                     <template x-if="applied.sub4">
                                         <span
                                             class="inline-flex items-center gap-1 rounded-full bg-slate-50 text-slate-700 border border-slate-200 px-2 py-1">
-                                            <strong>N4:</strong> <span x-text="applied.sub4"></span>
+                                            <span x-text="applied.sub4"></span>
                                         </span>
                                     </template>
                                 </div>
@@ -706,14 +803,31 @@
                     </template>
                 </div>
                 <br><br>
-                <div class="mb-4 flex items-center justify-center">
-                    <button id="btnWarnBack" type="button"
-                        class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50">
-                        Mirate al Espejo
-                    </button>
-                    <br><br>
-                </div>
+                <div class="mb-4 flex items-center justify-between">
+                    <button id="btnWarnBack2" type="button"
+                         class="inline-flex items-center gap-3 rounded-3xl px-10 py-4 text-lg font-bold
+                            text-white
+                            bg-[#34113F]
+                            hover:bg-[#BEB7DF] hover:text-[#34113F]
+                            focus:outline-none
+                            focus:ring-4 focus:ring-[#D9CCE7]
+                            transition-all duration-200
+                            disabled:opacity-50">
+                    Salón de espejos</button>
 
+                    <button id="btnWarnBack" type="button"
+                        class="inline-flex items-center gap-3 rounded-3xl px-10 py-4 text-lg font-bold
+                            text-white
+                            bg-[#34113F]
+                            hover:bg-[#BEB7DF] hover:text-[#34113F]
+                            focus:outline-none
+                            focus:ring-4 focus:ring-[#D9CCE7]
+                            transition-all duration-200
+                            disabled:opacity-50">
+                        Mírate al spejo
+                    </button>
+
+                </div>
             </section>
         </section>
         <br>
@@ -729,7 +843,7 @@
 </div>
 @endsection @section('content')
 {{-- Barra fija de "Volver" SIEMPRE por encima del header global --}}
-<nav class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-black/80 backdrop-blur pointer-events-auto">
-  <a href="{{ url('/#contact8') }}" class="text-white font-bold text-lg">&larr; Volver</a>
+<nav class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-[#34113F]/80 backdrop-blur pointer-events-auto">
+  <a href="{{ url('/#contact8') }}" class="text-[#f8f8fa] font-bold text-lg">Espejito, espejito</a>
 </nav>
 
