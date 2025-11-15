@@ -18,3 +18,32 @@
   opacity: 0;
   animation: fadeIn 1s ease-out forwards;
 }
+/* === Animación al hacer scroll: aparecer desde abajo flotando === */
+.reveal-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.reveal-scroll.is-visible {
+    animation: floatUp 0.8s ease-out forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-6px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Delays opcionales */
+.reveal-delay-1.is-visible { animation-delay: 0.15s; }
+.reveal-delay-2.is-visible { animation-delay: 0.3s;  }
+.reveal-delay-3.is-visible { animation-delay: 0.45s; }
