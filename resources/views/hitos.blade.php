@@ -474,7 +474,7 @@
             document.addEventListener('DOMContentLoaded', () => {
             const btnWarnBack = document.getElementById('btnWarnBack');
             btnWarnBack.addEventListener('click', () => {
-                window.location.href = "{{ route('espejo.paint') }}";
+                window.location.href="{{ route('detras.many', ['ids' => '11,12,13']) }}";
             });
             });
             document.addEventListener('DOMContentLoaded', () => {
@@ -827,7 +827,7 @@ window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
                             focus:ring-4 focus:ring-[#D9CCE7]
                             transition-all duration-200
                             disabled:opacity-50">
-                        Mírate al spejo
+                        Mírate al espejo
                     </button>
 
                 </div>

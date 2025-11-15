@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Entrevistas - Proyecto Espejo')
+@section('title', 'Entrevistas - Espejito, espejito')
 
 @section('content')
 <div class="relative min-h-screen">
