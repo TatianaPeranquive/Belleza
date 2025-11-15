@@ -281,14 +281,17 @@ class EntrevistaController extends Controller
                 'edad'     => $u->edad,
                 'oficio'   => $u->oficio,
                 'locacion' => $u->locacion,
+
                 'perfil'   => $this->armarPerfil($u->nombre, $u->edad, $u->oficio, $u->locacion),
             ];
         })->values()->all();
 
+         //return view('entrevistas.detras-many', compact('entrevistas'));
+
         return view('entrevistas.show', [
             'autoras'      => $autoras,
             'volverRoute'  => 'home',
-            'tituloPagina' => 'A cerca de nostros',
+            'tituloPagina' => 'Tejedoras',
         ]);
     }
 }
