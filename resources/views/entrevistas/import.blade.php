@@ -32,7 +32,7 @@
       <input type="file" name="file" accept=".xlsx,.xls,.csv,text/csv,text/plain" required class="border rounded p-2 w-full">
     </div>
 
-    <button class="px-4 py-2 rounded bg-black text-white">Importar</button>
+    <button class="px-4 py-2 rounded bg-[#34113F] text-[#f8f8fa]">Importar</button>
   </form>
 
   <div class="text-xs text-gray-500">

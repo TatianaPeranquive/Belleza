@@ -68,7 +68,7 @@
 
             .selected {
                 background-color: 34113f;
-                color: -[#34113F];
+                color: #f8f8fa;
             }
 
             /* ESTADO INICIAL: negro + texto blanco + borde blanco */
@@ -76,9 +76,9 @@
             #opciones2 .opcion2 {
                 background-color: #34113f;
                 /* negro */
-                color: #fff;
+                color: #f8f8fa;
                 /* blanco */
-                border-color: #fff;
+                border-color: #f8f8fa;
                 /* borde blanco */
                 transition: transform 180ms ease, background-color .2s ease, color .2s ease, border-color .2s ease;
             }
@@ -107,7 +107,7 @@
             /* ESTADO SELECCIONADO: pasa a claro (blanco) + borde negro */
             #opciones1 .opcion.selected,
             #opciones2 .opcion2.selected {
-                background-color: #fff;
+                background-color: #f8f8fa;
                 color: #34113f;
                 border-color: #34113f;
                 animation: bounce-in 200ms ease-out;
@@ -125,12 +125,11 @@
             }
 
    /* barra sólida clara / oscura */
-.nav-light { background: rgba(255,255,255,.88); color:#34113f; backdrop-filter: blur(6px); border-bottom:1px solid #34113f; }
+.nav-light { background: #f8f8fa; color:#f8f8fa; backdrop-filter: blur(6px); border-bottom:1px solid #34113f; }
 .nav-solid { background: #34113f;  color:#fff;     backdrop-filter: blur(6px); border-bottom:1px solid #34113F14; }
 /* variantes de contraste según fondo */
 .menu-on-light { color:#34113f; }
-.menu-on-dark  { color:#fff; }
-
+.menu-on-dark  { color:#f8f8fa; }
         </style>
 
         </style>
@@ -156,12 +155,12 @@
             <!-- MENÚ FIJO -->
         </section>
 
-        <section id="about" class="flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+        <section id="about" class="flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Imagen -->
                 <div class="div1 flex justify-center">
-                    <h1 class="text-4xl md:text-6xl font-bold">Espejito, espejito</h1>
+                    <h2 class="text-4xl md:text-6xl font-bold">Espejito, espejito</h2>
                     <img src="portada1.png" alt=" " class="max-h-[500px] object-contain">
                 </div>
 
@@ -183,7 +182,7 @@
         </section>
 
 
-        <section id="work" class="flex  justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+        <section id="work" class="flex  justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
@@ -198,8 +197,8 @@
             </div>
         </section>
 
-        <!-- <section id="contact" class="h-screen flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]"> -->
-        <section id="contact" class="flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+        <!-- <section id="contact" class="h-screen flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]"> -->
+        <section id="contact" class="flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Imagen -->
@@ -221,8 +220,8 @@
             </div>
         </section>
 
-        <!-- <section id="about2" class="h-screen flex justify-center items-center text-4xl bg-[#34113F] text--[#34113F]"> -->
-        <section id="about2" class="flex  justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+
+        <section id="about2" class="flex  justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
@@ -233,7 +232,7 @@
             </div>
         </section>
 
-        <section id="contact2" class="flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+        <section id="contact2" class="flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Imagen -->
@@ -257,7 +256,7 @@
             </div>
         </section>
 
-        <section id="about3" class="flex  justify-center items-center text-4xl bg-[#34113F] text--[#34113F]">
+        <section id="about3" class="flex  justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
                 <div class="div2 text-center space-y-4">
                     <p class="text-lg md:text-xl max-w-prose mx-auto ">
@@ -265,7 +264,7 @@
                     </p>
                 </div>
 
-                <div class="div2 text-center space-y-4">
+                 <div class="div1 flex justify-center">
                     <p class="text-lg md:text-xl max-w-prose mx-auto ">
                         ¿Será inetable?
                     </p>
@@ -274,7 +273,7 @@
         </section>
 
 
-        <section id="contact4" class="py-20 flex justify-center items-center text-4xl bg-[#34113F] text--[#34113F]">
+        <section id="contact4" class="py-20 flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Opciones -->
@@ -316,7 +315,7 @@
             </div>
         </section>
 
-        <section id="about4" class="flex  justify-center items-center text-4xl bg-[#34113F] text--[#34113F]">
+        <section id="about4" class="flex  justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
@@ -335,7 +334,7 @@
             </div>
         </section>
 
-        <section id="contact3" class="py-10 flex justify-center items-center text-4xl bg-[#34113F] text--[#34113F]">
+        <section id="contact3" class="py-10 flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Lista de opciones -->
@@ -343,25 +342,25 @@
                     <ul id="opciones1" class="flex justify-center gap-4 w-full max-w-6xl">
                         <li class="flex-1">
                             <button type="button" data-value="UN POCO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
-               hover:underline bg-[#34113F] text--[#34113F] border-[#34113F]">
+               hover:underline bg-[#34113F] text-[#f8f8fa] border-[#34113F]">
                                 Casi nunca
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button" data-value="UN MONTÓN" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
-               hover:underline bg-[#34113F] text--[#34113F] border-[#34113F]">
+               hover:underline bg-[#34113F] text-[#f8f8fa] border-[#34113F]">
                                 A ratos
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button" data-value="NO LO HABÍA PENSADO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
-               hover:underline bg-[#34113F] text--[#34113F] border-[#34113F]">
+               hover:underline bg-[#34113F] text-[#f8f8fa] border-[#34113F]">
                                 Todo el tiempo
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button" data-value="NO TANTO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
-               hover:underline bg-[#34113F] text--[#34113F] border-[#34113F]">
+               hover:underline bg-[#34113F] text-[#f8f8fa] border-[#34113F]">
                                 Qué hay que pensar
                             </button>
                         </li>
@@ -369,14 +368,14 @@
                 </div>
                 <!-- Texto que se actualizará -->
                 <div class="div2 text-center space-y-4">
-                    <p id="respuesta" class="text-lg md:text-xl max-w-prose mx-auto italic text--[#34113F]-700"></p>
+                    <p id="respuesta" class="text-lg md:text-xl max-w-prose mx-auto italic text-[#f8f8fa]-700"></p>
                     <p class="text-lg md:text-xl max-w-prose mx-auto ">
                         Pues, este proyecto quiere hacerte reflexionar sobre la belleza de otra manera.
                     </p>
                 </div>
             </div>
         </section>
-        <section id="contact4" class=" py-10 flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+        <section id="contact4" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="text-center ">
                 <br>
                 <p class="text-lg md:text-xl max-w-prose mx-auto ">
@@ -387,13 +386,13 @@
 </div>
 </section>
 
-<section id="contact5" class=" py-10 flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+<section id="contact5" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
         <img src="portada8.png" alt=" " class="max-h-[500px] object-contain">
     </div>
 </section>
 
-<section id="contact6" class=" py-10 flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+<section id="contact6" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
         <p class="text-lg md:text-xl max-w-prose mx-auto ">
            Aquí leerás las historias de un par de mujeres colombianas que se aventuraron a relatar cómo se relacionaron con el embellecimiento y la belleza a lo largo de sus vidas.
@@ -401,7 +400,7 @@
     </div>
 </section>
 
-<section id="contact7" class=" py-10 flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+<section id="contact7" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
         <p class="text-lg md:text-xl max-w-prose mx-auto ">
             Espero que al leer los hilos de sus historias te mires al espejo y veas algo diferente.
@@ -413,13 +412,13 @@
     </div>
 </section>
 
-<section id="contact8" class="py-20 justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+<section id="contact8" class="py-20 justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
         <h2 class="text-2xl md:text-3xl tracking-wide">• Entra al espejo •</h2>
     </div>
 </section>
 
-<section id="contact5" class="flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
+<section id="contact5" class="flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
 
     <div class="relative max-w-5xl mx-auto">
         <!-- Imagen -->
@@ -483,12 +482,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // SPAN para el texto base (con su propio estilo)
             const spanBase = document.createElement("span");
-            spanBase.className = "text-lg md:text-xl italic text--[#34113F]-300";
+            spanBase.className = "text-lg md:text-xl italic text-[#f8f8fa]-300";
             spanBase.textContent = op.textContent.trim() + " ";
 
             // SPAN para "Interesante" (con otro estilo distinto)
             const spanInteresante = document.createElement("span");
-            spanInteresante.className = "text-lg md:text-xl font-bold text--[#34113F]-300";
+            spanInteresante.className = "text-lg md:text-xl font-bold text-[#f8f8fa]-300";
             spanInteresante.textContent = "  Interesante.";
 
             // Agregar ambos al párrafo
@@ -513,9 +512,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const onHero = entry.isIntersecting;
       if (onHero) {
         menu.classList.remove('nav-light','nav-solid','opacity-100','pointer-events-auto');
-        menu.classList.add('bg-transparent','text--[#34113F]','opacity-0','pointer-events-none');
+        menu.classList.add('bg-transparent','text-[#f8f8fa]','opacity-0','pointer-events-none');
       } else {
-        menu.classList.remove('bg-transparent','text--[#34113F]','opacity-0','pointer-events-none');
+        menu.classList.remove('bg-transparent','text-[#f8f8fa]','opacity-0','pointer-events-none');
         // elige un estilo base al bajar; por defecto claro
         menu.classList.add('nav-light','opacity-100','pointer-events-auto');
       }

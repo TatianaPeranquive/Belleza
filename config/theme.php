@@ -6,8 +6,8 @@ return [
 
     'palettes' => [
         'light' => [
-            'card_bg' => ['#FFFFFF','#F9FAFB','#F3F4F6','#E5E7EB','#D1D5DB'],
-            'bg'      => '#FFFFFF',
+            'card_bg' => ['#34113F','#F9FAFB','#F3F4F6','#E5E7EB','#D1D5DB'],
+            'bg'      => '#34113F',
             'text'    => '#111827',
             'muted'   => '#6B7280',
             'border'  => '#E5E7EB',

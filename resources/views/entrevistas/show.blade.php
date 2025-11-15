@@ -3,8 +3,8 @@
 @endsection @section('content')
 {{-- Barra fija de "Volver" SIEMPRE por encima del header global --}}
 <nav
-    class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-black/80 backdrop-blur pointer-events-auto">
-    <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-white font-bold text-lg">&larr; Volver</a>
+    class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-[#34113F]/80 backdrop-blur pointer-events-auto">
+    <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-[#f8f8fa] font-bold text-lg"> Espejito, espejito</a>
 </nav>
 
 {{-- SPACER: empuja TODO por debajo de lo que tape arriba.
@@ -29,10 +29,9 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                 {{-- Foto --}}
                 <div class="flex flex-col items-center">
                     <img src="{{ asset($a['foto']) }}" alt="{{ $a['nombre'] }}"
-                        class="w-80 h-80 md:w-[22rem] md:h-[22rem] object-cover rounded-2xl shadow-xl ring-1 ring-white/10" />
+                        class="w-80 h-80 md:w-[22rem] md:h-[22rem] object-cover rounded-2xl shadow-xl ring-1 ring-[#f8f8fa]/10" />
                     <div class="mt-4 h-1 w-40 rounded-full" style="background-color: {{
-                            $a['color'] ?? '#96D1C5'
-                        }};"></div>
+                            $a['color'] ?? '#96D1C5'}};"></div>
                 </div>
 
                 {{-- Perfil + datos + audio --}}
@@ -58,19 +57,11 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                     <div class="bg-gray-200 w-full grid gap-10 items-center fade-in">
                         {!! strip_tags($respuesta, '<p><strong><em><b><i><br>') !!}
                     </div>
-
-
-                    <div class="mt-6">
-                        <audio controls class="w-full ring-1 ring-white/10 rounded-lg">
-                            <source src="{{ asset($a['audio']) }}" type="audio/mpeg" />
-                            Tu navegador no soporta audio HTML5.
-                        </audio>
-                    </div>
                 </div>
             </article>
 
             @if(!$loop->last)
-            <hr class="border-t border-white/10 my-2" />
+            <hr class="border-t border-[#f8f8fa]/10 my-2" />
             @endif @endforeach
         </div>
 

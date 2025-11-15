@@ -20,12 +20,12 @@
     [x-cloak]{display:none!important}
   </style>
 </head>
-<body class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-white text-[#111827]' }}">
+<body class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-[#f8f8fa] text-[#111827]' }}">
 
-  <header class="fixed top-0 left-0 w-full bg-black z-50">
-    <div class="flex justify-between items-center p-4 text-white">
+  <header class="fixed top-0 left-0 w-full bg-[#34113F] z-50">
+    <div class="flex justify-between items-center p-4 text--[#f8f8fa]">
       <div class="font-bold text-lg"></div>
-      <div class="flex justify-between items-center p-4 text-white"></div>
+      <div class="flex justify-between items-center p-4 text-[#f8f8fa]"></div>
       <nav id="menu" class="fixed top-0 left-0 w-full z-50 opacity-0 pointer-events-none transition-all duration-300">
         <ul class="flex justify-center gap-4 w-full max-w-6xl mx-auto">
           <li class="flex-1">
@@ -38,13 +38,10 @@
             <a href="{{ route('entrevistas.index') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Salón de espejos</a>
           </li>
           <li class="flex-1">
-            <a href="{{ route('espejo.paint') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Dentro del espejo</a>
+            <a href="{{ route('espejo.paint') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tocador</a>
           </li>
           <li class="flex-1">
-            <a href="{{ route('diccionario.buscar', 'palabra') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Diccionario</a>
-          </li>
-          <li class="flex-1">
-            <a href="{{ route('detras.many', ['ids' => '11,12']) }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Detrás del espejo</a>
+            <a href="{{ route('detras.many', ['ids' => '11,12']) }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tejedoras</a>
           </li>
         </ul>
       </nav>
@@ -65,20 +62,20 @@
     class="z-[9999] pointer-events-none"
   >
 <div id="float-card"
-     class="max-w-[420px] w-[min(92vw,420px)] rounded-2xl shadow-2xl border bg-white/90 backdrop-blur p-3 pointer-events-auto">
+     class="max-w-[420px] w-[min(92vw,420px)] rounded-2xl shadow-2xl border bg-[#f8f8fa]/90 backdrop-blur p-3 pointer-events-auto">
   <div class="flex items-center justify-between mb-2">
-    <div class="text-[10px] uppercase tracking-wide text-slate-500">Diccionario</div>
+    <div class="text-[10px] uppercase tracking-wide text-slate-500"></div>
 
     <div class="flex gap-1">
       <button
         class="text-xs px-2 py-1 rounded border"
-        :class="$store.float.mode === 'def' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700'"
+        :class="$store.float.mode === 'def' ? 'bg-slate-900 text-[#f8f8fa]' : 'bg-[#f8f8fa] text-slate-700'"
         @click="$store.float.setMode('def')">
         Definición
       </button>
       <button
         class="text-xs px-2 py-1 rounded border"
-        :class="$store.float.mode === 'ref' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700'"
+        :class="$store.float.mode === 'ref' ? 'bg-slate-900 text-[#f8f8fa]' : 'bg-[#f8f8fa] text-slate-700'"
         @click="$store.float.setMode('ref')">
         Referencia
       </button>

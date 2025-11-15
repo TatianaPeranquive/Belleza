@@ -5,9 +5,9 @@
 @section('content')
 
         class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4
-               z-[9999] bg-black/80 backdrop-blur pointer-events-auto shadow-lg">
+               z-[9999] bg-[#34113F]/80 backdrop-blur pointer-events-auto shadow-lg">
         <a href="{{ route($volverRoute ?? 'diccionario.buscar', 'campana') }}"
-           class="text-white font-bold text-lg hover:underline">
+           class="text-[#f8f8fa] font-bold text-lg hover:underline">
             &larr; Volver
         </a>
     </nav>
@@ -42,7 +42,7 @@
     }
   </style>
 </head>
-<body class="bg-white text-black">
+<body class="bg-[#f8f8fa] text-[#34113F]">
 
   <!-- Barra superior con botón -->
   <div class="w-full flex justify-center mt-4">
