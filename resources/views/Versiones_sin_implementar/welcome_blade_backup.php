@@ -5,8 +5,8 @@
     <h1 class="text-4xl font-bold mb-6">Bienvenido</h1>
     <p class="mb-4">Explora las entrevistas, llena tu espejo y conoce más sobre nosotros en detrás del espejo.</p>
     <div class="mt-6">
-        <button id="playBtn" class="bg-green-500 px-4 py-2 text-white rounded">▶ Play Audio</button>
-        <button id="pauseBtn" class="bg-red-500 px-4 py-2 text-white rounded">⏸ Pause Audio</button>
+        <button id="playBtn" class="bg-green-500 px-4 py-2 text--[#f8f8fa] rounded">▶ Play Audio</button>
+        <button id="pauseBtn" class="bg-red-500 px-4 py-2 text--[#f8f8fa] rounded">⏸ Pause Audio</button>
     </div>
 </div>
 <script>

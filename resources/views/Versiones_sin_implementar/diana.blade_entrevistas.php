@@ -3,12 +3,12 @@
 @section('title', $nombre . ' - Entrevista')
 
 @section('content')
-<nav class="fixed top-20 left-4 z-40 bg-black px-4 py-2 rounded">
-    <a href="{{ route('entrevistas.index') }}" class="text-white font-bold text-lg hover:underline">&larr; Volver</a>
+<nav class="fixed top-20 left-4 z-40 bg-[#34113F] px-4 py-2 rounded">
+    <a href="{{ route('entrevistas.index') }}" class="text--[#34113F] font-bold text-lg hover:underline">&larr; Volver</a>
 </nav>
 
 
-<section class="pt-28 px-6 fade-in text-white bg-black">
+<section class="pt-28 px-6 fade-in text--[#34113F] bg-[#34113F]">
 
     <div class="max-w-3xl mx-auto text-center">
         <h1 class="text-5xl font-bold mb-6">{{ $nombre }}</h1>
