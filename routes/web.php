@@ -39,12 +39,14 @@ Route::controller(DiccionarioController::class)
         Route::get('/{palabra}', 'buscar')->name('diccionario.buscar');
     });
 
+    Route::prefix('entrevistas')->group(function () {
 Route::prefix('detras-del-espejo')->group(function() {
     Route::get('/', [EntrevistaController::class, 'detrasShowMany'])
     ->name('detras.many');
     Route::get('/{id}', [EntrevistaController::class, 'detrasShow'])
     ->whereNumber('id')
     ->name('detras.show');
+});
 });
 
   //  Route::get('/about', function () {return view('usuarios');})->name('usuarios');
