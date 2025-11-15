@@ -7,7 +7,7 @@
 <div class="relative">
 
 
-    {{-- Contenido principal encima --}}
+    {{-- Contenido principal encima  34113f--}}
     <!DOCTYPE html>
     <html lang="es">
 
@@ -51,7 +51,7 @@
             }
 
             .menu-on-light a {
-                color: #000 !important;
+                color: #34113f !important;
                 border-color: currentColor !important;
             }
 
@@ -67,14 +67,14 @@
             }
 
             .selected {
-                background-color: black;
-                color: white;
+                background-color: 34113f;
+                color: -[#34113F];
             }
 
             /* ESTADO INICIAL: negro + texto blanco + borde blanco */
             #opciones1 .opcion,
             #opciones2 .opcion2 {
-                background-color: #000;
+                background-color: #34113f;
                 /* negro */
                 color: #fff;
                 /* blanco */
@@ -108,8 +108,8 @@
             #opciones1 .opcion.selected,
             #opciones2 .opcion2.selected {
                 background-color: #fff;
-                color: #000;
-                border-color: #000;
+                color: #34113f;
+                border-color: #34113f;
                 animation: bounce-in 200ms ease-out;
             }
             .fade-scroll {
@@ -125,10 +125,10 @@
             }
 
    /* barra sólida clara / oscura */
-.nav-light { background: rgba(255,255,255,.88); color:#0f172a; backdrop-filter: blur(6px); border-bottom:1px solid rgba(0,0,0,.06); }
-.nav-solid { background: rgba(17,24,39,.85);  color:#fff;     backdrop-filter: blur(6px); border-bottom:1px solid rgba(255,255,255,.08); }
+.nav-light { background: rgba(255,255,255,.88); color:#34113f; backdrop-filter: blur(6px); border-bottom:1px solid #34113f; }
+.nav-solid { background: #34113f;  color:#fff;     backdrop-filter: blur(6px); border-bottom:1px solid #34113F14; }
 /* variantes de contraste según fondo */
-.menu-on-light { color:#0f172a; }
+.menu-on-light { color:#34113f; }
 .menu-on-dark  { color:#fff; }
 
         </style>
@@ -138,11 +138,15 @@
 
     <body class="overflow-x-hidden">
 
-        <section id="home0" class="py-10 bg-black"></section>
+        <section id="home0"></section>
         <!-- HERO -->
-        <section id="home" class="h-screen flex justify-center items-center text-4xl bg-black text-white">
-            <!-- Imagen -->
-            <video src="EspejoPortada1.mp4" controls poster="EspejoPortada.png"
+       <section id="home" class="h-screen flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
+            <!-- video -->
+            <video src="EspejoPortada1.mp4"
+                autoplay
+                muted
+                loop
+                playsinline
                 class="w-full h-auto max-h-screen object-cover">
             </video>
             <!-- al final del hero/video -->
@@ -152,21 +156,19 @@
             <!-- MENÚ FIJO -->
         </section>
 
-        <section id="about" class="flex justify-center items-center text-4xl bg-white text-black">
+        <section id="about" class="flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Imagen -->
                 <div class="div1 flex justify-center">
+                    <h1 class="text-4xl md:text-6xl font-bold">Espejito, espejito</h1>
                     <img src="portada1.png" alt=" " class="max-h-[500px] object-contain">
                 </div>
 
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
-                    <h1 class="text-4xl md:text-6xl font-bold">Espejito, espejito</h1>
-                    <br><br>
-                    <h2 class="text-2xl md:text-3xl tracking-wide">• ¿Qué es la belleza? •</h2>
-                    <br><br>
-                    <p class="text-lg md:text-xl">Para mí, la belleza es...</p>
+                    <h2 class="text-2xl md:text-3xl tracking-wide">¿Qué es la belleza?</h2>
+                    <p class="text-lg md:text-xl">Historias orales de mujeres colombianas</p>
                 </div>
 
                 <div class="div1 flex justify-center">
@@ -181,13 +183,13 @@
         </section>
 
 
-        <section id="work" class="flex  justify-center items-center text-4xl bg-white text-black">
+        <section id="work" class="flex  justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
                     <p class="text-lg md:text-xl max-w-prose mx-auto italic"> Había una vez una mujer que le preguntó al
                         espejo
-                        si era la más bonita del reino.</p>
+                        si era la más bonita.</p>
                 </div>
                 <!-- Imagen -->
                 <div class="div1 flex justify-center">
@@ -196,8 +198,8 @@
             </div>
         </section>
 
-        <!-- <section id="contact" class="h-screen flex justify-center items-center text-4xl bg-white text-black"> -->
-        <section id="contact" class="flex justify-center items-center text-4xl bg-white text-black">
+        <!-- <section id="contact" class="h-screen flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]"> -->
+        <section id="contact" class="flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Imagen -->
@@ -209,9 +211,7 @@
                 <div class="div2 text-center space-y-4">
                     <p class="text-lg md:text-xl max-w-prose mx-auto italic">
                         Cuando el espejo le dijo que no,
-                        ella, determinada,
-                        decidió matar
-                        a quien tomó su lugar.
+                        la mujer condenó a quien le había quitado su lugar.
                     </p>
                 </div>
 
@@ -221,26 +221,19 @@
             </div>
         </section>
 
-        <!-- <section id="about2" class="h-screen flex justify-center items-center text-4xl bg-black text-white"> -->
-        <section id="about2" class="flex  justify-center items-center text-4xl bg-white text-black">
+        <!-- <section id="about2" class="h-screen flex justify-center items-center text-4xl bg-[#34113F] text--[#34113F]"> -->
+        <section id="about2" class="flex  justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
                     <p class="text-lg md:text-xl max-w-prose mx-auto italic">
-                        Pero la mujer más bonita
-                        se escapó de sus intentos
-                        de asesinato
-                        debido a su belleza.
+                        Los actos para retomar su título fueron en vano, nadie quiso matar a la inocente belleza.
                     </p>
-                </div>
-                <!-- Imagen -->
-                <div class="div1 flex justify-center">
-                    <img src="portada4.png" alt=" " class="max-h-[500px] object-contain">
                 </div>
             </div>
         </section>
 
-        <section id="contact2" class="flex justify-center items-center text-4xl bg-white text-black">
+        <section id="contact2" class="flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Imagen -->
@@ -251,12 +244,10 @@
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
                     <p class="text-lg md:text-xl max-w-prose mx-auto italic">
-                        Y la mujer que había
-                        perdido su título fue
-                        castigada con la muerte.
+                        Así, con su deseo insatisfecho, la mujer fue castigada con la muerte.
                     </p>
                     <p class="text-lg md:text-xl max-w-prose mx-auto italic">
-                        FIN (?)
+                        Siempre me pregunté qué pasaría después...
                     </p>
                 </div>
 
@@ -266,30 +257,24 @@
             </div>
         </section>
 
-        <section id="about3" class="flex  justify-center items-center text-4xl bg-black text-white">
+        <section id="about3" class="flex  justify-center items-center text-4xl bg-[#34113F] text--[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-                <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
                     <p class="text-lg md:text-xl max-w-prose mx-auto ">
-                        Esa es una historia que nos
-                        han contado muchas veces;
-                        cada vez que pienso en ella,
-                        reflexiono en el castigo que
-                        recibió la mujer
-                        fue por tener el deseo de ser bonita,
-                        por darle importancia al querer.
-                        Pero...
+                        Tal vez el ciclo se repitió y la sobreviviente le hizo la misma pregunta al espejo.
                     </p>
                 </div>
-                <!-- Imagen -->
-                <div class="div1 flex justify-center">
-                    <img src="portada6.png" alt=" " class="max-h-[500px] object-contain">
+
+                <div class="div2 text-center space-y-4">
+                    <p class="text-lg md:text-xl max-w-prose mx-auto ">
+                        ¿Será inetable?
+                    </p>
                 </div>
             </div>
         </section>
 
 
-        <section id="contact4" class="py-20 flex justify-center items-center text-4xl bg-black text-white">
+        <section id="contact4" class="py-20 flex justify-center items-center text-4xl bg-[#34113F] text--[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Opciones -->
@@ -298,25 +283,25 @@
                         <li class="flex-1">
                             <button type="button"
                                 class="opcion2 block w-full text-center px-3 py-1 rounded border font-bold text-lg hover:underline">
-                                VARIAS VECES
+                                Las imperfecciones
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button"
                                 class="opcion2 block w-full text-center px-3 py-1 rounded border font-bold text-lg hover:underline">
-                                POCAS VECES
+                                Lo malo y lo bueno
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button"
                                 class="opcion2 block w-full text-center px-3 py-1 rounded border font-bold text-lg hover:underline">
-                                TODO EL TIEMPO
+                                El paso del tiempo
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button"
                                 class="opcion2 block w-full text-center px-3 py-1 rounded border font-bold text-lg hover:underline">
-                                NUNCA
+                                Que todo esté en su lugar
                             </button>
                         </li>
                     </ul>
@@ -325,40 +310,32 @@
                 <!-- Pregunta -->
                 <div class="div2 text-center space-y-4">
                     <p class="text-lg md:text-xl max-w-prose mx-auto">
-                        ¿Cuántas veces no te has visto al espejo y te has preguntado por la belleza?
+                        Y tú, ¿cuándo te miras al espejo, qué ves?
                     </p>
                 </div>
             </div>
         </section>
 
-        <section id="about4" class="flex  justify-center items-center text-4xl bg-black text-white">
+        <section id="about4" class="flex  justify-center items-center text-4xl bg-[#34113F] text--[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
                     <!-- Respuesta -->
                     <div class="div1 flex justify-center">
-
-
-                        </p>
-                        <p id="respuesta2" class="text-lg md:text-xl max-w-prose mx-auto italic text-white-700"></p>
+                        <p id="respuesta2" ></p>
                     </div>
+
                     <p class="text-lg md:text-xl max-w-prose mx-auto ">
-                        Personalmente, yo lo he hecho;
-                        ha sido algo que ha impactado mi vida de muchas formas;
-                        me imagino que la tuya,
+                        En tu vida cotidiana, ¿qué tanto piensas sobre tu belleza?
                     </p>
                     <p class="text-lg md:text-xl max-w-prose mx-auto ">
                         ¿También?
                     </P>
                 </div>
-                <!-- Imagen -->
-                <div class="div1 flex justify-center">
-                    <img src="portada7.png" alt=" " class="max-h-[500px] object-contain">
-                </div>
             </div>
         </section>
 
-        <section id="contact3" class="py-10 flex justify-center items-center text-4xl bg-black text-white">
+        <section id="contact3" class="py-10 flex justify-center items-center text-4xl bg-[#34113F] text--[#34113F]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
 
                 <!-- Lista de opciones -->
@@ -366,107 +343,83 @@
                     <ul id="opciones1" class="flex justify-center gap-4 w-full max-w-6xl">
                         <li class="flex-1">
                             <button type="button" data-value="UN POCO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
-               hover:underline bg-black text-white border-black">
-                                UN POCO
+               hover:underline bg-[#34113F] text--[#34113F] border-[#34113F]">
+                                Casi nunca
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button" data-value="UN MONTÓN" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
-               hover:underline bg-black text-white border-black">
-                                UN MONTÓN
+               hover:underline bg-[#34113F] text--[#34113F] border-[#34113F]">
+                                A ratos
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button" data-value="NO LO HABÍA PENSADO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
-               hover:underline bg-black text-white border-black">
-                                NO LO HABÍA PENSADO
+               hover:underline bg-[#34113F] text--[#34113F] border-[#34113F]">
+                                Todo el tiempo
                             </button>
                         </li>
                         <li class="flex-1">
                             <button type="button" data-value="NO TANTO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
-               hover:underline bg-black text-white border-black">
-                                NO TANTO
+               hover:underline bg-[#34113F] text--[#34113F] border-[#34113F]">
+                                Qué hay que pensar
                             </button>
                         </li>
                     </ul>
-
-                    {{-- opcional: para enviar al backend --}}
-                    <input type="hidden" id="respuestaSeleccionada" name="respuesta" value="">
                 </div>
                 <!-- Texto que se actualizará -->
                 <div class="div2 text-center space-y-4">
-                    <p id="respuesta" class="text-lg md:text-xl max-w-prose mx-auto italic text-white-700">
-
+                    <p id="respuesta" class="text-lg md:text-xl max-w-prose mx-auto italic text--[#34113F]-700"></p>
+                    <p class="text-lg md:text-xl max-w-prose mx-auto ">
+                        Pues, este proyecto quiere hacerte reflexionar sobre la belleza de otra manera.
                     </p>
                 </div>
             </div>
         </section>
-        <section id="contact4" class=" py-10 flex justify-center items-center text-4xl bg-white text-black">
+        <section id="contact4" class=" py-10 flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
             <div class="text-center ">
-                <p class="text-lg md:text-xl max-w-prose mx-auto ">
-                    Por eso, esta página es una forma de comenzar una charla.
-                </p>
                 <br>
                 <p class="text-lg md:text-xl max-w-prose mx-auto ">
-                    Una que abarque varios puntos de la belleza, mi propuesta es pasar de lo bueno y lo malo y
-                    adentrarnos a un
-                    espacio en que veamos el entramado de los hilos de la belleza.
+                   Rompamos el blanco y negro con el propósito de reconocer y resignificar la forma en que te relacionas con la belleza y tejes tu propia historia.
                 </p>
             </div>
 
 </div>
 </section>
 
-<section id="contact5" class=" py-10 flex justify-center items-center text-4xl bg-white text-black">
+<section id="contact5" class=" py-10 flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
     <div class="text-center ">
         <img src="portada8.png" alt=" " class="max-h-[500px] object-contain">
     </div>
 </section>
 
-<section id="contact6" class=" py-10 flex justify-center items-center text-4xl bg-white text-black">
+<section id="contact6" class=" py-10 flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
     <div class="text-center ">
         <p class="text-lg md:text-xl max-w-prose mx-auto ">
-            En que podamos charlar de las cosas chéveres, las cosas difíciles y de aquellas cosas que pasan
-            inadvertidas. Para reconocer y resignificar la forma en la que te relacionas con la belleza y tejes tu
-            propia historia.
+           Aquí leerás las historias de un par de mujeres colombianas que se aventuraron a relatar cómo se relacionaron con el embellecimiento y la belleza a lo largo de sus vidas.
         </p>
     </div>
 </section>
 
-<section id="contact7" class=" py-10 flex justify-center items-center text-4xl bg-white text-black">
+<section id="contact7" class=" py-10 flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
     <div class="text-center ">
         <p class="text-lg md:text-xl max-w-prose mx-auto ">
-            Las historias que leerás a continuación son de un par de mujeres colombianas y responden a cuáles han sido
-            sus experiencias con su cuerpo, cómo la belleza las atravesó en momentos de su vida y cómo han lidiado con
-            ella.
+            Espero que al leer los hilos de sus historias te mires al espejo y veas algo diferente.
         </p>
-    </div>
-</section>
-
-<section id="about5" class="flex  justify-center items-center text-4xl bg-white text-black">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-        <!-- Texto (centrado siempre) -->
-        <div class="div2 text-center space-y-4">
-            <p class="text-lg md:text-xl max-w-prose mx-auto ">
-                Espero que al leer los hilos de sus historias encuentres algo de ti en ellas que te ayuden a pensar de
-                otras formas sobre la belleza que nos atraviesa en el espejo.
-            </P>
-        </div>
-        <!-- Imagen -->
+            <!-- Imagen -->
         <div class="text-center ">
             <img src="portada9.png" alt=" " class="max-h-[500px] object-contain">
         </div>
-
     </div>
 </section>
 
-<section id="contact8" class="py-20 justify-center items-center text-4xl bg-white text-black">
+<section id="contact8" class="py-20 justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
     <div class="text-center ">
-        <h2 class="text-2xl md:text-3xl tracking-wide">• Escoge un espejo •</h2>
+        <h2 class="text-2xl md:text-3xl tracking-wide">• Entra al espejo •</h2>
     </div>
 </section>
 
-<section id="contact5" class="flex justify-center items-center text-4xl bg-white text-black">
+<section id="contact5" class="flex justify-center items-center text-4xl bg--[#34113F] text-[#34113F]">
 
     <div class="relative max-w-5xl mx-auto">
         <!-- Imagen -->
@@ -488,7 +441,6 @@
             </a>
 
             <!-- Espejo derecho -->
-
             <a href="{{ route('hitos.index', ['hito' => 3]) }}#hitos-top" class="block group"
                 aria-label="Espejo derecho"
                 class="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
@@ -510,19 +462,40 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       opciones.forEach(o => o.classList.remove('selected'));
       op.classList.add('selected');
-      if (respuesta) respuesta.textContent = op.textContent.trim();
+      if (respuesta) respuesta.textContent = " ¿" + op.textContent.trim() + "?";
     });
   });
 
   const opciones2 = document.querySelectorAll('#opciones2 .opcion2');
   const respuesta2 = document.getElementById('respuesta2');
+  const comentario = document.getElementById("comentario");
+
+
 
   opciones2.forEach(op => {
     op.addEventListener('click', e => {
-      e.preventDefault();
-      opciones2.forEach(o => o.classList.remove('selected'));
-      op.classList.add('selected');
-      if (respuesta2) respuesta2.textContent = op.textContent.trim() + '.';
+        e.preventDefault();
+        opciones2.forEach(o => o.classList.remove('selected'));
+        op.classList.add('selected');
+        if (respuesta2) {
+            // Limpia el <p>
+            respuesta2.innerHTML = "";
+
+            // SPAN para el texto base (con su propio estilo)
+            const spanBase = document.createElement("span");
+            spanBase.className = "text-lg md:text-xl italic text--[#34113F]-300";
+            spanBase.textContent = op.textContent.trim() + " ";
+
+            // SPAN para "Interesante" (con otro estilo distinto)
+            const spanInteresante = document.createElement("span");
+            spanInteresante.className = "text-lg md:text-xl font-bold text--[#34113F]-300";
+            spanInteresante.textContent = "  Interesante.";
+
+            // Agregar ambos al párrafo
+            respuesta2.appendChild(spanBase);
+            respuesta2.appendChild(spanInteresante);
+        }
+      //if (respuesta2.textContent.trim() !== "") {comentario.classList.remove("hidden");}
     });
   });
 
@@ -540,9 +513,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const onHero = entry.isIntersecting;
       if (onHero) {
         menu.classList.remove('nav-light','nav-solid','opacity-100','pointer-events-auto');
-        menu.classList.add('bg-transparent','text-white','opacity-0','pointer-events-none');
+        menu.classList.add('bg-transparent','text--[#34113F]','opacity-0','pointer-events-none');
       } else {
-        menu.classList.remove('bg-transparent','text-white','opacity-0','pointer-events-none');
+        menu.classList.remove('bg-transparent','text--[#34113F]','opacity-0','pointer-events-none');
         // elige un estilo base al bajar; por defecto claro
         menu.classList.add('nav-light','opacity-100','pointer-events-auto');
       }
