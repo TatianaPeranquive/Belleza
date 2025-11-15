@@ -18,12 +18,12 @@
 
 
 
-    <nav class="fixed top-0 left-0 w-full p-4 z-[200] bg-black/80 backdrop-blur">
-        <a href="{{ route('home') }}" class="text-white font-bold text-lg hover:underline">&larr; Volver</a>
+    <nav class="fixed top-0 left-0 w-full p-4 z-[200] bg-[#34113F]/80 backdrop-blur">
+        <a href="{{ route('home') }}" class="text-[#f8f8fa] font-bold text-lg hover:underline">Espejito, espejito</a>
     </nav>
 
   <div class="relative z-10 flex flex-col items-center text-center px-4 pt-40 pb-16">
-    <h1 class="text-4xl font-bold mb-12">Entrevistas</h1>
+    <h1 class="text-4xl font-bold mb-12">Salón de espejos</h1>
 
     <div id="cards-container"
          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
@@ -37,7 +37,7 @@
         @if(!empty($card['slug']))
           <a href="{{ route('entrevistas.show', $card['slug']) }}"
              class="card p-6 rounded shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl ring-1"
-             style="background-color: {{ $bg }}; {{ $theme === 'dark' ? 'border-color:#334155;' : 'border-color:#E5E7EB;' }}">
+             style="background-color: {{ $bg }}; {{ $theme === 'dark' ? 'border-color:#D9CCE7;' : 'border-color:#E5E7EB;' }}">
             <h2 class="font-semibold text-xl"
                 style="color: {{ $theme === 'dark' ? '#F9FAFB' : '#111827' }};">
               {{ $card['name'] }}
@@ -45,7 +45,7 @@
           </a>
         @else
           <div class="card p-6 rounded shadow-lg opacity-90 ring-1"
-               style="background-color: {{ $bg }}; {{ $theme === 'dark' ? 'border-color:#334155;' : 'border-color:#E5E7EB;' }}">
+               style="background-color: {{ $bg }}; {{ $theme === 'dark' ? 'border-color:#D9CCE7;' : 'border-color:#E5E7EB;' }}">
             <h2 class="font-semibold text-xl"
                 style="color: {{ $theme === 'dark' ? '#F9FAFB' : '#111827' }};">
               {{ $card['name'] }}
@@ -57,6 +57,15 @@
   </div>
 </div>
 
+
+<div class="mb-4 flex items-center justify-center">
+    <button id="btnWarnBack" type="button"
+        class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-[#f8f8fa] bg--[#34113F] hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50">
+        Mirate al Espejo
+    </button>
+    <br><br>
+</div>
+
 {{-- Animación simple (opcional) --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
@@ -66,5 +75,14 @@
       { y: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: "power3.out" }
     );
   }
+
+        const btnWarnBack     = document.getElementById('btnWarnBack');
+      //  window.location.href = "{{ route('entrevistas.index') }}";
+        document.addEventListener('DOMContentLoaded', () => {
+        const btnWarnBack = document.getElementById('btnWarnBack');
+        btnWarnBack.addEventListener('click', () => {
+            window.location.href = "{{ route('espejo.paint') }}";
+        });
+        });
 </script>
 @endsection

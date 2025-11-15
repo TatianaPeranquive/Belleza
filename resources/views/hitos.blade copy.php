@@ -22,7 +22,7 @@
                 <button
                     type="button"
                     @click="selectHito(it)"
-                    class="text-left rounded-3xl border bg-white shadow-sm hover:shadow p-5 transition"
+                    class="text-left rounded-3xl border bg-[#34113F] shadow-sm hover:shadow p-5 transition"
                 >
                     <h3 class="text-xl font-semibold" x-text="it.title"></h3>
                     <p class="mt-1 text-sm text-gray-600" x-text="it.text"></p>
@@ -47,7 +47,7 @@
                     :class="cardClasses(it.id)"
                 >
                     <div
-                        class="h-full w-full rounded-3xl border bg-white shadow-xl transition p-6 overflow-hidden"
+                        class="h-full w-full rounded-3xl border bg-[#f8f8fa] shadow-xl transition p-6 overflow-hidden"
                     >
                         <div class="flex items-start justify-between gap-4">
                             <div>
@@ -62,7 +62,7 @@
                             </div>
                             <span
                                 class="rounded-full px-2 py-0.5 text-xs font-medium transition"
-                                :class="activeId === it.id ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'"
+                                :class="activeId === it.id ? 'bg-[#34113F]-600 text-[#f8f8fa]' : 'bg-gray-200 text-gray-700'"
                             >
                                 <span
                                     x-text="activeId === it.id ? 'Seleccionado' : 'Cambiar'"
@@ -98,7 +98,7 @@
         <button
             type="button"
             @click="mostrarSubNivel(1)"
-            class="group inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold border shadow focus:outline-none focus:ring-4 !bg-indigo-600 !text-white border-indigo-600 focus:ring-indigo-300 hover:bg-indigo-700 active:scale-[0.98] disabled:bg-gray-200 disabled:text-gray-500 disabled:border-gray-300"
+            class="group inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold border shadow focus:outline-none focus:ring-4 !bg-[#34113F]-600 !text-[#f8f8fa] border-[#34113F]-600 focus:ring-[#34113F]-300 hover:bg-[#34113F]-700 active:scale-[0.98] disabled:bg-gray-200 disabled:text-gray-500 disabled:border-gray-300"
             aria-label="Continuar"
         >
             <svg
@@ -114,7 +114,7 @@
                     d="m9 5 7 7-7 7"
                 />
             </svg>
-            <span class="!text-white">Continuar</span>
+            <span class="!text-[#f8f8fa]">Continuar</span>
         </button>
     </div>
 
@@ -141,8 +141,8 @@
                         @click="seleccionarNivel(lvl, opt)"
                         class="relative text-left focus:outline-none transition will-change-transform transform-gpu"
                         :class="{
-              'rounded-3xl border bg-white shadow-sm p-5': true,
-              'ring-2 ring-indigo-600': (sub[lvl].selected?.id === opt.id),
+              'rounded-3xl border bg-[#f8f8fa] shadow-sm p-5': true,
+              'ring-2 ring-[#34113F]-600': (sub[lvl].selected?.id === opt.id),
               'opacity-80 hover:opacity-100': (sub[lvl].hovered === opt.id) || (sub[lvl].selected?.id === opt.id)
             }"
                     >
@@ -160,7 +160,7 @@
                             <div class="flex items-center gap-2">
                                 <span
                                     class="rounded-full px-2 py-0.5 text-xs font-medium transition"
-                                    :class="(sub[lvl].selected?.id === opt.id) ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'"
+                                    :class="(sub[lvl].selected?.id === opt.id) ? 'bg-[#34113F]-600 text-[#f8f8fa]' : 'bg-gray-200 text-gray-700'"
                                 >
                                     <span
                                         x-text="(sub[lvl].selected?.id === opt.id) ? 'Elegido' : 'Explorar'"
@@ -182,7 +182,7 @@
                 </button>
                 <button
                     type="button"
-                    class="rounded-2xl px-4 py-2 text-white bg-indigo-600 disabled:opacity-50"
+                    class="rounded-2xl px-4 py-2 text-[#f8f8fa] bg-[#34113F]-600 disabled:opacity-50"
                     :disabled="!sub[lvl].selected"
                     @click="continuarNivel(lvl)"
                 >
@@ -190,7 +190,7 @@
                 </button>
                 <button
                     type="button"
-                    class="rounded-2xl px-4 py-2 bg-black text-white disabled:opacity-50"
+                    class="rounded-2xl px-4 py-2 bg-[#34113F] text-[#f8f8fa] disabled:opacity-50"
                     :disabled="!listo"
                     @click="finalizar()"
                 >
@@ -214,7 +214,7 @@
             </div>
         </div>
 
-        <div class="rounded border bg-white">
+        <div class="rounded border bg-[#f8f8fa]">
             <template x-if="!loading && results.length === 0">
                 <div class="p-4 text-sm text-gray-600">
                     No hay resultados para los filtros seleccionados.

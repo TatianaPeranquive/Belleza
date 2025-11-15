@@ -6,8 +6,8 @@
 @endsection @section('content')
 {{-- Barra fija de "Volver" SIEMPRE por encima del header global --}}
 <nav
-    class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-black/80 backdrop-blur pointer-events-auto">
-    <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-white font-bold text-lg">&larr; Espejito,
+    class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-[#34113F]/80 backdrop-blur pointer-events-auto">
+    <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-[#f8f8fa] font-bold text-lg">&larr; Espejito,
         espejito</a>
 </nav>
 
@@ -1154,7 +1154,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
 
     <section class="modal-body">
       <div class="fc-reset">
-            <p class="modal-desc">  Gracias por verte en este espejo.</p>
+            <p class="modal-desc"  text-align:center;>  Gracias por verte en este espejo,</p>
             <p class="modal-desc">Aunque la belleza no sea lo más importante para ti, está en todas partes: en tu elección de ropa para la entrevista de trabajo, en arreglarse para una cita romántica o para verse con las amigas. Piensa en las historias de las mujeres que leíste y en los hilos que la conforman. Los factores son múltiples y se enredan entre sí.</p>
             <p class="modal-desc">El proyecto quiere informarte, no juzgarte. Espero que la información de esta página te sirva para redefinir lo que tú quieres con la belleza y negociar tu proceso de embellecimiento en los momentos que consideres. Tomes la decisión que tomes, serás juzgada: es parte de la paradoja de la belleza. Pierdes si quieres ser bella, pierdes si no lo quieres. Sin embargo, quiero dar un paso más allá para romper el blanco y negro y ver el enredo en el que tienes que vivir. </p>
             <p class="modal-desc">Espero que encuentres aquí un lugar para pensar la belleza desde una resistencia colectiva. Existirán muchas presiones a lo largo de tu vida y probablemente más con las innovaciones tecnológicas. La belleza es una moneda de cambio tanto por sus beneficios como desventajas. Así que, al igual que tú decides cómo negociar con ella, si aspiras a pasar inadvertida, a la diferenciación o la notoriedad; abraza la incoherencia que viene con ello, mírate al espejo y pregúntale: “Espejito, espejito, ¿de dónde viene este enredo?”</p>
@@ -1684,7 +1684,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
                     ctx.shadowColor = 'rgba(2,6,23,0.06)';
                     ctx.shadowBlur = 18;
                     ctx.shadowOffsetY = 6;
-                    ctx.fillStyle = '#ffffff';
+                    ctx.fillStyle = '#34113F';
                     ctx.fill();
                     ctx.restore();
                     // borde
