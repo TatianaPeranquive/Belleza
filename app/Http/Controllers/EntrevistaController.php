@@ -130,36 +130,61 @@ class EntrevistaController extends Controller
      * ====================================== */
 
     public function index()
-    {
-        $rows = DB::table('entrevistas as e')
-            ->join('usuarios as u', 'u.id', '=', 'e.usuario_id')
-            ->select('u.id', 'u.nombre', 'u.color')
-            ->groupBy('u.id', 'u.nombre', 'u.color')
-            ->orderBy('u.nombre')
-            ->get();
+        {
+            $rows = DB::table('entrevistas as e')
+                ->join('usuarios as u', 'u.id', '=', 'e.usuario_id')
+                ->select('u.id', 'u.nombre', 'u.color')
+                ->groupBy('u.id', 'u.nombre', 'u.color')
+                ->orderBy('u.nombre')
+                ->get();
 
-        // Paleta según tema activo (ajusta si no usas config theme)
-        $theme    = session('theme', config('theme.active', 'default'));
-        $palette  = config("theme.palettes.$theme.card_bg", ['#f1f5f9','#e2e8f0','#cbd5e1','#94a3b8']);
+            $total = $rows->count();
 
-        $cards = $rows->map(function ($r) use ($palette) {
-            return [
-                'slug'  => Str::slug($r->nombre, '_'),
-                'name'  => $r->nombre,
-                'color' => $r->color ?: $palette[$r->id % count($palette)],
+            // Paleta fija por "columna"
+            $columnPalette = [
+                '#D4F2D2', // verde suave
+                '#BEB7DF', // lila
+                '#ABA9BF', // gris-lila
             ];
-        })->values()->all();
 
-        return view('entrevistas.index', compact('cards'));
-    }
+            $mod = $total % 3;
 
-    public function limpiarHtml($texto) {
-        return preg_replace(
-            '/<script\b[^>]*>(.*?)<\/script>/is',
-            '',
-            strip_tags($texto, '<p><strong><em><b><i><u><br>')
-        );
-    }
+            $cards = $rows->values()->map(function ($r, $index) use ($total, $columnPalette, $mod) {
+
+                // ¿es la última y queda solita (total ≡ 1 mod 3)?
+                $forceMiddle = ($index === $total - 1) && ($mod === 1);
+
+                // columna lógica
+                $colIndex = $forceMiddle ? 1 : ($index % 3);
+
+                $baseBg = $columnPalette[$colIndex];
+
+                // criterio de “seleccionada” (ajusta si usas otro campo)
+                $isSelected = !empty($r->color);
+
+                $bgColor     = $isSelected ? '#34113F' : $baseBg;
+                $textColor   = $isSelected ? '#F9FAFB' : '#111827';
+                $borderColor = $isSelected ? '#BEB7DF' : '#ABA9BF';
+
+                return [
+                    'slug'     => Str::slug($r->nombre, '_'),
+                    'name'     => $r->nombre,
+                    'bg'       => $bgColor,
+                    'text'     => $textColor,
+                    'border'   => $borderColor,
+                    'colStart' => $forceMiddle ? 'lg:col-start-2' : '',
+                ];
+            })->all();
+
+            return view('entrevistas.index', ['cards' => $cards]);
+        }
+        public function limpiarHtml($texto) {
+            return preg_replace(
+                '/<script\b[^>]*>(.*?)<\/script>/is',
+                '',
+                strip_tags($texto, '<p><strong><em><b><i><u><br>')
+            );
+        }
 
     public function show($slug)
     {
