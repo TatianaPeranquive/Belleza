@@ -529,26 +529,30 @@ window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
             </section>
 <!-- CLIC INICIO-->
 <div x-data="{ showHint: true }"
-     x-init="setTimeout(() => { showHint = false }, 3500)">
+     x-init="setTimeout(() => { showHint = false }, 3800)">
 
   <div
     x-show="showHint"
     x-transition.opacity
-    class="fixed inset-0 z-[9980] bg-black/70 backdrop-blur-sm
-           flex items-center justify-center">
+    class="fixed inset-0 z-[9980]
+           bg-[#3B1E54]/50 backdrop-blur-md
+           flex items-center justify-center"
+  >
 
-    <div class="w-[min(92vw,680px)] max-w-3xl
-                bg-white/95 rounded-[32px] shadow-2xl border border-slate-200
-                px-12 py-12 text-center">
+    <div class="w-[min(92vw,720px)] max-w-4xl
+                bg-gradient-to-b from-[#f8f8fa] to-[#E4E1F3]/90
+                rounded-[36px] shadow-2xl border border-[#BEB7DF]
+                px-14 py-12 text-center">
 
-      <h2 class="text-4xl font-extrabold text-slate-900 mb-6 tracking-wide">
-        ¡Da clic en el Hito!
+      <h2 class="text-5xl font-extrabold mb-6 tracking-wide
+                 text-[#3B1E54] drop-shadow-sm">
+         ¡Haz clic en el Hito!
       </h2>
 
-      <p class="text-xl text-slate-800 leading-relaxed mb-8">
+      <p class="text-2xl text-slate-700 leading-relaxed mb-9 font-medium">
         Para continuar, selecciona el
-        <span class="font-bold">Hito</span> en la parte superior.
-        Este paso es necesario para mostrar el contenido correspondiente.
+        <span class="font-bold text-[#3B1E54]">Hito</span>
+        ubicado en la parte superior.
       </p>
 
       <p class="text-sm text-slate-500">
@@ -558,7 +562,6 @@ window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
     </div>
   </div>
 </div>
-
 
 
         <!-- GRID: centro más ancho -->
