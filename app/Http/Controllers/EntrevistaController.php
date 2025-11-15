@@ -131,8 +131,10 @@ class EntrevistaController extends Controller
 
     public function index()
         {
+            $ocultarIdsAutoras = [11, 12, 13];
             $rows = DB::table('entrevistas as e')
                 ->join('usuarios as u', 'u.id', '=', 'e.usuario_id')
+                ->whereNotIn('u.id', $ocultarIdsAutoras)
                 ->select('u.id', 'u.nombre', 'u.color')
                 ->groupBy('u.id', 'u.nombre', 'u.color')
                 ->orderBy('u.nombre')
@@ -264,29 +266,56 @@ class EntrevistaController extends Controller
 
         if (empty($ids)) abort(404);
 
-        $rows = DB::table('usuarios')
-            ->whereIn('id', $ids)
-            ->get(['id','nombre','color','foto','audio','edad','oficio','locacion']);
+        // $rows = DB::table('usuarios')
+        //     ->whereIn('id', $ids)
+        //     ->get(['id','nombre','color','foto','audio','edad','oficio','locacion']);
+         // ->get(['id','nombre','color','foto','audio','edad','oficio','locacion', 'valor'])
+
+$rows = DB::table('entrevistas as e')
+    ->join('usuarios as u', 'u.id', '=', 'e.usuario_id')
+    ->join('respuestas as r', 'e.id', '=', 'r.entrevista_id')
+    ->select(
+        'u.id',
+        'u.nombre',
+        'u.color',
+        'u.foto',
+        'u.audio',
+        'u.edad',
+        'u.oficio',
+        'u.locacion',
+        'r.valor'
+    )
+    ->whereIn('u.id', $ids)
+    ->groupBy(
+        'u.id',
+        'u.nombre',
+        'u.color',
+        'u.foto',
+        'u.audio',
+        'u.edad',
+        'u.oficio',
+        'u.locacion',
+        'r.valor'
+    )
+     ->get(['id','nombre','color','foto','audio','edad','oficio','locacion', 'valor']);
 
         if ($rows->isEmpty()) abort(404);
 
         $autoras = $rows->map(function ($u) {
             $foto  = $u->foto ?: (preg_replace('/\s+/', '', $u->nombre) . '_foto.png');
-            $audio = $u->audio ?: ($u->id . '_audio.mp3');
+
             return [
                 'nombre'   => $u->nombre,
                 'foto'     => $foto,
-                'audio'    => $audio,
                 'color'    => $u->color,
                 'edad'     => $u->edad,
                 'oficio'   => $u->oficio,
                 'locacion' => $u->locacion,
+                'valor'    => $u->valor,
                 'perfil'   => $this->armarPerfil($u->nombre, $u->edad, $u->oficio, $u->locacion),
             ];
         })->values()->all();
-
-         //return view('entrevistas.detras-many', compact('entrevistas'));
-
+//dd($tituloPagina ?? null, $nombre ?? null, $autoras ?? null, $edad ?? null, $a ?? null);
         return view('entrevistas.show', [
             'autoras'      => $autoras,
             'volverRoute'  => 'home',
