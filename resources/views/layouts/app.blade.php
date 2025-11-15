@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   @vite('resources/css/app.css')
-<script>
+<!-- <script>
   window.DIC_EP = @json(url('/diccionario/buscar'));
-</script>
+</script> -->
 
   <!-- AlpineJS -->
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -18,6 +18,27 @@
     body { cursor: url("{{ asset('micursor.cur') }}") 16 16, auto; }
     a, button { cursor: url("{{ asset('micursor.cur') }}") 16 16, pointer; }
     [x-cloak]{display:none!important}
+
+@keyframes hitoGlowPulse {
+  0% {
+    box-shadow: 0 0 18px 6px rgba(190, 183, 223, 0.55);
+    transform: translateY(0) scale(1.03);
+  }
+  50% {
+    box-shadow: 0 0 55px 22px rgba(190, 183, 223, 0.95);
+    transform: translateY(-1px) scale(1.07);
+  }
+  100% {
+    box-shadow: 0 0 18px 6px rgba(190, 183, 223, 0.55);
+    transform: translateY(0) scale(1.03);
+  }
+}
+
+.hitoBtn.is-selected {
+  animation: hitoGlowPulse 1.4s ease-in-out infinite;
+}
+
+
   </style>
 </head>
 <body class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-[#f8f8fa] text-[#111827]' }}">
@@ -53,16 +74,18 @@
   </main>
 
   <!-- ===================== PORTAL FLOTA ================================== -->
-  <div
-    id="float-holder"
-    x-data
-    x-show="$store.float && $store.float.show"
-    x-transition.opacity.duration.120ms
-    style="position: fixed; left: 0; top: 0; display:none;"
-    class="z-[9999] pointer-events-none"
-  >
+<div
+  id="float-holder"
+  x-data
+  x-show="$store.float && $store.float.show"
+  x-transition.opacity.duration.120ms
+  class="fixed inset-0 z-[9999] pointer-events-none flex items-center justify-center">
+
 <div id="float-card"
-     class="max-w-[420px] w-[min(92vw,420px)] rounded-2xl shadow-2xl border bg-[#f8f8fa]/90 backdrop-blur p-3 pointer-events-auto">
+     class="max-w-[780px] w-[min(92vw,780px)]
+            rounded-2xl shadow-2xl border bg-[#f8f8fa]/90 backdrop-blur
+            p-4 pointer-events-auto
+            max-h-[60vh] overflow-y-auto">
   <div class="flex items-center justify-between mb-2">
     <div class="text-[10px] uppercase tracking-wide text-slate-500"></div>
 
@@ -87,7 +110,7 @@
 
   <div class="mt-2 flex justify-end">
     <button class="text-xs underline text-slate-600 hover:text-slate-900"
-            @click="$store.float && $store.float.close()">Cerrar</button>
+            @click="$store.float && $store.float.close()">Cerrar o con ESC</button>
   </div>
 </div>
 
@@ -128,118 +151,80 @@
   </script>
 
   <!-- ============= Store Alpine: flotante diccionario =================== -->
- <script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.store('float', {
-      show: false,
-      text: '',
-      def: '',          // definición
-      ref: '',          // ejemplo / referencia
-      mode: 'def',      // 'def' | 'ref'
-      x: 0, y: 0,
+<script>
+document.addEventListener('alpine:init', () => {
 
-      openFor(el, palabra) {
-        const word = (palabra ?? '').toString().trim();
-        this.mode = 'def';
-        this.text = word ? 'Cargando…' : 'Sin palabra. Demo del flotante.';
-        this.positionNear(el);
-        this.show = true;
+  Alpine.store('float', {
 
-        if (!word) return;
+    show: false,
+    text: '',
+    def: '',
+    ref: '',
+    mode: 'def',
+    x: 0, y: 0,
 
-        const ep = (window.DIC_EP ?? '/diccionario/buscar');
-        fetch(`${ep}?palabra=${encodeURIComponent(word)}`)
-          .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status)))
-          .then(d => {
-            if (d && d.found) {
-              this.def = d.definicion || 'Sin definición disponible.';
-              this.ref = d.ejemplo    || '';
-            } else {
-              this.def = `No encontramos la definición de “${word}”.`;
-              this.ref = '';
-            }
-            this.applyMode();
-            this.positionNear(el);
-          })
-          .catch(err => {
-            console.warn('Diccionario error:', err);
-            this.def = 'Error consultando el diccionario.';
+    openFor(el, palabra) {
+      const word = (palabra ?? '').toString().trim();
+      this.mode = 'def';
+      this.text = word ? 'Cargando…' : 'Sin palabra. Demo del flotante.';
+      this.show = true;
+
+      if (!word) return;
+
+      const ep = (window.DIC_EP ?? '/diccionario/buscar');
+      fetch(`${ep}?palabra=${encodeURIComponent(word)}`)
+        .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status)))
+        .then(d => {
+          if (d && d.found) {
+            this.def = d.definicion || 'Sin definición disponible.';
+            this.ref = d.ejemplo    || '';
+          } else {
+            this.def = `No encontramos la definición de “${word}”.`;
             this.ref = '';
-            this.applyMode();
-            this.positionNear(el);
-          });
-      },
-
-      setMode(m) {
-        this.mode = (m === 'ref') ? 'ref' : 'def';
-        this.applyMode();
-      },
-
-      applyMode() {
-        this.text = (this.mode === 'ref')
-          ? (this.ref && this.ref.trim() !== '' ? this.ref : 'Sin referencia disponible.')
-          : this.def;
-      },
-
-      positionNear(el) {
-        const rect = el.getBoundingClientRect();
-        this.x = rect.left + rect.width / 2;
-        this.y = rect.top  - 8;
-
-        requestAnimationFrame(() => {
-          const holder = document.getElementById('float-holder');
-          const card   = document.getElementById('float-card');
-          if (!holder || !card) return;
-
-          const r = card.getBoundingClientRect();
-          let x = this.x - r.width / 2;
-          let y = this.y - r.height - 12;
-
-          const vw = window.innerWidth, vh = window.innerHeight;
-          x = Math.max(8, Math.min(vw - r.width - 8, x));
-          y = Math.max(8, Math.min(vh - r.height - 8, y));
-
-          holder.style.left = `${x}px`;
-          holder.style.top  = `${y}px`;
+          }
+          this.applyMode();
+        })
+        .catch(err => {
+          console.warn('Diccionario error:', err);
+          this.def = 'Error consultando el diccionario.';
+          this.ref = '';
+          this.applyMode();
         });
-      },
+    },
 
-      close() {
-        this.show = false;
-        this.text = '';
-        this.def  = '';
-        this.ref  = '';
-        this.mode = 'def';
-      }
-    });
+    setMode(m) {
+      this.mode = (m === 'ref') ? 'ref' : 'def';
+      this.applyMode();
+    },
 
-    // Reposicionar si cambia tamaño/scroll
-    const repos = () => {
-      const holder = document.getElementById('float-holder');
-      const card   = document.getElementById('float-card');
-      const s = Alpine.store('float');
-      if (!holder || !card || !s.show) return;
-      requestAnimationFrame(() => {
-        const r = card.getBoundingClientRect();
-        let x = s.x - r.width / 2;
-        let y = s.y - r.height - 12;
-        const vw = window.innerWidth, vh = window.innerHeight;
-        x = Math.max(8, Math.min(vw - r.width - 8, x));
-        y = Math.max(8, Math.min(vh - r.height - 8, y));
-        holder.style.left = `${x}px`;
-        holder.style.top  = `${y}px`;
-      });
-    };
-    window.addEventListener('resize', repos);
-    window.addEventListener('scroll',  repos, true);
-  });
+    applyMode() {
+      this.text = (this.mode === 'ref')
+        ? (this.ref && this.ref.trim() !== '' ? this.ref : 'Sin referencia disponible.')
+        : this.def;
+    },
 
-  // Cerrar con ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && window.Alpine?.store('float')) {
-      Alpine.store('float').close();
+
+    positionNear(el) {
+      return;
+    },
+
+    close() {
+      this.show = false;
+      this.text = '';
+      this.def  = '';
+      this.ref  = '';
+      this.mode = 'def';
     }
   });
+
+});
+
+// Cerrar con ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && window.Alpine?.store('float')) {
+    Alpine.store('float').close();
+  }
+});
 </script>
 
   <!-- =================================================================== -->
