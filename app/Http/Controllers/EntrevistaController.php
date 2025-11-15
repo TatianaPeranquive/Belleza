@@ -281,7 +281,6 @@ class EntrevistaController extends Controller
                 'edad'     => $u->edad,
                 'oficio'   => $u->oficio,
                 'locacion' => $u->locacion,
-
                 'perfil'   => $this->armarPerfil($u->nombre, $u->edad, $u->oficio, $u->locacion),
             ];
         })->values()->all();
