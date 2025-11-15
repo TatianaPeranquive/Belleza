@@ -62,7 +62,7 @@
             <a href="{{ route('espejo.paint') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tocador</a>
           </li>
           <li class="flex-1">
-            <a href="{{ route('detras.many', ['ids' => '11,12']) }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tejedoras</a>
+            <a href="{{ route('detras.many', ['ids' => '11,12,13']) }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tejedoras</a>
           </li>
         </ul>
       </nav>
