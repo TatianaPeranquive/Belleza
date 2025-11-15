@@ -224,7 +224,34 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && window.Alpine?.store('float')) {
     Alpine.store('float').close();
   }
+
 });
+
+//========ANIMACION TEXTOS ==================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const elements = document.querySelectorAll('.reveal-scroll');
+
+    if (!('IntersectionObserver' in window)) {
+        // Navegadores viejitos: mostrar todo sin animación
+        elements.forEach(el => el.classList.add('is-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target); // solo una vez por elemento
+            }
+        });
+    }, {
+        threshold: 0.2  // se activa cuando ~20% del elemento es visible
+    });
+
+    elements.forEach(el => observer.observe(el));
+});
+
 </script>
 
   <!-- =================================================================== -->
