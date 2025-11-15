@@ -247,11 +247,11 @@ window.hitosUI = function (ds) {
           <button type="button"
             @click="selectHito(it.id)"
             @mouseenter="hovered = it.id" @mouseleave="hovered = null" @focus="hovered = it.id" @blur="hovered = null"
-            class="rounded-xl border bg-white/90 shadow-sm transition px-4 h-12 flex items-center justify-between text-left focus:outline-none"
+            class="rounded-xl border bg--[#34113F]/90 shadow-sm transition px-4 h-12 flex items-center justify-between text-left focus:outline-none"
             :class="{'ring-2 ring-indigo-500': activeId === it.id}">
             <h3 class="text-sm font-semibold truncate" x-text="it.title"></h3>
             <span class="rounded-full px-2 py-0.5 text-[10px] font-medium"
-              :class="activeId === it.id ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'"
+              :class="activeId === it.id ? 'bg-indigo-600 text--[#34113F]' : 'bg-gray-200 text-gray-700'"
               x-text="activeId === it.id ? 'Elegido' : 'Elegir'"></span>
           </button>
         </template>
@@ -272,7 +272,7 @@ window.hitosUI = function (ds) {
           <template x-for="opt in sub[1].options" :key="opt.id">
             <button type="button"
               @click="sub[1].selected = opt.id; loadSub2();"
-              class="rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
+              class="rounded-lg border bg--[#34113F] px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
               :class="{'ring-2 ring-indigo-500': sub[1].selected === opt.id}">
               <span class="font-medium" x-text="opt.title"></span>
             </button>
@@ -290,7 +290,7 @@ window.hitosUI = function (ds) {
           <template x-for="opt in sub[2].options" :key="opt.id">
             <button type="button"
               @click="sub[2].selected = opt.id; loadSub3();"
-              class="rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
+              class="rounded-lg border bg--[#34113F] px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
               :class="{'ring-2 ring-indigo-500': sub[2].selected === opt.id}">
               <span class="font-medium" x-text="opt.title"></span>
             </button>
@@ -308,7 +308,7 @@ window.hitosUI = function (ds) {
           <template x-for="opt in sub[3].options" :key="opt.id">
             <button type="button"
               @click="sub[3].selected = opt.id"
-              class="rounded-lg border bg-white px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
+              class="rounded-lg border bg--[#34113F] px-3 py-2 text-left text-sm hover:shadow focus:outline-none"
               :class="{'ring-2 ring-indigo-500': sub[3].selected === opt.id}">
               <span class="font-medium" x-text="opt.title"></span>
             </button>
@@ -318,7 +318,7 @@ window.hitosUI = function (ds) {
 
       <div class="mt-4">
         <button type="button" @click="buscar()"
-          class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50"
+          class="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text--[#34113F] bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:opacity-50"
           :disabled="!activeId">
           Mostrar comentarios
         </button>
@@ -343,7 +343,7 @@ window.hitosUI = function (ds) {
           class="absolute inset-0 mx-auto cursor-pointer select-none"
           :style="rCardStyle(r.id, idx)"
           :class="rCardClasses(r.id)">
-          <div class="w-full h-full rounded-2xl border bg-white shadow-md transition p-5 overflow-hidden flex flex-col justify-between">
+          <div class="w-full h-full rounded-2xl border bg--[#34113F] shadow-md transition p-5 overflow-hidden flex flex-col justify-between">
             <h3 class="text-base font-semibold truncate" x-text="r.title"></h3>
             <p class="mt-1 text-sm text-gray-700 line-clamp-3" x-text="r.text"></p>
           </div>

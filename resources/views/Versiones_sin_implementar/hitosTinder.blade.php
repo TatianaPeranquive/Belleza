@@ -36,7 +36,7 @@
             'opacity-40': hovered && hovered !== it.id
           }"
         >
-          <div class="rounded-2xl border bg-white/90 shadow-sm transition p-6">
+          <div class="rounded-2xl border bg--[#34113F]/90 shadow-sm transition p-6">
             <div class="flex items-start justify-between gap-4">
               <div>
                 <h3 class="text-lg font-semibold" x-text="it.title"></h3>
@@ -65,7 +65,7 @@
           :style="cardStyle(it.id, idx)"
           :class="cardClasses(it.id)"
         >
-          <div class="h-full w-full rounded-3xl border bg-white shadow-xl transition p-6 overflow-hidden">
+          <div class="h-full w-full rounded-3xl border bg--[#34113F] shadow-xl transition p-6 overflow-hidden">
             <div class="flex items-start justify-between gap-4">
               <div>
                 <h3 class="text-xl font-semibold" x-text="it.title"></h3>
@@ -73,7 +73,7 @@
               </div>
               <span
                 class="rounded-full px-2 py-0.5 text-xs font-medium transition"
-                :class="activeId === it.id ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'">
+                :class="activeId === it.id ? 'bg-indigo-600 text--[#34113F]' : 'bg-gray-200 text-gray-700'">
                 <span x-text="activeId === it.id ? 'Seleccionado' : 'Cambiar'"></span>
               </span>
             </div>
@@ -91,7 +91,7 @@
     <button
       type="button"
       @click="showSubs = true; $nextTick(() => document.getElementById('subs')?.scrollIntoView({behavior:'smooth'}))"
-      class="group inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white
+      class="group inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text--[#34113F]
              transition transform-gpu focus:outline-none focus:ring-4
              bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] focus:ring-indigo-300"
     >
@@ -123,7 +123,7 @@
             'opacity-40': (subHovered || subSelected) && (subHovered ?? subSelected) !== sub.id
           }"
         >
-          <div class="rounded-2xl border bg-white/90 shadow-sm transition p-5">
+          <div class="rounded-2xl border bg--[#34113F]/90 shadow-sm transition p-5">
             <div class="flex items-start justify-between gap-4">
               <div>
                 <h3 class="text-lg font-semibold" x-text="sub.title"></h3>
@@ -131,7 +131,7 @@
               </div>
               <span
                 class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium transition"
-                :class="(subSelected === sub.id) ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'">
+                :class="(subSelected === sub.id) ? 'bg-indigo-600 text--[#34113F]' : 'bg-gray-200 text-gray-700'">
                 <span x-text="(subSelected === sub.id) ? 'Elegido' : 'Explorar'"></span>
               </span>
             </div>

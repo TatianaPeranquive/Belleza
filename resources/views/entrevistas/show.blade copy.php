@@ -3,8 +3,8 @@
 @section('title', strtoupper($nombre).' - ENTREVISTA')
 
 @section('content')
-<nav class="fixed top-0 left-0 w-full p-4 z-[200] bg-black/80 backdrop-blur">
-  <a href="{{ route('entrevistas.index') }}" class="text-white font-bold text-lg">&larr; Volver</a>
+<nav class="fixed top-0 left-0 w-full p-4 z-[200] bg-[#34113F]/80 backdrop-blur">
+  <a href="{{ route('entrevistas.index') }}" class="text--[#34113F] font-bold text-lg">&larr; Volver</a>
 </nav>
 
 <section class="min-h-screen flex flex-col justify-center items-center text-center pt-20 px-8">
@@ -15,7 +15,7 @@
     <div class="text-left">
       <p class="text-xl leading-relaxed">{{ $perfil }}</p>
       <ul class="mt-4 text-sm opacity-80 space-y-1">
-        <li><strong>Oficio:</strong> {{ $oficio ?? '—' }}</li>
+        <li><strong>Oficio:</strong> {{ $edad ?? '—' }}</li>
         <li><strong>Locación:</strong> {{ $locacion ?? '—' }}</li>
       </ul>
       <p> {{ $respuesta ?? '—' }} Frase introductoria  </p>

@@ -4,23 +4,23 @@
 @section('title', 'Dentro Del Espejo — Paint')
 
 @section('content')
-<nav class="fixed top-0 left-0 w-full h-16 flex items-center px-4 z-[1200] bg-black/80 text-white">
+<nav class="fixed top-0 left-0 w-full h-16 flex items-center px-4 z-[1200] bg-[#34113F]/80 text--[#34113F]">
   <a href="{{ route('hitos.index', ['hito' => 1]) }}#hitos-top" class="font-semibold">&larr; Volver</a>
 </nav>
 
 <main class="max-w-6xl mx-auto px-4 pt-20 pb-12">
   {{-- Barra 1: Cámara --}}
   <div class="flex items-center gap-3 mb-3">
-    <button id="openCam"  class="px-3 py-2 rounded-xl border border-slate-300 bg-white">📷 Abrir cámara</button>
-    <button id="flipCam"  class="px-3 py-2 rounded-xl border border-slate-300 bg-white" disabled>🔁 Cambiar cámara</button>
+    <button id="openCam"  class="px-3 py-2 rounded-xl border border-slate-300 bg--[#34113F]">📷 Abrir cámara</button>
+    <button id="flipCam"  class="px-3 py-2 rounded-xl border border-slate-300 bg--[#34113F]" disabled>🔁 Cambiar cámara</button>
     <button id="shot"     class="px-3 py-2 rounded-xl border border-emerald-300 bg-emerald-50" disabled>📸 Tomar selfie</button>
-    <button id="closeCam" class="px-3 py-2 rounded-xl border border-slate-300 bg-white" hidden>✖️ Cerrar</button>
-    <button id="download" class="ml-auto px-3 py-2 rounded-xl border border-slate-300 bg-white">⬇️ Descargar</button>
+    <button id="closeCam" class="px-3 py-2 rounded-xl border border-slate-300 bg--[#34113F]" hidden>✖️ Cerrar</button>
+    <button id="download" class="ml-auto px-3 py-2 rounded-xl border border-slate-300 bg--[#34113F]">⬇️ Descargar</button>
   </div>
 
   {{-- Barra 2: Herramientas --}}
   <div class="flex flex-wrap items-center gap-3 mb-4">
-    <button id="back" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">&larr; Volver</button>
+    <button id="back" class="px-3 py-2 rounded-xl border border-slate-300 bg--[#34113F]">&larr; Volver</button>
 
     <h2 class="mx-auto font-semibold">Dentro Del Espejo</h2>
 
@@ -50,7 +50,7 @@
 
   {{-- Escenario --}}
   <div id="stage"
-     class="relative w-full h-[70vh] min-h-[420px] bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden select-none">
+     class="relative w-full h-[70vh] min-h-[420px] bg--[#34113F] border border-slate-200 rounded-2xl shadow-sm overflow-hidden select-none">
 
   <!-- Imagen de fondo (se ajusta) -->
   <img id="bg" alt="Imagen de fondo"
@@ -77,13 +77,13 @@
 </div>
 <!-- Modal de previsualización -->
 <div id="selfieModal"
-     class="fixed inset-0 z-[1300] hidden bg-black/70 backdrop-blur-sm">
+     class="fixed inset-0 z-[1300] hidden bg-[#34113F]/70 backdrop-blur-sm">
   <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-              bg-white rounded-2xl shadow-xl p-4 w-[min(92vw,720px)]">
+              bg--[#34113F] rounded-2xl shadow-xl p-4 w-[min(92vw,720px)]">
     <h3 class="text-lg font-semibold mb-3">Previsualización</h3>
     <img id="selfiePreview" class="w-full h-[50vh] object-contain rounded-xl bg-slate-50" alt="Selfie">
     <div class="mt-4 flex justify-end gap-2">
-      <button id="retryShot" class="px-3 py-2 rounded-xl border border-slate-300 bg-white">Repetir</button>
+      <button id="retryShot" class="px-3 py-2 rounded-xl border border-slate-300 bg--[#34113F]">Repetir</button>
       <button id="useShot" class="px-3 py-2 rounded-xl border border-emerald-300 bg-emerald-50">Usar foto</button>
     </div>
   </div>
@@ -93,7 +93,7 @@
   <!-- Tarjeta animada (oculta hasta pasar sobre el lienzo) -->
   <div id="qaCard"
        class="pointer-events-auto hidden absolute -left-2 top-0 w-[min(420px,42vw)]
-              bg-white/95 rounded-2xl shadow-xl border border-slate-200 p-4">
+              bg--[#34113F]/95 rounded-2xl shadow-xl border border-slate-200 p-4">
     <h4 id="qaTitle" class="font-semibold mb-2">Pregunta</h4>
     <p id="qaText" class="text-sm text-slate-700 mb-3"></p>
     <textarea id="qaAnswer"
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     c.width=W; c.height=H;
     const x = c.getContext('2d');
     // fondo
-    x.fillStyle = '#ffffff'; x.fillRect(0,0,W,H);
+    x.fillStyle = '#34113F'; x.fillRect(0,0,W,H);
     x.fillStyle = '#0f172a'; x.font = 'bold 22px system-ui, Segoe UI, Arial';
     x.fillText(Q[i].t, 24, 40);
     x.fillStyle = '#334155'; x.font='16px system-ui, Segoe UI, Arial';
