@@ -1124,26 +1124,110 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
 
 
         <!-- ==== AVISO BLOQUEANTE (modal con overlay) ==== -->
-        <div id="warnOverlay" class="warn-overlay" aria-modal="true" role="dialog">
-            <div class="warn-modal" role="document">
-                <h2
-                    style="color:#dc2626; font-weight:800; font-size:1.4rem; text-transform:uppercase; text-align:center; margin-bottom:.75rem;">
-                     Advertencia de contenido
-                </h2>
+<div id="warnOverlay"
+     aria-modal="true"
+     role="dialog"
+     style="
+       position: fixed;
+       inset: 0;
+       z-index: 9990;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       /* FONDO LAVANDA COMO HITOS (D9CCE7) */
+       background: rgba(217, 204, 231, 0.82); /* #D9CCE7 con transparencia */
+       backdrop-filter: blur(10px);
+     "
+>
+  <div
+    class="warn-modal"
+    role="document"
+    style="
+      width: min(92vw, 720px);
+      max-width: 720px;
+      /* TARJETA CLARITA CON BORDE LILA */
+      background-color: #ffffff;
+      border: 2px solid #BEB7DF;
+      border-radius: 32px;
+      padding: 3rem 3.5rem;
+      text-align: center;
+      box-shadow: 0 18px 45px rgba(171, 169, 191, 0.55); /* #ABA9BF base */
+    "
+  >
+    <h2
+      style="
+        color:#34113F;
+        font-weight:900;
+        font-size:2.2rem;
+        text-transform:uppercase;
+        letter-spacing:1px;
+        margin-bottom:1.8rem;
+      "
+    >
+      ADVERTENCIA DE CONTENIDO
+    </h2>
 
-                <p style="line-height:1.5; color:#0f172a; text-align:center; margin-bottom:1rem;">
-                    Este ejercicio contiene preguntas sobre modificación facial, cirugía plástica e inseguridades. Si no
-                    te sientes en la condición de hablar sobre estos temas, te recomiendo que saltes esta sección.<br>
-                    Presione <strong>Continuar</strong> para ver las preguntas o <strong>Volver</strong> para ir al
-                    Salón de Espejos.
-                </p>
+    <p
+      style="
+        line-height:1.6;
+        font-size:1.2rem;
+        color:#34113F;
+        margin-bottom:2rem;
+      "
+    >
+      Este ejercicio contiene preguntas sobre modificación facial, cirugía plástica e inseguridades.
+      <br><br>
+      Si no te sientes en la condición de hablar sobre estos temas, te recomiendo que saltes esta sección.
+      <br><br>
+      Presione <strong>Tocador</strong> para ver las preguntas o
+      <strong>Salón de espejos</strong> para regresar.
+    </p>
 
-                <div style="display:flex; justify-content:space-between; gap:.75rem;">
-                    <button id="btnWarnBack" class="btn" style="flex:1;">← Volver</button>
-                    <button id="btnWarnContinue" class="btn btn-primary" style="flex:1;">Continuar →</button>
-                </div>
-            </div>
-        </div>
+    <div style="display:flex; justify-content:center; gap:1.2rem;">
+      <!-- Botón Salón de espejos -->
+      <button
+        id="btnWarnBack"
+        class="btn"
+        style="
+          flex:1;
+          background:#D9CCE7;
+          border:2px solid #BEB7DF;
+          color:#34113F;
+          font-weight:700;
+          padding:1rem 1.3rem;
+          border-radius:12px;
+          font-size:1.05rem;
+          cursor:pointer;
+          transition:.15s;
+        "
+      >
+        ← Salón de espejos
+      </button>
+
+      <!-- Botón Tocador -->
+      <button
+        id="btnWarnContinue"
+        class="btn btn-primary"
+        style="
+          flex:1;
+          background:#34113F;
+          border:2px solid #34113F;
+          color:#D9CCE7;
+          font-weight:700;
+          padding:1rem 1.3rem;
+          border-radius:12px;
+          font-size:1.05rem;
+          cursor:pointer;
+          transition:.15s;
+        "
+      >
+        Tocador →
+      </button>
+    </div>
+  </div>
+</div>
+
+
 
 <div id="finalOverlay" class="overlay hidden">
   <div class="modal-full">
@@ -1898,7 +1982,7 @@ document.getElementById('btnContinuarFinal').onclick = () => {
 
                 document.getElementById('btnContinuarFinal').onclick = () => {
                     document.body.classList.remove('modal-open');
-                    window.location.href = "{{ route('espejo.paint') }}";
+                    window.location.href="{{ route('detras.many', ['ids' => '11,12,13']) }}";
                 };
                 }
 
