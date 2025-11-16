@@ -17,11 +17,17 @@ Ajusta : h-[140px] / h-[160px] / h-[180px] --}}
     <div class="max-w-6xl mx-auto">
         {{-- Título de página (no se tapa gracias al spacer) --}}
         <header class="text-center mb-10">
-            <div class="w-full fade-in"
-                style="background-color: #D9CCE7; padding: 2.5rem 3rem; border-radius: 18px; text-align:center;">
+            <div class="w-full fade-in" style="
+                background-image: url('{{ asset('fondoTrama.png') }}');
+                background-repeat: repeat;
+                background-size: 200px; /* Ajusta: 80px = fino, 200px = más elegante */
+                padding: 0.5rem 1rem;
+                border-radius: 18px;
+                text-align:center;">
+
                 <div class="fade-in" style="
                     background-color: #34113F;
-                    color: #ABA9BF;
+                    color: #E5E3F7;
                     padding: 0.45rem 1rem;
                     border-radius: 12px;
                     font-size: 1.05rem;
@@ -73,41 +79,36 @@ Ajusta : h-[140px] / h-[160px] / h-[180px] --}}
                     {{ $valor }}
                 </h2>
 
-
-
                 </div>
             </div>
         </header>
 
         @if(isset($autoras) && is_array($autoras))
-        {{-- === MODO MÚLTIPLE (apilado): una debajo de la otra === --}}
+        {{-- === MODO MÚLTIPLE === --}}
 
         <div class="w-full fade-in" style="
-                    background-color: #ABA9BF;
+                    background-color: #E5E3F7;
                     padding: 2.5rem 3rem;
                     border-radius: 24px;">
             <p class="text-xl mb-12 leading-relaxed" style="color:#34113F;">
                 Espejito, espejito es un proyecto de humanidades públicas digitales y feminista que utiliza
                 la historia oral y la difracción para preguntar por el papel que ha jugado la belleza en las historias
-                de
-                vida de mujeres colombianas.
+                de vida de mujeres colombianas.</p>
+            <p class="text-xl mb-12 leading-relaxed" style="color:#34113F;">
                 Las categorías que ves en la sección Entramado fueron alimentadas por fuentes académicas y por los temas
-                en
-                común de los relatos de las narradoras. Para crear las categorías me detuve en sus anécdotas sobre la
+                en común de los relatos de las narradoras. Para crear las categorías me detuve en sus anécdotas sobre la
                 transformación corporal, ya sea la subida o bajada de peso, los cambios asociados a la vejez o las
                 alteraciones temporales y permanentes en su apariencia física, como el uso de maquillaje, tratamientos
-                para
-                el cabello o su forma de vestir. Así pude concluir que la manera en que cuentan estos eventos presenta
+                para el cabello o su forma de vestir. Así pude concluir que la manera en que cuentan estos eventos presenta
                 similitudes cíclicas. Es decir, a lo largo de sus vidas experimentan tres hitos en su relación con el
-                cuerpo
-                y el embellecimiento: el aprendizaje, la resignificación y la respuesta al cuerpo que envejece. Estos
-                tres
-                hitos se entrelazan; no existen cortes tajantes que determinen cuándo termina una etapa y comienza la
+                cuerpo y el embellecimiento: el aprendizaje, la resignificación y la respuesta al cuerpo que envejece. Estos
+                tres hitos se entrelazan; no existen cortes tajantes que determinen cuándo termina una etapa y comienza la
                 otra.
                 Más bien, los veo como procesos que transitan y se influyen mutuamente. En los hitos, encontrarás las
                 categorías a las que las narradoras prestaron más atención en cada ciclo, aunque estas afectan toda la
-                vida,
-                siguen el orden de introducción en sus relatos.
+                vida, siguen el orden de introducción en sus relatos.
+            </p>
+            <p class="text-xl mb-12 leading-relaxed" style="color:#34113F;">
                 El propósito de este proyecto es abrir una conversación conjunta sobre la belleza para entender el
                 concepto
                 más allá de la superficialidad. Porque, después de verlo y entenderlo, no hay nada en este tema que sea
@@ -127,23 +128,13 @@ Ajusta : h-[140px] / h-[160px] / h-[180px] --}}
                 cómo este proceso influye en la relación con tu cuerpo y la sociedad. De esta manera podrás interpretar
                 cómo
                 sientes y performas tu feminidad y cómo percibes la legitimidad social.
+            </p>
+            <p class="text-xl mb-12 leading-relaxed" style="color:#34113F;">
                 Este proyecto fue realizado como proyecto de grado para la Maestría en Humanidades Digitales de la
                 Universidad de los Andes. Se realizó gracias a la participación voluntaria de las mujeres que
                 presentaron
                 sus historias para este proyecto experimental.
-                Mi nombre es Angélica, soy historiadora y decidí crear este proyecto como una forma de entender un
-                guisante
-                en mi cama que me incomodaba. Como feminista, nunca supe qué posición tomar con respecto al
-                embellecimiento.
-                Me gusta pintarme las uñas, me gusta saber del mundo de la moda, me gusta el maquillaje, me importa cómo
-                se
-                vea mi cuerpo y aun así sentía que tenía que luchar en contra de todo eso. Ahora, después de este
-                proyecto,
-                pienso que el acto más feminista es entender el contexto en el que estoy, qué privilegios poseo y cuáles
-                son
-                los puntos que estoy dispuesta a negociar y cuáles no. No se trata de llevar una coherencia absoluta; de
-                hecho, creo que al entender los matices y las contradicciones, puedo redefinir cómo performo el
-                embellecimiento y cómo lidio con las capas de historia que tiene la belleza.
+            </p>
         </div>
 
         <br><br>
