@@ -146,7 +146,7 @@ class EntrevistaController extends Controller
             $columnPalette = [
                 '#D4F2D2', // verde suave
                 '#BEB7DF', // lila
-                '#ABA9BF', // gris-lila
+                '#E5E3F7', // gris-lila
             ];
 
             $mod = $total % 3;
@@ -166,7 +166,7 @@ class EntrevistaController extends Controller
 
                 $bgColor     = $isSelected ? '#34113F' : $baseBg;
                 $textColor   = $isSelected ? '#F9FAFB' : '#111827';
-                $borderColor = $isSelected ? '#BEB7DF' : '#ABA9BF';
+                $borderColor = $isSelected ? '#D9CCE7' : '#E5E3F7';
 
                 return [
                     'slug'     => Str::slug($r->nombre, '_'),
