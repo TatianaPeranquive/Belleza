@@ -26,7 +26,7 @@
             activeResId: null,
             // --- Grafico ALUBIAL ---
             portPad: 2, // <- largo del whisker (en px). Sube/baja este número a tu gusto
-            palette: ['#5B8DEF', '#22C55E', '#F59E0B', '#EC4899', '#06B6D4', '#10B981', '#F43F5E', '#8B5CF6'],
+            palette: ['#34113F', '#A397D7', '#BCF7B8', '#BBF6B7', '#22C55E', '#F59E0B', '#EC4899', '#06B6D4'],
             colorFor(id) { if (!id) return '#5B8DEF'; const i = Math.abs(parseInt(id, 10) || 0); return this.palette[(i - 1) % this.palette.length]; },
 
             getEl(sel) { return this.$root.querySelector(sel); },
@@ -467,23 +467,8 @@
             }
         }
 
-// }  y borrar la flor
-            const btnWarnBack     = document.getElementById('btnWarnBack');
-            const btnWarnBack2    = document.getElementById('btnWarnBack2');
-        //  window.location.href = "{{ route('entrevistas.index') }}";
-            document.addEventListener('DOMContentLoaded', () => {
-            const btnWarnBack = document.getElementById('btnWarnBack');
-            btnWarnBack.addEventListener('click', () => {
-                window.location.href="{{ route('detras.many', ['ids' => '11,12,13']) }}";
-            });
-            });
-            document.addEventListener('DOMContentLoaded', () => {
-            const btnWarnBack2 = document.getElementById('btnWarnBack2');
-            btnWarnBack2.addEventListener('click', () => {
-                window.location.href = "{{ route('entrevistas.index') }}";
-            });
-            });
-} // esta es la flor
+}
+
 window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
 </script>
 
@@ -506,13 +491,13 @@ window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
 
                 <!-- selectHito -->
             <section class="mb-8">
-            <div class="rounded-2xl border border-[#ABA9BF]/70 bg-[#f8f8fa]/80 backdrop-blur px-6 py-4 shadow-md">
+            <div class="rounded-2xl border border-[#E5E3F7]/70 bg-[#f8f8fa]/80 backdrop-blur px-6 py-4 shadow-md">
                <div class="mx-auto w-full max-w-5xl grid grid-cols-1 sm:grid-cols-3 gap-20">
                 <template x-for="it in items" :key="it.id">
                <button
                 type="button"
                     @click="selectHito(it.id); $nextTick(() => $store.float.openFor($el, (it.palabra ?? it.slug ?? it.title)?.toString().trim()))"
-                    class="hitoBtn w-full rounded-full border border-[#ABA9BF]/70 px-6 py-3 text-base
+                    class="hitoBtn w-full rounded-full border border-[#E5E3F7]/70 px-6 py-3 text-base
                         bg-white/90 hover:shadow-lg hover:-translate-y-[1px]
                         focus:outline-none transition-all duration-200 ease-out
                         text-[#34113F] font-semibold tracking-wide"
@@ -807,7 +792,8 @@ window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
                 </div>
                 <br><br>
                 <div class="mb-4 flex items-center justify-between">
-                    <button id="btnWarnBack2" type="button"
+                    <button id="btnWarnBackNext"
+                    @click="window.location.href = '{{ route('entrevistas.index') }}'"
                          class="inline-flex items-center gap-3 rounded-3xl px-10 py-4 text-lg font-bold
                             text-white
                             bg-[#34113F]
@@ -818,23 +804,19 @@ window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
                             disabled:opacity-50">
                     Salón de espejos</button>
 
-                    <button id="btnWarnBack" type="button"
+                    <button id="btnWarnBack"
+                        @click="window.location.href = '{{ route('espejo.paint') }}'"
                         class="inline-flex items-center gap-3 rounded-3xl px-10 py-4 text-lg font-bold
-                            text-white
-                            bg-[#34113F]
+                            text-white bg-[#34113F]
                             hover:bg-[#BEB7DF] hover:text-[#34113F]
-                            focus:outline-none
-                            focus:ring-4 focus:ring-[#D9CCE7]
-                            transition-all duration-200
-                            disabled:opacity-50">
+                            focus:outline-none focus:ring-4 focus:ring-[#D9CCE7]
+                            transition-all duration-200 disabled:opacity-50">
                         Mírate al espejo
                     </button>
-
                 </div>
             </section>
         </section>
         <br>
-
     </div>
 
     <template x-if="loading">
