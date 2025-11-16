@@ -25,6 +25,7 @@ Route::prefix('api/resumen')->group(function () {
     Route::get('/sub1',                   [ResumenFiltroApiController::class, 'sub1']);          // requiere ?hito=
     Route::get('/sub2',                   [ResumenFiltroApiController::class, 'sub2']);          // requiere ?hito=&sub1=
     Route::get('/sub3',                   [ResumenFiltroApiController::class, 'sub3']);          // requiere ?hito=&sub1=&sub2=
+    Route::get('/sub4',                   [ResumenFiltroApiController::class, 'sub4']);          // requiere ?hito=&sub1=&sub2=&sub3=
     Route::get('/buscar',                 [ResumenFiltroApiController::class, 'buscar']);        // trae filas filtradas por lo elegido
     Route::get('/buscar-texto',           [ResumenFiltroApiController::class, 'buscarTexto']);   // full-text en comentario (opcional)
 });

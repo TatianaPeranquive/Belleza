@@ -129,6 +129,44 @@ class ResumenFiltroApiController extends Controller
         return response()->json($this->mapListToItems($vals));
     }
 
+    // Nivel 4 (requiere hito, sub1, sub2, sub3 como string o id)
+    public function sub4(Request $req)
+    {
+        $hitoIn = $req->query('hito');
+        $hito   = $this->resolveValue('categoria_1', $hitoIn);
+        if (!$hito) return response()->json([]);
+
+        $sub1In = $req->query('sub1');
+        $sub1   = $this->resolveValue('categoria_2', $sub1In, [
+            'categoria_1' => $hito,
+        ]);
+        if (!$sub1) return response()->json([]);
+
+        $sub2In = $req->query('sub2');
+        $sub2   = $this->resolveValue('categoria_3', $sub2In, [
+            'categoria_1' => $hito,
+            'categoria_2' => $sub1,
+        ]);
+        if (!$sub2) return response()->json([]);
+
+        $sub3In = $req->query('sub3');
+        $sub3   = $this->resolveValue('categoria_4', $sub3In, [
+            'categoria_1' => $hito,
+            'categoria_2' => $sub1,
+            'categoria_3' => $sub2,
+        ]);
+        if (!$sub3) return response()->json([]);
+
+        $vals = $this->distinctValues('categoria_5', [
+            'categoria_1' => $hito,
+            'categoria_2' => $sub1,
+            'categoria_3' => $sub2,
+            'categoria_4' => $sub3,
+        ]);
+
+        return response()->json($this->mapListToItems($vals));
+    }
+
     // Filtrado final; acepta numérico o texto en hito/sub1/sub2/sub3
     public function buscar(Request $req)
     {
