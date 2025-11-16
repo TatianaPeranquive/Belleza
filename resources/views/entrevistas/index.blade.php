@@ -6,7 +6,7 @@
 <div class="relative min-h-screen">
 
     {{-- Fondo decorativo --}}
-    <img src="{{ asset('fondo_index.png') }}" alt="Fondo decorativo"
+    <img src="{{ asset('EspejosSalon.png') }}" alt="Fondo decorativo"
          class="pointer-events-none absolute inset-0 opacity-20 object-cover w-full h-full z-0" />
 
     {{-- Barra fija arriba --}}
