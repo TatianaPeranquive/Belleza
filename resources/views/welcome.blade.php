@@ -452,10 +452,6 @@
         <p class="text-lg md:text-xl max-w-prose mx-auto reveal-scroll ">
             Espero que al leer los hilos de sus historias te mires al espejo y veas algo diferente.
         </p>
-        <!-- Imagen -->
-        <div class="text-center ">
-            <img src="portada9.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
-        </div>
     </div>
 </section>
 
