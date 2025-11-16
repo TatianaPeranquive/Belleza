@@ -1151,7 +1151,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
       border-radius: 32px;
       padding: 3rem 3.5rem;
       text-align: center;
-      box-shadow: 0 18px 45px rgba(171, 169, 191, 0.55); /* #ABA9BF base */
+      box-shadow: 0 18px 45px rgba(171, 169, 191, 0.55); /* #E5E3F7 base */
     "
   >
     <h2
@@ -1640,11 +1640,11 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
 
                 // --- Preguntas "quemadas"
                 const Q = [
-                    "Si pudieras modificar cualquier cosa de tu rostro sin dolor o secuelas, ¿qué cambiarías? Señala en la imagen. CONTINUAR",
-                    "Ahora puedes cambiar cosas, pero tienes que hacerte un procedimiento radical. ¿Qué cosas intervendrías con cirugías? Señala en la imagen. CONTINUAR",
-                    "Solo puedes utilizar tratamientos no invasivos para cambiar tu rostro: desde plantas, minerales, productos y tratamientos. ¿Qué cosas cambiarías con eso? Señala tu imagen. CONTINUAR",
-                    "¿Alguna vez has recurrido a estos procesos radicales o no invasivos? Si es así, ¿por qué? Si no es el caso, ¿por qué no? Raya tu selfie. CONTINUAR",
-                    "¿Qué cosas intervienen en tus decisiones y bajo qué condiciones? Si tu entorno fuera diferente, ¿cambiarias tu razonamiento? Raya tu selfie. CONTINUAR"
+                    "Si pudieras modificar cualquier cosa de tu rostro sin dolor o secuelas, ¿qué cambiarías? Señala en la imagen o escribe. CONTINUAR",
+                    "Ahora puedes cambiar cosas, pero tienes que hacerte un procedimiento radical. ¿Qué cosas intervendrías con cirugías? Señala en la imagen o escribe. CONTINUAR",
+                    "Solo puedes utilizar tratamientos no invasivos para cambiar tu rostro: desde plantas, minerales, productos y tratamientos. ¿Qué cosas cambiarías con eso? Señala tu imagen o escribe. CONTINUAR",
+                    "¿Alguna vez has recurrido a estos procesos radicales o no invasivos? Si es así, ¿por qué? Si no es el caso, ¿por qué no? Raya tu selfie o escribe. CONTINUAR",
+                    "¿Qué cosas intervienen en tus decisiones y bajo qué condiciones? Si tu entorno fuera diferente, ¿cambiarias tu razonamiento? Raya tu selfie o escribe. CONTINUAR"
                 ];
 
                 let qIdx = 0;
