@@ -888,7 +888,7 @@ body.modal-open{ overflow: hidden !important; }
   width: 100vw;
   height: 100vh;
   background-color: #fff;
-  background-image: url("/PROYECTOS/Belleza/public/img/tocador2.png"); /* ← tu marco PNG */
+  background-image: href="{{ secure_url('/img/#tocador2.png') }}"
   background-repeat: no-repeat;
   background-size: cover; /* se estira al tamaño completo */
   background-position: center;
@@ -1369,22 +1369,21 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
                 let drawing = false, lastX = 0, lastY = 0, lastStampX = 0, lastStampY = 0, stampSpacing = 0.35;
                 let history = [], redoStack = [], historyLimit = 50;
 
-                // —— Cursores personalizados (pon tus PNGs en /public/img/cursors/)
-                const cursorBase = '/PROYECTOS/Belleza/public/img/cursors/';
+
                 function updateCursor() {
                     let path = '';
-                    if (mode === 'erase') path = cursorBase + 'borrar.png';
+                    if (mode === 'erase') path = "{{ asset('img/borrar.png') }}";
                     else {
                         switch (brush) {
-                            case 'lipstick': path = cursorBase + 'labial.png'; break;
-                            case 'shadow': path = cursorBase + 'sombra.png'; break;
-                            case 'blush': path = cursorBase + 'rubor.png'; break;
-                            case 'eyeliner': path = cursorBase + 'delineador.png'; break;
-                            case 'remover': path = cursorBase + 'desmaquillante.png'; break;
+                            case 'lipstick': path = "{{ asset('img/labial.png') }}"; break;
+                            case 'shadow': path   = "{{ asset('img/sombra.png') }}"; break;
+                            case 'blush': path    = "{{ asset('img/rubor.png') }}"; break;
+                            case 'eyeliner': path = "{{ asset('img/delineador.png') }}"; break;
+                            case 'remover': path  = "{{ asset('img/desmaquillante.png') }}"; break;
                             default: path = '';
                         }
                     }
-                    if (path) cv.style.cursor = `secure_url("${path}") 16 16, crosshair`;
+                    if (path) cv.style.cursor = `url("${path}") 16 16, crosshair`;
                     else cv.style.cursor = 'crosshair';
                 }
 

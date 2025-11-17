@@ -289,7 +289,7 @@
 
                 <!-- COLUMNA DERECHA → IMAGEN REDUCIDA -->
                 <div class="flex justify-center">
-                    <img src="portada3.png" alt=" " class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
+                    <img src="Portada3.png" alt=" " class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
                 </div>
 
             </div>
@@ -310,7 +310,7 @@
 
                     <!-- Imagen (MUCHO más grande) -->
                     <div class="flex justify-center">
-                        <img src="portada5.png" class="object-contain
+                        <img src="Portada5.png" class="object-contain
                             max-h-[600px] md:max-h-[750px] lg:max-h-[900px]
                             reveal-scroll">
                     </div>
@@ -503,7 +503,7 @@
 
 <section id="contact5" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
-        <img src="portada8.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
+        <img src="Portada8.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
     </div>
 </section>
 
