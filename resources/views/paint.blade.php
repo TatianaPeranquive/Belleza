@@ -6,7 +6,8 @@
 @endsection @section('content')
 {{-- Barra fija de "Volver" SIEMPRE por encima del header global --}}
 <nav
-    class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-[#34113F]/80 backdrop-blur pointer-events-auto">
+    class="fixed
+     top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-[#34113F]/80 backdrop-blur pointer-events-auto">
     <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-[#f8f8fa] font-bold text-lg">&larr; Espejito,
         espejito</a>
 </nav>
@@ -45,7 +46,8 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             gap: .5rem;
             height: var(--bar-h);
             padding: 0 .75rem;
-            background: #fff;
+             background: transparent !important;
+            border: none !important;
             backdrop-filter: saturate(180%) blur(8px);
             border-bottom: 1px solid #e2e8f0;
             z-index: 50
@@ -92,29 +94,47 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         }
 
         /* === Botones generales === */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.42rem 0.75rem;
-            border: 1px solid #111;
-            border-radius: 9999px;
-            background: #fff;
-            color: #111;
-            font-weight: 600;
-            line-height: 1;
-            white-space: nowrap;
-            box-shadow: inset 0 -2px rgba(0, 0, 0, 0.06);
-            cursor: pointer;
-            transition: transform 0.05s ease, background 0.15s ease, color 0.15s ease;
-        }
+    .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 1.1rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+
+    background: #E8E0F2;       /* lavanda muy suave */
+    color: #3A245F;            /* morado profundo */
+    border: 1px solid #C8B7E2; /* tono de borde coherente */
+
+    box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.12),
+        inset 0 -2px rgba(255, 255, 255, 0.4);
+
+    transition:
+        transform 0.15s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    background: #D9CFF0;
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    background: #CFC3EB;
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
 
         .btn {
             padding: .4rem .7rem;
             border: 1px solid #cbd5e1;
             border-radius: .6rem;
-            background: #fff;
-            color: #334155;
+            background: #d9cce7;
+            color: #34113F;
             font-size: .9rem;
             cursor: pointer
         }
@@ -127,15 +147,15 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         /* Clic → negro */
         .btn:active,
         .chip:active {
-            background: #000;
-            color: #fff;
+            background: #34113F;
+            color: #D9CCE7;
             transform: translateY(1px);
         }
 
         /* Estado activo (si el JS aplica .active) */
         .btn.active,
         .chip.active {
-            background: #f4f4f5;
+            background: #D9CCE7;
         }
 
         /* === Botón “Cargar imagen” === */
@@ -190,12 +210,12 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             align-items: center;
             justify-content: center;
             padding: 0.42rem 0.75rem;
-            border: 1px solid #111;
+            border: 1px solid #34113F;
             border-radius: 9999px;
-            background: #fff;
-            color: #111;
+            background: #D9CCE7;
+            color: #34113F;
             font-weight: 600;
-            cursor: pointer;
+
             box-shadow: inset 0 -2px rgba(0, 0, 0, 0.06);
             transition: transform 0.05s ease, background 0.15s ease, color 0.15s ease;
         }
@@ -210,19 +230,19 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
         .chip {
             padding: .4rem .7rem;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #D9CCE7;
             border-radius: 6rem;
             background: #fff;
-            color: #334155;
+            color: #34113F;
             font-size: .85rem;
-            cursor: pointer;
+
             white-space: nowrap
         }
 
         .chip.active {
-            background: #0f172a;
-            color: #fff;
-            border-color: #0f172a
+            background: #34113F;
+            color: #D9CCE7;
+            border-color: #34113F
         }
 
         .wrap {
@@ -355,7 +375,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         /* marco en medio */
         :root {
             --mirror-shift-x: 25%;
-            /* Ajusta según necesites */
         }
 
         #frame,
@@ -523,7 +542,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         /* --- Reflexión al final del lienzo --- */
         .reflection-section {
             margin-top: 40px;
-            background: #fff;
+            background: #E5E3F7;
             border: 1px solid #e2e8f0;
             border-radius: 14px;
             box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
@@ -570,7 +589,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
         .reflection-section {
             margin-top: 40px;
-            background: #fff;
+            background: #E5E3F7;
             border: 1px solid #e2e8f0;
             border-radius: 14px;
             box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
@@ -582,7 +601,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         .reflection-title {
             font-weight: 800;
             font-size: 1.25rem;
-            color: #0f172a;
+            color: #34113F;
             margin-bottom: .5rem;
         }
 
@@ -669,9 +688,8 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         .instructions-card {
             max-width: 1024px;
             margin: .4rem auto 1rem;
-            border: 1px solid #e5e7eb;
             border-radius: 12px;
-            background: rgba(249, 250, 251, .75);
+            background: #D9CCE7;
             /* gris MUY leve y semitransparente */
             overflow: hidden;
         }
@@ -683,7 +701,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             align-items: center;
             gap: .5rem;
             padding: .55rem .85rem;
-            cursor: pointer;
+
             font-weight: 700;
             user-select: none;
         }
@@ -699,11 +717,10 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             align-items: center;
             justify-content: center;
             border-radius: 9999px;
-            border: 1px solid #111;
+            border: 1px solid #34113F;
             font-size: .9rem;
             line-height: 1;
-            background: #fff;
-            color: #111;
+            color: #34113F;
         }
 
         .instructions-card .hint {
@@ -791,7 +808,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
   overflow-y: auto;
   padding: 2.8rem 3.2rem;
-  background: rgba(255, 255, 255, 0.85);
+
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 
@@ -816,9 +833,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 /* Footer fijo abajo con botón visible */
 #finalOverlay .modal-footer{
   position: sticky; bottom: 0; z-index: 2;
-  background: rgba(255,255,255,.96);
   backdrop-filter: blur(2px);
-  border-top: 1px solid #eee;
   padding: 10px 16px;
   display: flex; justify-content: flex-end; gap: .5rem;
 }
@@ -890,7 +905,7 @@ body.modal-open{ overflow: hidden !important; }
   color: #111;
   line-height: 1.7;
   font-size: 1.05rem;
-  background: rgba(255,255,255,0.7); /* leve velo para legibilidad */
+  background: #F5F1FA   ; /* leve velo para legibilidad */
   border-radius: 12px;
   box-shadow: 0 0 12px rgba(0,0,0,0.1);
 }
@@ -913,21 +928,21 @@ body.modal-open{ overflow: hidden !important; }
 #finalOverlay .btn {
   padding: .6rem 1.2rem;
   font-weight: 600;
-  border: 1px solid #111;
+  border: 1px solid #34113F;
   border-radius: 9999px;
-  background: #fff;
+  background: #D9CCE7;
   color: #111;
 }
 #finalOverlay .btn:active {
-  background: #000;
-  color: #fff;
+  background: #34113F;
+  color: #D9CCE7;
 }
 /* Capa oscura */
 /* === POP-UP FINAL CON MARCO A PANTALLA COMPLETA === */
 #finalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: #34113F;
   backdrop-filter: blur(3px);
   z-index: 10000;
   display: flex;
@@ -968,7 +983,7 @@ body.modal-open{ overflow: hidden !important; }
 #finalOverlay .modal-footer {
   position: relative;
   z-index: 1;
-  color: #111;
+  color: #34113F;
 }
 
 /* Header arriba */
@@ -979,7 +994,7 @@ body.modal-open{ overflow: hidden !important; }
   margin: 0;
   font-size: 1.6rem;
   font-weight: 800;
-  color: #111;
+  color: #34113F;
 }
 
 /* Body con scroll */
@@ -990,9 +1005,9 @@ body.modal-open{ overflow: hidden !important; }
   max-height:65vh;     /* alto controlado */
   overflow:auto;
   padding:2rem 3rem;
-  background:rgba(255,255,255,.88);
+  background:#E5E3F7;
   border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,.15);
+  box-shadow:0 6px 18px #34113F;
 transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantalla */
 
 }
@@ -1003,7 +1018,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
   bottom: 0;
   right: 0;
   padding: 1rem 2rem;
-  background: rgba(255,255,255,0.9);
+  background: #E5E3F7;
   backdrop-filter: blur(4px);
   border-top-left-radius: 12px;
 }
@@ -1012,16 +1027,15 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
 #finalOverlay .btn {
   padding: .6rem 1.2rem;
   font-weight: 600;
-  border: 1px solid #111;
+  border: 1px solid #BEB7DF;
   border-radius: 9999px;
-  background: #fff;
-  color: #111;
-  cursor: pointer;
+  background: #D9CCE7;
+  color: #34113F;
   transition: background .15s, color .15s;
 }
 #finalOverlay .btn:active {
-  background: #000;
-  color: #fff;
+  background: #34113F;
+  color: #D9CCE7;
 }
 
 
@@ -1097,7 +1111,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
         <aside style="flex:0 0 300px;">
             <!-- Tu tarjeta de preguntas (qFly) arranca oculta -->
             <div id="qFly" class="q-fly hidden">
-                <div class="q-head">
+                <div  class=" q-head text-xl" style="color:#34113F;">
                     <strong>Pregunta</strong>
                 </div>
 
