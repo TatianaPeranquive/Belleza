@@ -139,7 +139,7 @@
 
             .nav-solid {
                 background: #34113f;
-                color: #fff;
+                color: #E5E3F7;
                 backdrop-filter: blur(6px);
                 border-bottom: 1px solid #34113F14;
             }
@@ -195,74 +195,79 @@
         <section id="home0"></section>
         <!-- HERO -->
         <section id="home" class="h-screen flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
-            <!-- video -->
-            <video src="EspejoPortada1.mp4" autoplay muted loop playsinline
-                class="w-full h-auto max-h-screen object-cover">
+
+            <video src="EspejoPortada1.mp4" autoplay muted playsinline class="w-full h-auto max-h-screen object-cover">
             </video>
-            <!-- al final del hero/video -->
-            <div id="hero-sentinel" style="position: relative; height: 1px;"></div>
+                        <div id="hero-sentinel" style="position: relative; height: 1px;"></div>
 
             <br><br> <br><br>
             <!-- MENÚ FIJO -->
         </section>
 
-        <section id="about" class="flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
+        <section id="about" class="bg-[#f8f8fa]  py-10 mt-16 min-h-screen flex flex-col justify-start">
 
-                <!-- Imagen -->
-                <div class="div1 flex justify-center">
+            <div class="relative w-full h-[90vh] flex items-center justify-center">
 
-                    <h2 class="text-4xl md:text-6xl font-bold reveal-scroll">Espejito, espejito</h2>
-                    <img src="portada1.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
-                </div>
+                <h1 class="absolute top-14 left-12
+                 text-5xl md:text-6xl lg:text-6xl
+                   font-bold text-[#34113F]">
+                    Espejito,espejito
+                </h1>
 
-                <!-- Texto (centrado siempre) -->
-                <div class="div2 text-center space-y-4">
-                    <h2 class="text-2xl md:text-3xl tracking-wide reveal-scroll">¿Qué es la belleza?</h2>
-                    <p class="text-lg md:text-xl reveal-scroll">Historias orales de mujeres colombianas</p>
-                </div>
-            </div>
-        </section>
+                <img src="portada1.png"
+                    class="w-auto h-[90vh] object-contain transform lg:translate-x-[-50px] reveal-scroll">
 
 
-        <section id="work" class="flex  justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-                <!-- Texto (centrado siempre) -->
-                <div class="div2 text-center space-y-4">
-                    <p class="text-lg md:text-xl max-w-prose mx-auto italic reveal-scroll reveal-delay-2"> Había una vez
-                        una mujer que le preguntó al
-                        espejo
-                        si era la más bonita.</p>
-                </div>
-                <!-- Imagen -->
-                <div class="div1 flex justify-center">
-                    <img src="portada2.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
-                </div>
-            </div>
-        </section>
-
-        <!-- <section id="contact" class="h-screen flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]"> -->
-        <section id="contact" class="flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-
-                <!-- Imagen -->
-                <div class="div1 flex justify-center">
-                    <img src="portada3.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
-                </div>
-
-                <!-- Texto (centrado siempre) -->
-                <div class="div2 text-center space-y-4">
-                    <p class="text-lg md:text-xl max-w-prose mx-auto italic reveal-scroll">
-                        Cuando el espejo le dijo que no,
-                        la mujer condenó a quien le había quitado su lugar.
+                <div class="absolute bottom-20 right-16 text-right">
+                    <h2
+                        class="text-5xl md:text-6xl lg:text-5xl font-semi text-[#34113F] leading-tight reveal-scroll-delay-2">
+                        ¿Qué es la belleza?
+                    </h2>
+                    <p class="text-xl md:text-3xl lg:text-4xl font-medium text-[#34113F]/80 mt-2  reveal-scroll-delay-2">
+                        Historias orales <br> de mujeres colombianas
                     </p>
                 </div>
-
-                <div class="div1 flex justify-center">
-                </div>
-
             </div>
+
         </section>
+
+
+
+     <section id="work" class="bg-[#f8f8fa] py-20">
+  <div
+    class="max-w-7xl mx-auto px-8
+           grid grid-cols-1 gap-10
+           lg:grid-cols-3 lg:grid-rows-2 lg:gap-12 items-center">
+
+    <!-- Texto arriba izquierda -->
+    <p
+      class="italic text-xl md:text-3xl lg:text-4xl text-[#34113F] leading-snug
+             lg:col-start-1 lg:row-start-1 lg:self-start">
+      Había una vez una mujer,
+      que le preguntó al espejo
+      si era la más bonita.
+    </p>
+
+    <!-- Imagen centrada, protagonista -->
+    <div
+      class="flex justify-center
+             lg:col-start-2 lg:row-span-2 lg:self-center">
+      <img src="portada2.png"
+           alt="Mujer frente al espejo"
+           class="max-h-[520px] lg:max-h-[650px] object-contain">
+    </div>
+
+    <!-- Texto abajo derecha -->
+    <p
+      class="italic text-xl md:text-3xl lg:text-4xl text-[#34113F] leading-snug text-right
+             lg:col-start-3 lg:row-start-2 lg:self-end">
+      Cuando el espejo le dijo que no,
+      la mujer condenó
+      a quien le había quitado su lugar.
+    </p>
+
+  </div>
+</section>
 
 
         <section id="about2" class="flex  justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
@@ -274,24 +279,16 @@
                     </p>
                 </div>
             </div>
-        </section>
-
-        <section id="contact2" class="flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-
-                <!-- Imagen -->
+  <!-- Imagen -->
                 <div class="div1 flex justify-center">
-                    <img src="portada5.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
+                    <img src="portada3.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
                 </div>
-
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
                     <p class="text-lg md:text-xl max-w-prose mx-auto italic reveal-scroll">
                         Así, con su deseo insatisfecho, la mujer fue castigada con la muerte.
                     </p>
-                    <p class="text-lg md:text-xl max-w-prose mx-auto italic reveal-scroll">
-                        Siempre me pregunté qué pasaría después...
-                    </p>
+
                 </div>
 
                 <div class="div1 flex justify-center">
@@ -302,8 +299,15 @@
 
         <section id="about3" class="flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
+    <!-- Imagen -->
+                <div class="div1 flex justify-center">
+                    <img src="portada5.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
+                </div>
 
                 <div class="div2 text-center space-y-4">
+                                       <p class="text-lg md:text-xl max-w-prose mx-auto italic reveal-scroll">
+                        Siempre me pregunté qué pasaría después...
+                    </p>
                     <p class="text-lg md:text-xl max-w-prose mx-auto reveal-scroll">
                         Tal vez el ciclo se repitió y la sobreviviente le hizo la misma pregunta al espejo.
                     </p>
