@@ -250,7 +250,7 @@
                 <!-- Imagen centrada, protagonista -->
                 <div class="flex justify-center
              lg:col-start-2 lg:row-span-2 lg:self-center">
-                    <img src="portada2.png" alt="Mujer frente al espejo"
+                    <img src="Portada2.png" alt="Mujer frente al espejo"
                         class="max-h-[520px] lg:max-h-[650px] object-contain reveal-scroll ">
                 </div>
 

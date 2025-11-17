@@ -1372,14 +1372,14 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
 
                 function updateCursor() {
                     let path = '';
-                    if (mode === 'erase') path = "{{ asset('img/borrar.png') }}";
+                    if (mode === 'erase') path = "{{ asset('cursors/borrar.png') }}";
                     else {
                         switch (brush) {
-                            case 'lipstick': path = "{{ asset('img/labial.png') }}"; break;
-                            case 'shadow': path   = "{{ asset('img/sombra.png') }}"; break;
-                            case 'blush': path    = "{{ asset('img/rubor.png') }}"; break;
-                            case 'eyeliner': path = "{{ asset('img/delineador.png') }}"; break;
-                            case 'remover': path  = "{{ asset('img/desmaquillante.png') }}"; break;
+                            case 'lipstick': path = "{{ asset('cursors/labial.png') }}"; break;
+                            case 'shadow': path   = "{{ asset('cursors/sombra.png') }}"; break;
+                            case 'blush': path    = "{{ asset('cursors/rubor.png') }}"; break;
+                            case 'eyeliner': path = "{{ asset('cursors/delineador.png') }}"; break;
+                            case 'remover': path  = "{{ asset('cursors/desmaquillante.png') }}"; break;
                             default: path = '';
                         }
                     }
