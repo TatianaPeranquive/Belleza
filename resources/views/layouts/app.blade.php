@@ -15,8 +15,8 @@
   <style>
     html, body { margin:0; padding:0; }
     body { overflow-x:hidden; }
-    body { cursor: secure_url("{{ asset('micursor.cur') }}") 16 16, auto; }
-    a, button { cursor: secure_url("{{ asset('micursor.cur') }}") 16 16, pointer; }
+    body { cursor: url("{{ asset('micursor.cur') }}") 16 16, auto; }
+    a, button { cursor: url("{{ asset('micursor.cur') }}") 16 16, pointer; }
     [x-cloak]{display:none!important}
 
 @keyframes hitoGlowPulse {
