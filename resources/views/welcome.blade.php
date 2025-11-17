@@ -194,7 +194,8 @@
 
         <section id="home0"></section>
         <!-- HERO -->
-        <section id="home" class="h-screen flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
+        <section id="home"
+        class="h-screen justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
 
             <video src="EspejoPortada1.mp4" autoplay muted playsinline class="w-full h-auto max-h-screen object-cover">
             </video>
@@ -241,7 +242,7 @@
 
     <!-- Texto arriba izquierda -->
     <p
-      class="italic text-xl md:text-3xl lg:text-4xl text-[#34113F] leading-snug
+      class="italic text-xl md:text-3xl lg:text-4xl text-[#34113F] leading-snug text-center
              lg:col-start-1 lg:row-start-1 lg:self-start">
       Había una vez una mujer,
       que le preguntó al espejo
@@ -259,7 +260,7 @@
 
     <!-- Texto abajo derecha -->
     <p
-      class="italic text-xl md:text-3xl lg:text-4xl text-[#34113F] leading-snug text-right
+      class="italic text-xl md:text-3xl lg:text-4xl text-[#34113F] leading-snug text-center
              lg:col-start-3 lg:row-start-2 lg:self-end">
       Cuando el espejo le dijo que no,
       la mujer condenó
@@ -268,117 +269,173 @@
 
   </div>
 </section>
+<section id="about2" class="bg-[#f8f8fa] py-20 text-[#34113F]">
+
+  <!-- TEXTO SUPERIOR (CENTRADO) -->
+  <div class="text-center mb-16">
+    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug">
+      Los actos para retomar su título<br>
+      fueron en vano, nadie quiso matar<br>
+      a la inocente belleza.
+    </p>
+  </div>
+
+  <!-- TABLA DE DOS COLUMNAS -->
+  <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 place-items-center">
+
+    <!-- COLUMNA IZQUIERDA → TEXTO -->
+    <div class="text-left">
+      <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug">
+        Así, con su deseo insatisfecho,<br>
+        la mujer fue castigada con la<br>
+        muerte.
+      </p>
+    </div>
+
+    <!-- COLUMNA DERECHA → IMAGEN REDUCIDA -->
+     <div class="flex justify-center">
+                <img src="portada3.png"
+                     alt=" "
+                     class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
+            </div>
+
+  </div>
+
+</section>
+
+<section id="about3" class="bg-[#34113F] text-[#f8f8fa] py-16">
+
+    <div class="max-w-6xl mx-auto px-8 space-y-6">
+
+        <!-- Texto superior centrado -->
+        <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll">
+            Siempre me pregunté qué pasaría después...
+        </p>
+
+        <!-- Fila central -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+
+            <!-- Imagen (MUCHO más grande) -->
+            <div class="flex justify-center">
+                <img src="portada5.png"
+                     class="object-contain
+                            max-h-[600px] md:max-h-[750px] lg:max-h-[900px]
+                            reveal-scroll">
+            </div>
+
+            <!-- Texto central derecha -->
+            <div class="text-center md:text-left">
+                <p class="text-xl md:text-3xl lg:text-4xl text-center leading-snug reveal-scroll">
+                    Tal vez el ciclo se repitió y la sobreviviente
+                    le hizo la misma pregunta al espejo.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Texto inferior centrado, SIN MARGEN EXTRA -->
+        <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
+            ¿Será inevitable?
+        </p>
+
+    </div>
+
+</section>
 
 
-        <section id="about2" class="flex  justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+<section id="contact4" class="py-24 bg-[#f8f8fa] text-[#34113F]">
+
+  <div class="max-w-5xl mx-auto px-6 space-y-12">
+
+    <!-- Pregunta superior -->
+     <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
+      En tu vida cotidiana, <i>¿qué tanto piensas<br>sobre tu belleza?</i>
+    </p>
+
+    <!-- Opciones flotadas -->
+    <div class="relative h-40 md:h-80 mx-auto">
+
+      <ul id="opciones1" class="relative w-full h-full">
+
+        <!-- Casi nunca -->
+        <li class="absolute top-0 left-[1%]">
+
+          <button
+            type="button"
+            class="opcion inline-flex justify-center items-center
+                   px-4 py-2 min-w-[12rem]
+                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                   rounded-2xl text-xl md:text-2xl shadow-sm">
+            Casi nunca
+          </button>
+        </li>
+
+        <!-- A ratos -->
+        <li class="absolute top-28 left-[46%]">
+
+          <button
+            type="button"
+            class="opcion inline-flex justify-center items-center
+                   px-4 py-2 min-w-[12rem]
+                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                   rounded-2xl text-xl md:text-2xl shadow-sm">
+            A ratos
+          </button>
+        </li>
+
+        <!-- Todo el tiempo -->
+           <li class="absolute top-14 left-[23%]">
+          <button
+            type="button"
+            class="opcion inline-flex justify-center items-center
+                   px-4 py-2 min-w-[12rem]
+                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                   rounded-2xl text-xl md:text-2xl shadow-sm">
+            Todo el tiempo
+          </button>
+        </li>
+
+        <!-- Qué hay que pensar -->
+        <li class="absolute top-40 md:top-44 left-[68%]">
+
+          <button
+            type="button"
+            class="opcion inline-flex justify-center items-center
+                   px-4 py-2 min-w-[12rem]
+                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                   rounded-2xl text-xl md:text-2xl shadow-sm whitespace-nowrap">
+            Qué hay que pensar
+          </button>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- Línea de respuesta -->
+
+       <p id="respuesta" class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
+
+
+
+
+    <!-- Texto final -->
+     <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
+      Pues, este proyecto quiere hacerte reflexionar<br>
+      sobre la belleza de otra manera.
+    </p>
+
+  </div>
+
+</section>
+
+
+
+        <section id="about4" class="flex  justify-center items-center text-4xl">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
                 <!-- Texto (centrado siempre) -->
                 <div class="div2 text-center space-y-4">
-                    <p class="text-lg md:text-xl max-w-prose mx-auto italic reveal-scroll ">
-                        Los actos para retomar su título fueron en vano, nadie quiso matar a la inocente belleza.
-                    </p>
-                </div>
-            </div>
-  <!-- Imagen -->
-                <div class="div1 flex justify-center">
-                    <img src="portada3.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
-                </div>
-                <!-- Texto (centrado siempre) -->
-                <div class="div2 text-center space-y-4">
-                    <p class="text-lg md:text-xl max-w-prose mx-auto italic reveal-scroll">
-                        Así, con su deseo insatisfecho, la mujer fue castigada con la muerte.
-                    </p>
 
-                </div>
 
-                <div class="div1 flex justify-center">
-                </div>
-
-            </div>
-        </section>
-
-        <section id="about3" class="flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-    <!-- Imagen -->
-                <div class="div1 flex justify-center">
-                    <img src="portada5.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
-                </div>
-
-                <div class="div2 text-center space-y-4">
-                                       <p class="text-lg md:text-xl max-w-prose mx-auto italic reveal-scroll">
-                        Siempre me pregunté qué pasaría después...
-                    </p>
-                    <p class="text-lg md:text-xl max-w-prose mx-auto reveal-scroll">
-                        Tal vez el ciclo se repitió y la sobreviviente le hizo la misma pregunta al espejo.
-                    </p>
-                </div>
-
-                <div class="div1 flex justify-center">
-                    <p class="text-lg md:text-xl max-w-prose mx-auto reveal-scroll reveal-delay-1">
-                        ¿Será inevitable?
-                    </p>
-                </div>
-
-            </div>
-        </section>
-
-        <section id="contact4" class="py-20 flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-
-                <!-- Opciones -->
-                <div class="div1 flex justify-center">
-                    <ul id="opciones2" class="flex justify-center gap-4 w-full max-w-6xl mx-auto">
-                        <li class="flex-1">
-                            <button type="button"
-                                class="opcion2 block w-full text-center px-3 py-1 rounded border font-bold text-lg hover:underline">
-                                Las imperfecciones
-                            </button>
-                        </li>
-                        <li class="flex-1">
-                            <button type="button"
-                                class="opcion2 block w-full text-center px-3 py-1 rounded border font-bold text-lg hover:underline">
-                                Lo malo y lo bueno
-                            </button>
-                        </li>
-                        <li class="flex-1">
-                            <button type="button"
-                                class="opcion2 block w-full text-center px-3 py-1 rounded border font-bold text-lg hover:underline">
-                                El paso del tiempo
-                            </button>
-                        </li>
-                        <li class="flex-1">
-                            <button type="button"
-                                class="opcion2 block w-full text-center px-3 py-1 rounded border font-bold text-lg hover:underline">
-                                Que todo esté en su lugar
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Pregunta -->
-                <div class="div2 text-center space-y-4">
-                    <p class="text-lg md:text-xl max-w-prose mx-auto reveal-scroll reveal-delay-1">
-                        Y tú, ¿cuándo te miras al espejo, qué ves?
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="about4" class="flex  justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-                <!-- Texto (centrado siempre) -->
-                <div class="div2 text-center space-y-4">
-                    <!-- Respuesta -->
-                    <div class="div1 flex justify-center">
-                        <p id="respuesta2"></p>
-                    </div>
-                    <p class="text-lg md:text-xl max-w-prose mx-auto reveal-scroll">
-                        Tal vez el ciclo se repitió y la sobreviviente le hizo la misma pregunta al espejo.
-                    </p>
-
-                    <p class="text-lg md:text-xl max-w-prose mx-auto reveal-scroll reveal-delay-1">
-                        ¿Será inevitable?
-                    </p>
                 </div>
             </div>
         </section>
@@ -388,27 +445,27 @@
 
                 <!-- Lista de opciones -->
                 <div class="div1 flex justify-center">
-                    <ul id="opciones1" class="flex justify-center gap-4 w-full max-w-6xl">
+                    <ul id="opciones2" class="flex justify-center gap-4 w-full max-w-6xl">
                         <li class="flex-1">
-                            <button type="button" data-value="UN POCO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
+                            <button type="button" data-value="UN POCO" class="opcion2 block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
                hover:underline bg-[#34113F] text-[#f8f8fa] border-[#34113F]">
                                 Casi nunca
                             </button>
                         </li>
                         <li class="flex-1">
-                            <button type="button" data-value="UN MONTÓN" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
+                            <button type="button" data-value="UN MONTÓN" class="opcion2 block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
                hover:underline bg-[#34113F] text-[#f8f8fa] border-[#34113F]">
                                 A ratos
                             </button>
                         </li>
                         <li class="flex-1">
-                            <button type="button" data-value="NO LO HABÍA PENSADO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
+                            <button type="button" data-value="NO LO HABÍA PENSADO" class="opcion2 block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
                hover:underline bg-[#34113F] text-[#f8f8fa] border-[#34113F]">
                                 Todo el tiempo
                             </button>
                         </li>
                         <li class="flex-1">
-                            <button type="button" data-value="NO TANTO" class="opcion block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
+                            <button type="button" data-value="NO TANTO" class="opcion2 block w-full text-center px-3 py-2 rounded-lg border font-bold text-lg transition
                hover:underline bg-[#34113F] text-[#f8f8fa] border-[#34113F]">
                                 Qué hay que pensar
                             </button>
@@ -417,7 +474,18 @@
                 </div>
                 <!-- Texto que se actualizará -->
                 <div class="div2 text-center space-y-4">
-                    <p id="respuesta" class="text-lg md:text-xl max-w-prose mx-auto italic text-[#f8f8fa]-700"></p>
+
+
+ <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
+      <span id="respuesta2"
+              class="inline-block min-w-[150px] border-b border-[#34113F] px-2 align-middle">
+        <!-- aquí tu script puede escribir la respuesta -->
+      </span>
+    </p>
+
+
+
+
                     <p class="text-lg md:text-xl max-w-prose mx-auto reveal-scroll ">
                         Pues, este proyecto quiere hacerte reflexionar sobre la belleza de otra manera.
                     </p>
@@ -529,12 +597,12 @@
 
                     // SPAN para el texto base (con su propio estilo)
                     const spanBase = document.createElement("span");
-                    spanBase.className = "text-lg md:text-xl italic text-[#f8f8fa]-300";
+                    spanBase.className = "text-xl md:text-3xl lg:text-4xl italic text-[#f8f8fa]-300";
                     spanBase.textContent = op.textContent.trim() + " ";
 
                     // SPAN para "Interesante" (con otro estilo distinto)
                     const spanInteresante = document.createElement("span");
-                    spanInteresante.className = "text-lg md:text-xl font-bold text-[#f8f8fa]-300";
+                    spanInteresante.className = "text-xl md:text-3xl lg:text-4xl font-bold text-[#f8f8fa]-300";
                     spanInteresante.textContent = "  Interesante.";
 
                     // Agregar ambos al párrafo
