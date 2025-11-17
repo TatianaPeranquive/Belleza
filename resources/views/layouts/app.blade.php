@@ -53,7 +53,7 @@
             <a href="#home" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Espejito, espejito</a>
           </li>
           <li class="flex-1">
-            <a href="#work" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Entramado</a>
+            <a href="{{ route('hitos.index') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Entramado</a>
           </li>
           <li class="flex-1">
             <a href="{{ route('entrevistas.index') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Salón de espejos</a>
