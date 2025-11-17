@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +26,8 @@ public function boot(): void
         $view->with('theme', $theme);
         $view->with('themeConfig', config("theme.palettes.$theme"));
     });
+    if (app()->environment('production')) {
+        URL::forceScheme('https');
+    }
 }
 }
