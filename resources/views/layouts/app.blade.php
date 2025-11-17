@@ -6,7 +6,7 @@
 
   @vite('resources/css/app.css')
 <!-- <script>
-  window.DIC_EP = @json(url('/diccionario/buscar'));
+  window.DIC_EP = @json(secure_url('/diccionario/buscar'));
 </script> -->
 
   <!-- AlpineJS -->
@@ -15,8 +15,8 @@
   <style>
     html, body { margin:0; padding:0; }
     body { overflow-x:hidden; }
-    body { cursor: url("{{ asset('micursor.cur') }}") 16 16, auto; }
-    a, button { cursor: url("{{ asset('micursor.cur') }}") 16 16, pointer; }
+    body { cursor: secure_url("{{ asset('micursor.cur') }}") 16 16, auto; }
+    a, button { cursor: secure_url("{{ asset('micursor.cur') }}") 16 16, pointer; }
     [x-cloak]{display:none!important}
 
 @keyframes hitoGlowPulse {

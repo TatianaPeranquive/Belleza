@@ -18,7 +18,7 @@ Ajusta : h-[140px] / h-[160px] / h-[180px] --}}
         {{-- Título de página (no se tapa gracias al spacer) --}}
         <header class="text-center mb-10">
             <div class="w-full fade-in" style="
-                background-image: url('{{ asset('fondoTrama.png') }}');
+                background-image: secure_url('{{ asset('fondoTrama.png') }}');
                 background-repeat: repeat;
                 background-size: 200px; /* Ajusta: 80px = fino, 200px = más elegante */
                 padding: 0.5rem 1rem;

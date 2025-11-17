@@ -1384,7 +1384,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
                             default: path = '';
                         }
                     }
-                    if (path) cv.style.cursor = `url("${path}") 16 16, crosshair`;
+                    if (path) cv.style.cursor = `secure_url("${path}") 16 16, crosshair`;
                     else cv.style.cursor = 'crosshair';
                 }
 

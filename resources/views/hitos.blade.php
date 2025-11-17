@@ -472,11 +472,11 @@
 window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
 </script>
 
-<div id="hitos-top" x-data="hitosUI($el.dataset)" data-ep-hitos="{{ url('/api/resumen/hitos') }}"
-    data-ep-sub1="{{ url('/api/resumen/sub1') }}" data-ep-sub2="{{ url('/api/resumen/sub2') }}"
-    data-ep-sub3="{{ url('/api/resumen/sub3') }}"
-    data-ep-sub4="{{ url('/api/resumen/sub4') }}"
-    data-ep-buscar="{{ url('/api/resumen/buscar') }}" data-mock="false" x-init="init()"
+<div id="hitos-top" x-data="hitosUI($el.dataset)" data-ep-hitos="{{ secure_url('/api/resumen/hitos') }}"
+    data-ep-sub1="{{ secure_url('/api/resumen/sub1') }}" data-ep-sub2="{{ secure_url('/api/resumen/sub2') }}"
+    data-ep-sub3="{{ secure_url('/api/resumen/sub3') }}"
+    data-ep-sub4="{{ secure_url('/api/resumen/sub4') }}"
+    data-ep-buscar="{{ secure_url('/api/resumen/buscar') }}" data-mock="false" x-init="init()"
     class="mx-auto max-w-7xl px-4 pt-20 pb-12">
     <h1 class="mb-4 text-center text-3xl font-extrabold tracking-tight uppercase">Entramado</h1>
     <br>
@@ -829,6 +829,6 @@ window.DIC_EP = @json(request()->getBaseUrl() . '/diccionario/buscar');
 @endsection @section('content')
 {{-- Barra fija de "Volver" SIEMPRE por encima del header global --}}
 <nav class="fixed top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-[#34113F]/80 backdrop-blur pointer-events-auto">
-  <a href="{{ url('/#contact8') }}" class="text-[#f8f8fa] font-bold text-lg">Espejito, espejito</a>
+  <a href="{{ secure_url('/#contact8') }}" class="text-[#f8f8fa] font-bold text-lg">Espejito, espejito</a>
 </nav>
 

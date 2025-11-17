@@ -35,14 +35,14 @@
 
             /* cursor principal */
             body {
-                cursor: url("{{ asset('micursor.cur') }}") 16 16,
+                cursor: secure_url("{{ asset('micursor.cur') }}") 16 16,
                 auto;
             }
 
             /* cursor específico en enlaces (fallback pointer) */
             a,
             button {
-                cursor: url("{{ asset('micursor.cur') }}") 16 16,
+                cursor: secure_url("{{ asset('micursor.cur') }}") 16 16,
                 pointer;
             }
 
