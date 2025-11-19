@@ -22,11 +22,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
     <title>Dibujar sobre imagen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        :root {
-            --bar-h: 48px;
-            --subbar-h: 44px;
-        }
-
         * {
             box-sizing: border-box
         }
@@ -46,7 +41,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             gap: .5rem;
             height: var(--bar-h);
             padding: 0 .75rem;
-             background: transparent !important;
+            background: transparent !important;
             border: none !important;
             backdrop-filter: saturate(180%) blur(8px);
             border-bottom: 1px solid #e2e8f0;
@@ -93,41 +88,106 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             font-size: 0.9rem;
         }
 
+        .stage-box {
+            position: relative;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
+            overflow: hidden;
+            max-width: min(90vw, 900px);
+            margin: 0 auto;
+        }
+
+        #stage {
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* Selfie */
+        #bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 1;
+        }
+
+        /* Vidrio */
+        #glass {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        /* Canvas */
+        #cv {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: auto;
+            touch-action: none;
+        }
+
+        /* Marco */
+        #frame {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill !important;
+            /* o 'fill' si quieres que se estire exacto */
+            z-index: 15;
+            pointer-events: none;
+        }
+
+
+
         /* === Botones generales === */
-    .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.55rem 1.1rem;
-    border-radius: 9999px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    white-space: nowrap;
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.55rem 1.1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            white-space: nowrap;
 
-    background: #E8E0F2;       /* lavanda muy suave */
-    color: #3A245F;            /* morado profundo */
-    border: 1px solid #C8B7E2; /* tono de borde coherente */
+            background: #E8E0F2;
+            color: #3A245F;
+            border: 1px solid #C8B7E2;
 
-    box-shadow:
-        0 3px 6px rgba(0, 0, 0, 0.12),
-        inset 0 -2px rgba(255, 255, 255, 0.4);
+            box-shadow:
+                0 3px 6px rgba(0, 0, 0, 0.12),
+                inset 0 -2px rgba(255, 255, 255, 0.4);
 
-    transition:
-        transform 0.15s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
-}
+            transition:
+                transform 0.15s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
 
-.btn:hover {
-    background: #D9CFF0;
-    transform: translateY(-1px);
-}
+        .btn:hover {
+            background: #D9CFF0;
+            transform: translateY(-1px);
+        }
 
-.btn:active {
-    background: #CFC3EB;
-    transform: translateY(1px);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-}
+        .btn:active {
+            background: #CFC3EB;
+            transform: translateY(1px);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
         .btn {
             padding: .4rem .7rem;
@@ -251,25 +311,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             padding: 12px
         }
 
-        .stage-box {
-            position: relative;
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
-            overflow: hidden
-        }
-
-        .stage {
-            position: relative;
-            touch-action: none
-        }
-
-        .bg {
-            display: block;
-            user-select: none;
-            -webkit-user-drag: none
-        }
 
         canvas {
             position: absolute;
@@ -371,82 +412,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             z-index: 30 !important;
         }
 
-        /* mensaje arriba */
-        /* marco en medio */
-        :root {
-            --mirror-shift-x: 25%;
-        }
-
-        #frame,
-        #bg {
-            transform: translateX(var(--mirror-shift-x));
-        }
-
-        /* fondo abajo */
-
-        /* --- Corrección de capas y eventos --- */
-        /* Capas dentro del stage */
-
-
-        #bg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            z-index: 0;
-        }
-
-        #cv {
-            position: absolute;
-            inset: 1% 1% 1% 1%;
-            /* top right bottom left */
-            width: auto;
-            height: auto;
-            z-index: 10;
-            pointer-events: auto;
-            touch-action: none;
-            display: block;
-        }
-
-        #frame {
-            z-index: 20;
-        }
-
-
-
-        #placeholder {
-            position: absolute;
-            inset: var(--glass-inset);
-            display: grid;
-            text-align: left;
-            color: #94a3b8;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        /* Inset del vidrio (TOP RIGHT BOTTOM LEFT). Ajusta a tu PNG. */
-        :root {
-            /* Ejemplo para el tocador clásico: */
-            --glass-inset: 14% 13% 17% 13%;
-        }
-
-        #stage {
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Región del vidrio alineada con el hueco del marco */
-        .glass {
-            position: absolute;
-            inset: var(--glass-inset);
-            z-index: 10;
-            overflow: hidden;
-            /* Para que no se pinte fuera del vidrio (opcional) */
-            display: grid;
-            /* Nos permite centrar el placeholder */
-            place-items: center;
-        }
 
         /* Fondo oscuro bloqueante */
         .warn-overlay {
@@ -754,291 +719,336 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             overflow: hidden;
         }
 
-        .overlay{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-        background:rgba(0,0,0,.55); backdrop-filter:blur(2px); z-index:1000; }
-        .overlay.hidden{ display:none; }
-        .modal{ background:#fff; border-radius:12px; padding:1.4rem 1.8rem; max-width:1000px; text-align:center; }
-        .modal-title{ font-size:1.25rem; font-weight:800; margin-bottom:.6rem; }
-        .modal-desc{ color:#333; margin-bottom:1rem; }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(2px);
+            z-index: 1000;
+        }
+
+        .overlay.hidden {
+            display: none;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.4rem 1.8rem;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: .6rem;
+        }
+
+        .modal-desc {
+            color: #333;
+            margin-bottom: 1rem;
+        }
 
 
         /* Fondo Reflexión Fullscreen real: ancho completo */
 
-/* === FULLSCREEN A PRUEBA DE FRAMEWORKS para el modal final === */
-#finalOverlay{
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 7000 !important;
-  background: rgba(0,0,0,.55) !important;
-  backdrop-filter: blur(3px);
-}
+        /* === FULLSCREEN A PRUEBA DE FRAMEWORKS para el modal final === */
+        #finalOverlay {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 7000 !important;
+            background: rgba(0, 0, 0, .55) !important;
+            backdrop-filter: blur(3px);
+        }
 
-/* La modal se pega a los 4 bordes del viewport */
-#finalOverlay .modal{
-  position: fixed !important;
-  left: 0 !important; top: 0 !important; right: 0 !important; bottom: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  max-width: none !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-  background: #fff !important;
-  display: flex !important;
-  flex-direction: column !important;
-  box-shadow: none !important;
-}
+        /* La modal se pega a los 4 bordes del viewport */
+        #finalOverlay .modal {
+            position: fixed !important;
+            left: 0 !important;
+            top: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: none !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            background: #fff !important;
+            display: flex !important;
+            flex-direction: column !important;
+            box-shadow: none !important;
+        }
 
-/* Header fijo arriba (opcional) */
-#finalOverlay .modal-header{
-  position: sticky; top: 0; z-index: 2;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  padding: 12px 20px;
-}
+        /* Header fijo arriba (opcional) */
+        #finalOverlay .modal-header {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 12px 20px;
+        }
 
-/* Cuerpo con scroll vertical y sin límites de ancho */
-#finalOverlay .modal-body {
-  position: relative;
-  z-index: 1;
-  margin: 0 auto;
+        /* Cuerpo con scroll vertical y sin límites de ancho */
+        #finalOverlay .modal-body {
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
 
-   width: min(45vw, 640px);
-  max-height: min(70vh, 680px);
-  transform: translateY(20vh);  /* baja todo el bloque unos 3% del alto de pantalla */
+            width: min(45vw, 640px);
+            max-height: min(70vh, 680px);
+            transform: translateY(20vh);
+            /* baja todo el bloque unos 3% del alto de pantalla */
 
-  overflow-y: auto;
-  padding: 2.8rem 3.2rem;
+            overflow-y: auto;
+            padding: 2.8rem 3.2rem;
 
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #111;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #111;
 
-  backdrop-filter: blur(2px);
-}
-
-
-/* Forzar que nada adentro se auto-estreche (prose, container, max-w-*, etc.) */
-#finalOverlay .modal-body :is(.prose, .container, .mx-auto, [class*="max-w"], [class*="container"]){
-  max-width: 100% !important;
-  width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-/* Footer fijo abajo con botón visible */
-#finalOverlay .modal-footer{
-  position: sticky; bottom: 0; z-index: 2;
-  backdrop-filter: blur(2px);
-  padding: 10px 16px;
-  display: flex; justify-content: flex-end; gap: .5rem;
-}
-
-/* Botón */
-#finalOverlay .btn{
-  padding: .6rem 1.2rem; font-weight: 600;
-  border: 1px solid #111; border-radius: 9999px; background:#fff; color:#111;
-}
-#finalOverlay .btn:active{ background:#000; color:#fff; }
-
-/* Bloquea el scroll del fondo cuando está abierto */
-body.modal-open{ overflow: hidden !important; }
+            backdrop-filter: blur(2px);
+        }
 
 
+        /* Forzar que nada adentro se auto-estreche (prose, container, max-w-*, etc.) */
+        #finalOverlay .modal-body :is(.prose, .container, .mx-auto, [class*="max-w"], [class*="container"]) {
+            max-width: 100% !important;
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        /* Footer fijo abajo con botón visible */
+        #finalOverlay .modal-footer {
+            position: sticky;
+            bottom: 0;
+            z-index: 2;
+            backdrop-filter: blur(2px);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: flex-end;
+            gap: .5rem;
+        }
+
+        /* Botón */
+        #finalOverlay .btn {
+            padding: .6rem 1.2rem;
+            font-weight: 600;
+            border: 1px solid #111;
+            border-radius: 9999px;
+            background: #fff;
+            color: #111;
+        }
+
+        #finalOverlay .btn:active {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Bloquea el scroll del fondo cuando está abierto */
+        body.modal-open {
+            overflow: hidden !important;
+        }
 
 
-.modal-frame{
-  position:fixed;
-  inset:0;
-  max-width:100vh;
-   max-height:100vh;
-  object-fit:cover;
-  z-index:0;
-}
-#finalOverlay .modal{
-  position:relative;
-  z-index:1;
-  background:rgba(255,255,255,0.8);
-  backdrop-filter:blur(2px);
-}
-.modal-frame{
-  position:fixed;
-  inset:0;
-  max-width:100vh;
-  max-height:100vh;
-  object-fit:cover;
-  z-index:0;
-}
-#finalOverlay .modal{
-  position:relative;
-  z-index:1;
-  background:rgba(255,255,255,0.8);
-  backdrop-filter:blur(2px);
-}
-
-/* imagen fondo reflexion*/
-/* Fondo de la modal (mantiene todo fullscreen) */
-#finalOverlay .modal {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #fff;
-  background-image: href="{{ secure_url('/img/#tocador2.png') }}"
-  background-repeat: no-repeat;
-  background-size: cover; /* se estira al tamaño completo */
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* Cuerpo scrollable con espacio para el marco */
-#finalOverlay .modal-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 80px clamp(5vw, 8vw, 120px); /* agrega margen para no tapar texto */
-  color: #111;
-  line-height: 1.7;
-  font-size: 1.05rem;
-  background: #F5F1FA   ; /* leve velo para legibilidad */
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
-}
-
-/* Header y footer ajustados */
-#finalOverlay .modal-header,
-#finalOverlay .modal-footer {
-  background: transparent;
-  border: none;
-}
-
-#finalOverlay .modal-footer {
-  position: sticky;
-  bottom: 0;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: flex-end;
-}
-
-#finalOverlay .btn {
-  padding: .6rem 1.2rem;
-  font-weight: 600;
-  border: 1px solid #34113F;
-  border-radius: 9999px;
-  background: #D9CCE7;
-  color: #111;
-}
-#finalOverlay .btn:active {
-  background: #34113F;
-  color: #D9CCE7;
-}
-/* Capa oscura */
-/* === POP-UP FINAL CON MARCO A PANTALLA COMPLETA === */
-#finalOverlay {
-  position: fixed;
-  inset: 0;
-  background: #34113F;
-  backdrop-filter: blur(3px);
-  z-index: 10000;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-}
-#finalOverlay.hidden { display: none; }
-
-/* Contenedor general: grid header-body-footer */
-#finalOverlay .modal-full {
-  position: fixed;
-  inset: 0;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  width: 100vw;
-  height: 100vh;
-  background: transparent;
-  overflow: hidden;
-}
-
-/* --- Imagen del marco --- */
-#finalOverlay .modal-frame{
-  position:fixed;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  width:auto;          /* no se deforma */
-  height:auto;
-  max-width:100vw;     /* ocupa todo el ancho disponible */
-  max-height:100vh;    /* o todo el alto, lo que llegue primero */
-  object-fit:contain;  /* mantiene proporciones */
-  pointer-events:none;
-  z-index:0;
-}
-
-/* --- Contenido encima del marco --- */
-#finalOverlay .modal-header,
-#finalOverlay .modal-body,
-#finalOverlay .modal-footer {
-  position: relative;
-  z-index: 1;
-  color: #34113F;
-}
-
-/* Header arriba */
-#finalOverlay .modal-header {
-  padding: 1rem 2rem;
-}
-#finalOverlay .modal-title {
-  margin: 0;
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #34113F;
-}
-
-/* Body con scroll */
-#finalOverlay .modal-body{
-  position:relative; z-index:1;
-  margin:0 auto;
-  width:56vw;          /* texto dentro del marco */
-  max-height:65vh;     /* alto controlado */
-  overflow:auto;
-  padding:2rem 3rem;
-  background:#E5E3F7;
-  border-radius:12px;
-  box-shadow:0 6px 18px #34113F;
-transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantalla */
-
-}
-
-/* Footer con el botón fijo abajo */
-#finalOverlay .modal-footer {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  padding: 1rem 2rem;
-  background: #E5E3F7;
-  backdrop-filter: blur(4px);
-  border-top-left-radius: 12px;
-}
-
-/* Botón */
-#finalOverlay .btn {
-  padding: .6rem 1.2rem;
-  font-weight: 600;
-  border: 1px solid #BEB7DF;
-  border-radius: 9999px;
-  background: #D9CCE7;
-  color: #34113F;
-  transition: background .15s, color .15s;
-}
-#finalOverlay .btn:active {
-  background: #34113F;
-  color: #D9CCE7;
-}
+        #finalOverlay .modal {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(2px);
+        }
 
 
+        #finalOverlay .modal {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(2px);
+        }
+
+        /* imagen fondo reflexion*/
+        /* Fondo de la modal (mantiene todo fullscreen) */
+        #finalOverlay .modal {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #fff;
+            background-image: href="{{ secure_url('/img/#tocador2.png') }}";
+            background-repeat: no-repeat;
+            background-size: cover;
+            /* se estira al tamaño completo */
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Cuerpo scrollable con espacio para el marco */
+        #finalOverlay .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 80px clamp(5vw, 8vw, 120px);
+            /* agrega margen para no tapar texto */
+            color: #111;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            background: #F5F1FA;
+            /* leve velo para legibilidad */
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header y footer ajustados */
+        #finalOverlay .modal-header,
+        #finalOverlay .modal-footer {
+            background: transparent;
+            border: none;
+        }
+
+        #finalOverlay .modal-footer {
+            position: sticky;
+            bottom: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #finalOverlay .btn {
+            padding: .6rem 1.2rem;
+            font-weight: 600;
+            border: 1px solid #34113F;
+            border-radius: 9999px;
+            background: #D9CCE7;
+            color: #111;
+        }
+
+        #finalOverlay .btn:active {
+            background: #34113F;
+            color: #D9CCE7;
+        }
+
+        /* Capa oscura */
+        /* === POP-UP FINAL CON MARCO A PANTALLA COMPLETA === */
+        #finalOverlay {
+            position: fixed;
+            inset: 0;
+            background: #34113F;
+            backdrop-filter: blur(3px);
+            z-index: 10000;
+            display: flex;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+
+        #finalOverlay.hidden {
+            display: none;
+        }
+
+        /* Contenedor general: grid header-body-footer */
+        #finalOverlay .modal-full {
+            position: fixed;
+            inset: 0;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            width: 100vw;
+            height: 100vh;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        /* --- Imagen del marco --- */
+        #finalOverlay .modal-frame {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: auto;
+            max-width: 100vw;
+            max-height: 100vh;
+            object-fit: contain;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+
+        /* --- Contenido encima del marco --- */
+        #finalOverlay .modal-header,
+        #finalOverlay .modal-body,
+        #finalOverlay .modal-footer {
+            position: relative;
+            z-index: 1;
+            color: #34113F;
+        }
+
+        /* Header arriba */
+        #finalOverlay .modal-header {
+            padding: 1rem 2rem;
+        }
+
+        #finalOverlay .modal-title {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #34113F;
+        }
+
+        /* Body con scroll */
+        #finalOverlay .modal-body {
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            width: 56vw;
+            /* texto dentro del marco */
+            max-height: 65vh;
+            /* alto controlado */
+            overflow: auto;
+            padding: 2rem 3rem;
+            background: #E5E3F7;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px #34113F;
+            transform: translateY(19vh);
+            /* baja todo el bloque unos 3% del alto de pantalla */
+
+        }
+
+        /* Footer con el botón fijo abajo */
+        #finalOverlay .modal-footer {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: #E5E3F7;
+            backdrop-filter: blur(4px);
+            border-top-left-radius: 12px;
+        }
+
+        /* Botón */
+        #finalOverlay .btn {
+            padding: .6rem 1.2rem;
+            font-weight: 600;
+            border: 1px solid #BEB7DF;
+            border-radius: 9999px;
+            background: #D9CCE7;
+            color: #34113F;
+            transition: background .15s, color .15s;
+        }
+
+        #finalOverlay .btn:active {
+            background: #34113F;
+            color: #D9CCE7;
+        }
     </style>
 </head>
 
@@ -1058,12 +1068,19 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
         </summary>
 
         <div class="instructions-content" display: flex, justify-content: center>
-            <p> <strong>Invirtamos los roles;</strong> este espejo te hará un par de preguntas que aparecen con solo ubicar el labial en el lienzo. </p><p> Te advierto que <strong> no existe una respuesta
-                correcta;</strong> es más bien una invitación a reflexionar sobre tu alrededor y el entramado social. Recuerda que esta sección es para ti y tus propias reflexiones.La información que escribas aquí no será
+            <p> <strong>Invirtamos los roles;</strong> este espejo te hará un par de preguntas que aparecen con solo
+                ubicar el labial en el lienzo. </p>
+            <p> Te advierto que <strong> no existe una respuesta
+                    correcta;</strong> es más bien una invitación a reflexionar sobre tu alrededor y el entramado
+                social. Recuerda que esta sección es para ti y tus propias reflexiones.La información que escribas aquí
+                no será
                 almacenada ni recolectada. </p> <br>
-            <p> <strong>1)</strong> Te pediré que te tomes una selfie que nunca compartirías con alguien y cargarla usando el botón
-                <strong>“Cargar selfie"</strong>.</p> <br>
-            <p> <strong>2)</strong> Utiliza el labial para marcar tu selfie según las indicaciones de las preguntas en cada caso. Puedes hacer dibujos,
+            <p> <strong>1)</strong> Te pediré que te tomes una selfie que nunca compartirías con alguien y cargarla
+                usando el botón
+                <strong>“Cargar selfie"</strong>.
+            </p> <br>
+            <p> <strong>2)</strong> Utiliza el labial para marcar tu selfie según las indicaciones de las preguntas en
+                cada caso. Puedes hacer dibujos,
                 símbolos o escribir alguna palabra o mensaje. No tienes que ser una artista; solo responde a cada
                 pregunta indicando qué parte cambiarías. </p>
         </div>
@@ -1111,7 +1128,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
         <aside style="flex:0 0 300px;">
             <!-- Tu tarjeta de preguntas (qFly) arranca oculta -->
             <div id="qFly" class="q-fly hidden">
-                <div  class=" q-head text-xl" style="color:#34113F;">
+                <div class=" q-head text-xl" style="color:#34113F;">
                     <strong>Pregunta</strong>
                 </div>
 
@@ -1138,10 +1155,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
 
 
         <!-- ==== AVISO BLOQUEANTE (modal con overlay) ==== -->
-<div id="warnOverlay"
-     aria-modal="true"
-     role="dialog"
-     style="
+        <div id="warnOverlay" aria-modal="true" role="dialog" style="
        position: fixed;
        inset: 0;
        z-index: 9990;
@@ -1151,12 +1165,8 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
        /* FONDO LAVANDA COMO HITOS (D9CCE7) */
        background: rgba(217, 204, 231, 0.82); /* #D9CCE7 con transparencia */
        backdrop-filter: blur(10px);
-     "
->
-  <div
-    class="warn-modal"
-    role="document"
-    style="
+     ">
+            <div class="warn-modal" role="document" style="
       width: min(92vw, 720px);
       max-width: 720px;
       /* TARJETA CLARITA CON BORDE LILA */
@@ -1166,43 +1176,35 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
       padding: 3rem 3.5rem;
       text-align: center;
       box-shadow: 0 18px 45px rgba(171, 169, 191, 0.55); /* #E5E3F7 base */
-    "
-  >
-    <h2
-      style="
+    ">
+                <h2 style="
         color:#34113F;
         font-weight:900;
         font-size:2.2rem;
         text-transform:uppercase;
         letter-spacing:1px;
         margin-bottom:1.8rem;
-      "
-    >
-      ADVERTENCIA DE CONTENIDO
-    </h2>
+      ">
+                    ADVERTENCIA DE CONTENIDO
+                </h2>
 
-    <p
-      style="
+                <p style="
         line-height:1.6;
         font-size:1.2rem;
         color:#34113F;
         margin-bottom:2rem;
-      "
-    >
-      Este ejercicio contiene preguntas sobre modificación facial, cirugía plástica e inseguridades.
-      <br><br>
-      Si no te sientes en la condición de hablar sobre estos temas, te recomiendo que saltes esta sección.
-      <br><br>
-      Presione <strong>Tocador</strong> para ver las preguntas o
-      <strong>Salón de espejos</strong> para regresar.
-    </p>
+      ">
+                    Este ejercicio contiene preguntas sobre modificación facial, cirugía plástica e inseguridades.
+                    <br><br>
+                    Si no te sientes en la condición de hablar sobre estos temas, te recomiendo que saltes esta sección.
+                    <br><br>
+                    Presione <strong>Tocador</strong> para ver las preguntas o
+                    <strong>Salón de espejos</strong> para regresar.
+                </p>
 
-    <div style="display:flex; justify-content:center; gap:1.2rem;">
-      <!-- Botón Salón de espejos -->
-      <button
-        id="btnWarnBack"
-        class="btn"
-        style="
+                <div style="display:flex; justify-content:center; gap:1.2rem;">
+                    <!-- Botón Salón de espejos -->
+                    <button id="btnWarnBack" class="btn" style="
           flex:1;
           background:#D9CCE7;
           border:2px solid #BEB7DF;
@@ -1213,16 +1215,12 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
           font-size:1.05rem;
           cursor:pointer;
           transition:.15s;
-        "
-      >
-        ← Salón de espejos
-      </button>
+        ">
+                        ← Salón de espejos
+                    </button>
 
-      <!-- Botón Tocador -->
-      <button
-        id="btnWarnContinue"
-        class="btn btn-primary"
-        style="
+                    <!-- Botón Tocador -->
+                    <button id="btnWarnContinue" class="btn btn-primary" style="
           flex:1;
           background:#34113F;
           border:2px solid #34113F;
@@ -1233,49 +1231,70 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
           font-size:1.05rem;
           cursor:pointer;
           transition:.15s;
-        "
-      >
-        Tocador →
-      </button>
-    </div>
-  </div>
-</div>
+        ">
+                        Tocador →
+                    </button>
+                </div>
+            </div>
+        </div>
 
 
 
-<div id="finalOverlay" class="overlay hidden">
-  <div class="modal-full">
-    <!-- Marco imagen: capa de fondo que NO bloquea clics/scroll -->
-    <img src="{{ asset('img/tocador2.png') }}"alt="" class="modal-frame">
+        <div id="finalOverlay" class="overlay hidden">
+            <div class="modal-full">
+                <!-- Marco imagen: capa de fondo que NO bloquea clics/scroll -->
+                <img src="{{ asset('img/tocador2.png') }}" alt="" class="modal-frame">
 
-    <!-- Contenido -->
+                <!-- Contenido -->
 
-    <section class="modal-body">
-      <div class="fc-reset">
-            <p class="modal-desc"  text-align:center;>  Gracias por verte en este espejo,</p>
-            <p class="modal-desc">Aunque la belleza no sea lo más importante para ti, está en todas partes: en tu elección de ropa para la entrevista de trabajo, en arreglarse para una cita romántica o para verse con las amigas. Piensa en las historias de las mujeres que leíste y en los hilos que la conforman. Los factores son múltiples y se enredan entre sí.</p>
-            <p class="modal-desc">El proyecto quiere informarte, no juzgarte. Espero que la información de esta página te sirva para redefinir lo que tú quieres con la belleza y negociar tu proceso de embellecimiento en los momentos que consideres. Tomes la decisión que tomes, serás juzgada: es parte de la paradoja de la belleza. Pierdes si quieres ser bella, pierdes si no lo quieres. Sin embargo, quiero dar un paso más allá para romper el blanco y negro y ver el enredo en el que tienes que vivir. </p>
-            <p class="modal-desc">Espero que encuentres aquí un lugar para pensar la belleza desde una resistencia colectiva. Existirán muchas presiones a lo largo de tu vida y probablemente más con las innovaciones tecnológicas. La belleza es una moneda de cambio tanto por sus beneficios como desventajas. Así que, al igual que tú decides cómo negociar con ella, si aspiras a pasar inadvertida, a la diferenciación o la notoriedad; abraza la incoherencia que viene con ello, mírate al espejo y pregúntale: “Espejito, espejito, ¿de dónde viene este enredo?”</p>
-            <p class="modal-desc">Tómate un momento, cuando quieras, continúa. </p>
+                <section class="modal-body">
+                    <div class="fc-reset">
+                        <p class="modal-desc" text-align:center;> Gracias por verte en este espejo,</p>
+                        <p class="modal-desc">Aunque la belleza no sea lo más importante para ti, está en todas partes:
+                            en tu elección de ropa para la entrevista de trabajo, en arreglarse para una cita romántica
+                            o para verse con las amigas. Piensa en las historias de las mujeres que leíste y en los
+                            hilos que la conforman. Los factores son múltiples y se enredan entre sí.</p>
+                        <p class="modal-desc">El proyecto quiere informarte, no juzgarte. Espero que la información de
+                            esta página te sirva para redefinir lo que tú quieres con la belleza y negociar tu proceso
+                            de embellecimiento en los momentos que consideres. Tomes la decisión que tomes, serás
+                            juzgada: es parte de la paradoja de la belleza. Pierdes si quieres ser bella, pierdes si no
+                            lo quieres. Sin embargo, quiero dar un paso más allá para romper el blanco y negro y ver el
+                            enredo en el que tienes que vivir. </p>
+                        <p class="modal-desc">Espero que encuentres aquí un lugar para pensar la belleza desde una
+                            resistencia colectiva. Existirán muchas presiones a lo largo de tu vida y probablemente más
+                            con las innovaciones tecnológicas. La belleza es una moneda de cambio tanto por sus
+                            beneficios como desventajas. Así que, al igual que tú decides cómo negociar con ella, si
+                            aspiras a pasar inadvertida, a la diferenciación o la notoriedad; abraza la incoherencia que
+                            viene con ello, mírate al espejo y pregúntale: “Espejito, espejito, ¿de dónde viene este
+                            enredo?”</p>
+                        <p class="modal-desc">Tómate un momento, cuando quieras, continúa. </p>
 
-      </div>
-    </section>
+                    </div>
+                </section>
 
-    <footer class="modal-footer">
-      <button id="btnContinuarFinal" class="btn">Continuar </button>
-    </footer>
-  </div>
-</div>
+                <footer class="modal-footer">
+                    <button id="btnContinuarFinal" class="btn">Continuar </button>
+                </footer>
+            </div>
+        </div>
 
         <!-- ============ ESCENARIO ============ -->
         <div id="stage" class="stage" style="flex:1 1 auto; min-width:0; position:relative; overflow:hidden;">
 
             <!-- Imagen de fondo (selfie u otra). Mantiene proporción -->
-            <img id="bg" alt="Imagen de fondo" style="position:absolute; inset:0; width:100%; height:100%;
+            <img id="bg" alt="" style="position:absolute; inset:0; width:100%; height:100%;
                     object-fit:contain; z-index:5; user-select:none; -webkit-user-drag:none;">
 
             <!-- Región del vidrio (misma abertura del marco) -->
-            <div id="glass" class="glass">
+            <div id="glass" class="glass" style="
+        position:absolute;
+        top:14.5%;
+        left:9%;
+        right:10%;
+        bottom:14%;
+        overflow:hidden;
+     ">
+
                 <!-- Canvas de pintura DENTRO del vidrio -->
                 <canvas id="cv" style="position:absolute; inset:0; width:100%; height:100%;
                                 z-index:10; pointer-events:auto; touch-action:none; display:block;"></canvas>
@@ -1355,6 +1374,7 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
                 const redoBtn = document.getElementById('redo');
                 const clearBtn = document.getElementById('clear');
                 const ctx = cv.getContext('2d', { willReadFrequently: true });
+                const frame = document.getElementById('frame');
 
                 // --- Modal de advertencia bloqueante ---
 
@@ -1376,10 +1396,10 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
                     else {
                         switch (brush) {
                             case 'lipstick': path = "{{ asset('img/cursors/labial.png') }}"; break;
-                            case 'shadow': path   = "{{ asset('img/cursors/sombra.png') }}"; break;
-                            case 'blush': path    = "{{ asset('img/cursors/rubor.png') }}"; break;
+                            case 'shadow': path = "{{ asset('img/cursors/sombra.png') }}"; break;
+                            case 'blush': path = "{{ asset('img/cursors/rubor.png') }}"; break;
                             case 'eyeliner': path = "{{ asset('img/cursors/delineador.png') }}"; break;
-                            case 'remover': path  = "{{ asset('img/cursors/desmaquillante.png') }}"; break;
+                            case 'remover': path = "{{ asset('img/cursors/desmaquillante.png') }}"; break;
                             default: path = '';
                         }
                     }
@@ -1397,65 +1417,102 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
                     }
                     return hex;
                 }
-                function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
-
-                // —— Tamaño que no se desborda (85vw x 75% del alto útil)
-                function resize() {
+                function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); } function resize() {
                     const dpr = window.devicePixelRatio || 1;
 
-                    // MARCO como fuente de tamaño/proporción
-                    const frame = document.getElementById('frame');
-                    const fw = frame?.naturalWidth || 900;   // 3:4 por defecto
-                    const fh = frame?.naturalHeight || 1200;
+                    const glass = document.getElementById('glass');
+                    if (!glass) return;
 
-                    // Si hay una imagen de fondo y quieres que *también* ajuste, puedes
-                    // cambiar a Math.max(fw, bg.naturalWidth) / Math.max(fh, bg.naturalHeight),
-                    // pero para el marco fijo, fw/fh es lo correcto.
-                    const natW = Math.max(fw, bg.naturalWidth);
-                    const natH = Math.max(fh, bg.naturalHeight);
+                    // -------------- 1) La selfie manda la proporción --------------
+                    const hasSelfie = bg.naturalWidth > 0 && bg.naturalHeight > 0;
 
-                    const headerH = (document.querySelector('.bar')?.getBoundingClientRect().height || 0) +
+                    const baseW = hasSelfie
+                        ? bg.naturalWidth
+                        : (frame?.naturalWidth || 1120);
+
+                    const baseH = hasSelfie
+                        ? bg.naturalHeight
+                        : (frame?.naturalHeight || 723);
+
+                    const aspect = baseW / baseH;
+
+                    // -------------- 2) Límites por pantalla --------------
+                    const headerH =
+                        (document.querySelector('.bar')?.getBoundingClientRect().height || 0) +
                         (document.querySelector('.subbar')?.getBoundingClientRect().height || 0);
-                    const maxW_vp = Math.floor(window.innerWidth * 0.85);
-                    const maxH_vp = Math.floor((window.innerHeight - headerH) * 0.75);
+
+                    const maxW_vp = Math.floor(window.innerWidth * 0.9);
+                    const maxH_vp = Math.floor((window.innerHeight - headerH) * 0.8);
 
                     const boxRect = stage.parentElement.getBoundingClientRect();
                     const maxW = Math.max(320, Math.min(maxW_vp, boxRect.width));
                     const maxH = Math.max(240, Math.min(maxH_vp, 2000));
 
-                    const scale = Math.min(maxW / natW, maxH / natH, 1);
-                    const dispW = Math.max(1, Math.floor(natW * scale));
-                    const dispH = Math.max(1, Math.floor(natH * scale));
+                    // -------------- 3) Tamaño final del stage --------------
+                    let dispW = maxW;
+                    let dispH = Math.round(dispW / aspect);
 
+                    if (dispH > maxH) {
+                        dispH = maxH;
+                        dispW = Math.round(dispH * aspect);
+                    }
 
                     stage.style.width = dispW + 'px';
                     stage.style.height = dispH + 'px';
 
-                    // fondo y marco llenan el stage
-                    Object.assign(bg.style, { width: dispW + 'px', height: dispH + 'px', objectFit: 'contain', display: 'block' });
-                    Object.assign(frame.style, { width: dispW + 'px', height: dispH + 'px', objectFit: 'contain', display: 'block' });
+                    // -------------- 4) Fondo y marco ocupan el stage --------------
+                    bg.style.position = 'absolute';
+                    bg.style.inset = '0';
+                    bg.style.width = '100%';
+                    bg.style.height = '100%';
+                    bg.style.objectFit = 'contain';
+                    bg.style.zIndex = '1';
 
-                    // canvas del mismo tamaño (HiDPI)
-                    cv.style.width = dispW + 'px';
-                    cv.style.height = dispH + 'px';
-                    cv.width = Math.round(dpr * dispW);
-                    cv.height = Math.round(dpr * dispH);
+                    frame.style.position = 'absolute';
+                    frame.style.inset = '0';
+                    frame.style.width = '100%';
+                    frame.style.height = '100%';
+                    frame.style.objectFit = 'fill';
+                    frame.style.zIndex = '15';
+                    frame.style.pointerEvents = 'none';
+
+                    // -------------- 5) Hueco interior del PNG --------------
+                    const FRAME_W = 1120;
+                    const FRAME_H = 723;
+
+                    const M_TOP = 98;
+                    const M_BOTTOM = 104;
+                    const M_LEFT = 86;
+                    const M_RIGHT = 86;
+
+                    const sX = dispW / FRAME_W;
+                    const sY = dispH / FRAME_H;
+
+                    const glassX = M_LEFT * sX;
+                    const glassY = M_TOP * sY;
+                    const glassW = (FRAME_W - M_LEFT - M_RIGHT) * sX;
+                    const glassH = (FRAME_H - M_TOP - M_BOTTOM) * sY;
+
+                    glass.style.position = "absolute";
+                    glass.style.left = glassX + "px";
+                    glass.style.top = glassY + "px";
+                    glass.style.width = glassW + "px";
+                    glass.style.height = glassH + "px";
+
+                    // -------------- 7) Canvas dentro del hueco interior --------------
+                    cv.style.left = "0px";
+                    cv.style.top = "0px";
+                    cv.style.width = "100%";
+                    cv.style.height = "100%";
+
+                    // ⚠️ AQUÍ EL CAMBIO IMPORTANTE:
+                    // la resolución interna del canvas debe basarse en el tamaño del GLASS,
+                    // no del stage completo
+                    cv.width = Math.round(glassW * dpr);
+                    cv.height = Math.round(glassH * dpr);
                     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-                    // const dpr = window.devicePixelRatio || 1;
-
-                    // Medimos el vidrio (NO el stage) para la resolución real del canvas
-                    const glass = document.getElementById('glass');
-                    const rect = glass.getBoundingClientRect();
-
-                    // El canvas ya llena el vidrio con CSS (inset:0), aquí solo resolvemos en píxeles
-                    cv.width = Math.max(1, Math.round(rect.width * dpr));
-                    cv.height = Math.max(1, Math.round(rect.height * dpr));
-                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-                    const qFly = document.getElementById('qFly');
-                    if (qFly) qFly.style.height = dispH + 'px';
                 }
+
 
                 // —— Historial
                 function pushHistory() {
@@ -1597,6 +1654,9 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
                     reader.onload = () => { bg.src = reader.result; };
                     reader.readAsDataURL(f);
                 });
+
+
+
                 bg.addEventListener('load', () => {
                     bgLoaded = true; ph.style.display = 'none'; resize(); pushHistory(); redoStack = [];
                 });
@@ -1859,61 +1919,195 @@ transform: translateY(19vh);  /* baja todo el bloque unos 3% del alto de pantall
                     e.stopPropagation();
                     downloadCurrentQA();
                 });
+                function resize() {
+                    const dpr = window.devicePixelRatio || 1;
 
-// --- Siguiente: salida -> cambio texto -> entrada (sin ocultar por hover) ---
+                    const glass = document.getElementById('glass');
+                    if (!glass) return;
 
-function nextQuestion() {
-  clearTimeout(hideTimer);
-  overCard = true;
-  if (!qVisible) showQ();
-  if (isAnimating) return;
+                    // 1) La selfie manda la proporción
+                    const hasSelfie = bg.naturalWidth > 0 && bg.naturalHeight > 0;
 
-  isAnimating = true;
-  qNext.disabled = true;
+                    const baseW = hasSelfie
+                        ? bg.naturalWidth
+                        : (frame?.naturalWidth || 1120);
 
-  // animación de salida (la que ya usas)
-  qFly.animate(
-    [
-      { transform: 'translateX(0) scale(1)', opacity: 1, filter: 'blur(0)' },
-      { transform: 'translateX(-80px) scale(.95)', opacity: 0, filter: 'blur(4px)' }
-    ],
-    { duration: 240, easing: EASE_OUT, fill: 'forwards' }
-  ).onfinish = () => {
-    // si esta era la última, no avances; muestra conclusión
-    if (isLast()) {
-      showFinalModal();
-      // opcional: mantén visible la tarjeta o escóndela
-      // hideQ();
-      isAnimating = false;
-      qNext.disabled = false;
-      return;
-    }
+                    const baseH = hasSelfie
+                        ? bg.naturalHeight
+                        : (frame?.naturalHeight || 723);
 
-    // avanzar índice y renderizar la siguiente
-    qIdx = Math.min(qIdx + 1, Q.length - 1);
-    qText.textContent = cleanQ(Q[qIdx]);
-    // Guarda la respuesta actual antes de avanzar
-    answers[qIdx - 1] = (qInput.value || '').trim();
+                    const aspect = baseW / baseH;
 
-    // Limpia o restaura según corresponda
-    qInput.value = answers[qIdx] || '';
+                    // 2) Límites por pantalla
+                    const headerH =
+                        (document.querySelector('.bar')?.getBoundingClientRect().height || 0) +
+                        (document.querySelector('.subbar')?.getBoundingClientRect().height || 0);
 
-    // animación de entrada
-    qFly.animate(
-      [
-        { transform: 'translateX(100px) scale(.92)', opacity: 0, filter: 'blur(4px)' },
-        { transform: 'translateX(0) scale(1)', opacity: 1, filter: 'blur(0)' }
-      ],
-      { duration: 420, easing: SPRING_IN, fill: 'both' }
-    ).onfinish = () => {
-      isAnimating = false;
-      qNext.disabled = false;
+                    const maxW_vp = Math.floor(window.innerWidth * 0.9);
+                    const maxH_vp = Math.floor((window.innerHeight - headerH) * 0.8);
 
-      // Si ahora estamos en la última, puedes cambiar el texto del botón:
-      // qNext.textContent = 'Finalizar';
-    };
-  };
-}
+                    const boxRect = stage.parentElement.getBoundingClientRect();
+                    const maxW = Math.max(320, Math.min(maxW_vp, boxRect.width));
+                    const maxH = Math.max(240, Math.min(maxH_vp, 2000));
+
+                    // 3) Tamaño final del stage
+                    let dispW = maxW;
+                    let dispH = Math.round(dispW / aspect);
+
+                    if (dispH > maxH) {
+                        dispH = maxH;
+                        dispW = Math.round(dispH * aspect);
+                    }
+
+                    stage.style.width = dispW + 'px';
+                    stage.style.height = dispH + 'px';
+
+                    // 5) Hueco interior REAL del PNG
+                    const FRAME_W = 1120;
+                    const FRAME_H = 723;
+
+                    const M_TOP = 98;
+                    const M_BOTTOM = 104;
+                    const M_LEFT = 76;
+                    const M_RIGHT = 86;
+
+                    const sX = dispW / FRAME_W;
+                    const sY = dispH / FRAME_H;
+
+                    const glassX = M_LEFT * sX;
+                    const glassY = M_TOP * sY;
+                    const glassW = (FRAME_W - M_LEFT - M_RIGHT) * sX;
+                    const glassH = (FRAME_H - M_TOP - M_BOTTOM) * sY;
+
+                    // 6) Aplicar hueco interior al glass
+                    glass.style.position = "absolute";
+                    glass.style.left = glassX + "px";
+                    glass.style.top = glassY + "px";
+                    glass.style.width = glassW + "px";
+                    glass.style.height = glassH + "px";
+
+
+                    // -------------- 4) Fondo: se ajusta AL HUECO del marco --------------
+                    bg.style.position = 'absolute';
+                    bg.style.left = glassX + 'px';
+                    bg.style.top = glassY + 'px';
+                    bg.style.width = glassW + 'px';
+                    bg.style.height = glassH + 'px';
+                    bg.style.objectFit = 'contain';        // la selfie cabe completa
+                    bg.style.objectPosition = 'center center';  // centrada en el hueco
+                    bg.style.zIndex = '1';
+
+
+                    // ----- 4) MARCO: MARCO ADAPTADO AL HUECO EXACTO -----
+                    frame.style.position = 'absolute';
+                    frame.style.inset = '0';
+                    frame.style.width = '100%';
+                    frame.style.height = '100%';
+                    frame.style.objectFit = 'fill';   // o 'contain' si prefieres
+                    frame.style.zIndex = '15';
+                    frame.style.pointerEvents = 'none';
+
+
+                    // -------------- 5) Canvas dentro del hueco interior --------------
+                    cv.style.left = "0px";
+                    cv.style.top = "0px";
+                    cv.style.width = "100%";
+                    cv.style.height = "100%";
+
+                    // Resolución interna: IGUAL al tamaño del glass
+                    const gRect = glass.getBoundingClientRect();
+
+                    cv.width = Math.round(gRect.width * dpr);
+                    cv.height = Math.round(gRect.height * dpr);
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                }
+
+                function syncModalFrameToStage() {
+                    const stage = document.getElementById('stage');
+                    const modalFrame = document.querySelector('#finalOverlay .modal-frame');
+                    if (!stage || !modalFrame) return;
+
+                    const r = stage.getBoundingClientRect();
+                    const vw = window.innerWidth;
+                    const vh = window.innerHeight;
+
+                    // Queremos que quepa en pantalla, pero con el MISMO aspecto del stage
+                    const scale = Math.min((vw * 0.9) / r.width, (vh * 0.9) / r.height);
+
+                    const w = r.width * scale;
+                    const h = r.height * scale;
+
+                    modalFrame.style.width = w + 'px';
+                    modalFrame.style.height = h + 'px';
+                }
+                function abrirReflexionFinal() {
+                    const overlay = document.getElementById('finalOverlay');
+                    if (!overlay) return;
+
+                    overlay.classList.remove('hidden');
+                    document.body.classList.add('modal-open');
+
+                    syncModalFrameToStage();
+                }
+
+                window.addEventListener('resize', syncModalFrameToStage);
+
+
+                // --- Siguiente: salida -> cambio texto -> entrada (sin ocultar por hover) ---
+
+                function nextQuestion() {
+                    clearTimeout(hideTimer);
+                    overCard = true;
+                    if (!qVisible) showQ();
+                    if (isAnimating) return;
+
+                    isAnimating = true;
+                    qNext.disabled = true;
+
+                    // animación de salida (la que ya usas)
+                    qFly.animate(
+                        [
+                            { transform: 'translateX(0) scale(1)', opacity: 1, filter: 'blur(0)' },
+                            { transform: 'translateX(-80px) scale(.95)', opacity: 0, filter: 'blur(4px)' }
+                        ],
+                        { duration: 240, easing: EASE_OUT, fill: 'forwards' }
+                    ).onfinish = () => {
+                        // si esta era la última, no avances; muestra conclusión
+                        if (isLast()) {
+                            showFinalModal();
+                            // opcional: mantén visible la tarjeta o escóndela
+                            // hideQ();
+                            isAnimating = false;
+                            qNext.disabled = false;
+                            return;
+                        }
+
+                        // avanzar índice y renderizar la siguiente
+                        qIdx = Math.min(qIdx + 1, Q.length - 1);
+                        qText.textContent = cleanQ(Q[qIdx]);
+                        // Guarda la respuesta actual antes de avanzar
+                        answers[qIdx - 1] = (qInput.value || '').trim();
+
+                        // Limpia o restaura según corresponda
+                        qInput.value = answers[qIdx] || '';
+
+                        // animación de entrada
+                        qFly.animate(
+                            [
+                                { transform: 'translateX(100px) scale(.92)', opacity: 0, filter: 'blur(4px)' },
+                                { transform: 'translateX(0) scale(1)', opacity: 1, filter: 'blur(0)' }
+                            ],
+                            { duration: 420, easing: SPRING_IN, fill: 'both' }
+                        ).onfinish = () => {
+                            isAnimating = false;
+                            qNext.disabled = false;
+
+                            // Si ahora estamos en la última, puedes cambiar el texto del botón:
+                            // qNext.textContent = 'Finalizar';
+                        };
+                    };
+                }
 
 
                 qNext.addEventListener('click', (e) => {
@@ -1967,14 +2161,14 @@ function nextQuestion() {
 
                 //==== REFLEXION  FINAL POP UP ========
 
-function showFinalModal(){
-  document.getElementById('finalOverlay').classList.remove('hidden');
-  document.body.classList.add('modal-open');
-}
-document.getElementById('btnContinuarFinal').onclick = () => {
-  document.body.classList.remove('modal-open');
-  window.location.href = "/netrevistas";
-};
+                function showFinalModal() {
+                    document.getElementById('finalOverlay').classList.remove('hidden');
+                    document.body.classList.add('modal-open');
+                }
+                document.getElementById('btnContinuarFinal').onclick = () => {
+                    document.body.classList.remove('modal-open');
+                    window.location.href = "/netrevistas";
+                };
                 function cleanQ(s) {
                     return String(s || '').replace(/\s*CONTINUAR\s*$/i, '').trim();
                 }
@@ -1988,15 +2182,15 @@ document.getElementById('btnContinuarFinal').onclick = () => {
                 }
 
 
-                function showFinalModal(){
-                const overlay = document.getElementById('finalOverlay');
-                overlay.classList.remove('hidden');
-                document.body.classList.add('modal-open');
+                function showFinalModal() {
+                    const overlay = document.getElementById('finalOverlay');
+                    overlay.classList.remove('hidden');
+                    document.body.classList.add('modal-open');
 
-                document.getElementById('btnContinuarFinal').onclick = () => {
-                    document.body.classList.remove('modal-open');
-                    window.location.href="{{ route('detras.many', ['ids' => '11,12,13']) }}";
-                };
+                    document.getElementById('btnContinuarFinal').onclick = () => {
+                        document.body.classList.remove('modal-open');
+                        window.location.href = "{{ route('detras.many', ['ids' => '11,12,13']) }}";
+                    };
                 }
 
 
