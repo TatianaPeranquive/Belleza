@@ -12,9 +12,6 @@
         espejito</a>
 </nav>
 
-{{-- SPACER: empuja TODO por debajo de lo que tape arriba.
-Si tu header global también es fijo, este tamaño grande evita solapes.
-Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 <div class="h-[160px] md:h-[100px]"></div>
 
 <head>
@@ -98,12 +95,24 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             max-width: min(90vw, 900px);
             margin: 0 auto;
         }
+        /* Marco */
+      #stage {
+  position: relative;
+  width: 100%;
+   aspect-ratio: 2654 / 2127; /* EXACTO al PNG */
+  /*aspect-ratio: 5232 / 4193; /* EXACTO al PNG */
+}
 
-        #stage {
-            position: relative;
-            margin: 0 auto;
-            overflow: hidden;
-        }
+#frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* respeta proporción */
+  pointer-events: none;
+  z-index: 15;
+}
+
 
         /* Selfie */
         #bg {
@@ -138,20 +147,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             pointer-events: auto;
             touch-action: none;
         }
-
-        /* Marco */
-        #frame {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: fill !important;
-            /* o 'fill' si quieres que se estire exacto */
-            z-index: 15;
-            pointer-events: none;
-        }
-
-
 
         /* === Botones generales === */
         .btn {
@@ -968,19 +963,6 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         }
 
         /* --- Imagen del marco --- */
-        #finalOverlay .modal-frame {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: auto;
-            height: auto;
-            max-width: 100vw;
-            max-height: 100vh;
-            object-fit: contain;
-            pointer-events: none;
-            z-index: 0;
-        }
 
 
         /* --- Contenido encima del marco --- */
@@ -1243,7 +1225,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         <div id="finalOverlay" class="overlay hidden">
             <div class="modal-full">
                 <!-- Marco imagen: capa de fondo que NO bloquea clics/scroll -->
-                <img src="{{ asset('img/tocador2.png') }}" alt="" class="modal-frame">
+                <img src="{{ asset('img/tocador2.png') }}?v=3" alt="" class="modal-frame">
 
                 <!-- Contenido -->
 
@@ -1311,8 +1293,9 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             </div>
 
             <!-- Marco por encima (no bloquea eventos) -->
-            <img id="frame" src="{{ asset('img/tocador.png') }}" alt="Marco" style="position:absolute; inset:0; width:100%; height:100%;
-                    object-fit:contain; z-index:15; pointer-events:none;">
+             <img id="frame"
+                src="http://localhost/PROYECTOS/Belleza/public/img/tocador.png"
+                alt="Marco">
         </div>
 
         <!-- ============ /ESCENARIO ============ -->
@@ -1472,7 +1455,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                     frame.style.inset = '0';
                     frame.style.width = '100%';
                     frame.style.height = '100%';
-                    frame.style.objectFit = 'fill';
+                    frame.style.objectFit = 'contain';
                     frame.style.zIndex = '15';
                     frame.style.pointerEvents = 'none';
 
@@ -1505,7 +1488,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                     cv.style.width = "100%";
                     cv.style.height = "100%";
 
-                    // ⚠️ AQUÍ EL CAMBIO IMPORTANTE:
+
                     // la resolución interna del canvas debe basarse en el tamaño del GLASS,
                     // no del stage completo
                     cv.width = Math.round(glassW * dpr);
@@ -1842,7 +1825,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                     ctx.shadowBlur = 18;
                     ctx.shadowOffsetY = 6;
                     ctx.fillStyle = '#34113F';
-                    ctx.fill();
+                    //ctx.fill();
                     ctx.restore();
                     // borde
                     ctx.strokeStyle = '#e2e8f0';
@@ -1930,11 +1913,11 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
 
                     const baseW = hasSelfie
                         ? bg.naturalWidth
-                        : (frame?.naturalWidth || 1120);
+                        : (frame?.naturalWidth || 2654);
 
                     const baseH = hasSelfie
                         ? bg.naturalHeight
-                        : (frame?.naturalHeight || 723);
+                        : (frame?.naturalHeight || 2127);
 
                     const aspect = baseW / baseH;
 
@@ -1963,13 +1946,13 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                     stage.style.height = dispH + 'px';
 
                     // 5) Hueco interior REAL del PNG
-                    const FRAME_W = 1120;
-                    const FRAME_H = 723;
+                    const FRAME_W = 1100;
+                    const FRAME_H = 410;
 
-                    const M_TOP = 98;
-                    const M_BOTTOM = 104;
+                    const M_TOP = 101;
+                    const M_BOTTOM = 100;
                     const M_LEFT = 76;
-                    const M_RIGHT = 86;
+                    const M_RIGHT = 0;
 
                     const sX = dispW / FRAME_W;
                     const sY = dispH / FRAME_H;
@@ -2003,7 +1986,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
                     frame.style.inset = '0';
                     frame.style.width = '100%';
                     frame.style.height = '100%';
-                    frame.style.objectFit = 'fill';   // o 'contain' si prefieres
+                    frame.style.objectFit = 'contain';   //fill  o 'contain' si prefieres
                     frame.style.zIndex = '15';
                     frame.style.pointerEvents = 'none';
 
