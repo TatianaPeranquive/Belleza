@@ -43,107 +43,31 @@
 </head>
 <body class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-[#f8f8fa] text-[#111827]' }}">
 
-<header
-    x-data="{ open: false }"
-    class="fixed top-0 left-0 w-full z-50
-           {{ $theme === 'dark'
-                ? 'bg-[#34113F] text-[#f8f8fa]'
-                : 'bg-[#f8f8fa] text-[#34113F] border-b border-[#34113F]/20' }}"
->
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="flex items-center justify-between h-16">
-
-            {{-- Logo / título (ajusta el texto o déjalo vacío) --}}
-            <div class="flex items-center gap-2">
-                <span class="font-bold tracking-wide">
-                    Espejito
-                </span>
-            </div>
-
-            {{-- Menú DESKTOP --}}
-            <nav class="hidden md:flex gap-4">
-                @php
-                    $linkBase = 'block px-4 py-2 rounded-lg border border-current font-bold text-sm md:text-base text-center transition hover:bg-white/10 hover:bg-opacity-20';
-                @endphp
-
-                <a href="#home" class="{{ $linkBase }}">
-                    Espeo, espejito
-                </a>
-                <a href="{{ route('hitos.index') }}" class="{{ $linkBase }}">
-                    Entramado
-                </a>
-                <a href="{{ route('entrevistas.index') }}" class="{{ $linkBase }}">
-                    Salón de espejos
-                </a>
-                <a href="{{ route('espejo.paint') }}" class="{{ $linkBase }}">
-                    Tocador
-                </a>
-                <a href="{{ route('detras.many', ['ids' => '11,12,13']) }}" class="{{ $linkBase }}">
-                    Tejedoras
-                </a>
-            </nav>
-
-            {{-- Botón hamburguesa (solo móvil) --}}
-            <button
-                class="md:hidden inline-flex items-center justify-center p-2 rounded-lg border border-current"
-                @click="open = !open"
-                aria-label="Abrir menú"
-            >
-                <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-                <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-
-        {{-- Menú MÓVIL --}}
-        <nav
-            class="md:hidden mt-1 pb-2"
-            x-show="open"
-            x-transition.opacity.duration.150ms
-        >
-            <ul class="flex flex-col gap-2">
-                <li>
-                    <a href="#home"
-                       class="block w-full text-center px-4 py-2 rounded-lg border border-current font-bold text-sm hover:bg-white/10 hover:bg-opacity-20">
-                       Espejito, espejito
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('hitos.index') }}"
-                       class="block w-full text-center px-4 py-2 rounded-lg border border-current font-bold text-sm hover:bg-white/10 hover:bg-opacity-20">
-                       Entramado
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('entrevistas.index') }}"
-                       class="block w-full text-center px-4 py-2 rounded-lg border border-current font-bold text-sm hover:bg-white/10 hover:bg-opacity-20">
-                       Salón de espejos
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('espejo.paint') }}"
-                       class="block w-full text-center px-4 py-2 rounded-lg border border-current font-bold text-sm hover:bg-white/10 hover:bg-opacity-20">
-                       Tocador
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('detras.many', ['ids' => '11,12,13']) }}"
-                       class="block w-full text-center px-4 py-2 rounded-lg border border-current font-bold text-sm hover:bg-white/10 hover:bg-opacity-20">
-                       Tejedoras
-                    </a>
-                </li>
-            </ul>
-        </nav>
+  <header class="fixed top-0 left-0 w-full bg-[#34113F] z-50">
+    <div class="flex justify-between items-center p-4 text--[#f8f8fa]">
+      <div class="font-bold text-lg"></div>
+      <div class="flex justify-between items-center p-4 text-[#f8f8fa]"></div>
+      <nav id="menu" class="fixed top-0 left-0 w-full z-50 opacity-0 pointer-events-none transition-all duration-300">
+        <ul class="flex justify-center gap-4 w-full max-w-6xl mx-auto">
+          <li class="flex-1">
+            <a href="#home" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Espejito, espejito</a>
+          </li>
+          <li class="flex-1">
+            <a href="{{ route('hitos.index') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Entramado</a>
+          </li>
+          <li class="flex-1">
+            <a href="{{ route('entrevistas.index') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Salón de espejos</a>
+          </li>
+          <li class="flex-1">
+            <a href="{{ route('espejo.paint') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tocador</a>
+          </li>
+          <li class="flex-1">
+            <a href="{{ route('detras.many', ['ids' => '11,12,13']) }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tejedoras</a>
+          </li>
+        </ul>
+      </nav>
     </div>
-</header>
-
+  </header>
 
   <main class="min-h-screen pt-16">
     @yield('content')
@@ -155,43 +79,42 @@
   x-data
   x-show="$store.float && $store.float.show"
   x-transition.opacity.duration.120ms
-  class="fixed inset-0 z-[9999] pointer-events-none"
-  style="left:0; top:0;"
->
-  <div
-    id="float-card"
-    class="absolute pointer-events-auto max-w-[420px] w-[min(92vw,420px)] rounded-2xl shadow-2xl border bg-white/90 backdrop-blur p-3"
-    style="will-change: transform;"
-  >
-    <div class="flex items-center justify-between mb-2">
-      <div class="text-[10px] uppercase tracking-wide text-slate-500">Diccionario</div>
+  class="fixed inset-0 z-[9999] pointer-events-none flex items-center justify-center">
 
-      <div class="flex gap-1">
-        <button
-          class="text-xs px-2 py-1 rounded border"
-          :class="$store.float.mode === 'def' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700'"
-          @click="$store.float.setMode('def')"
-        >Definición</button>
+<div id="float-card"
+     class="max-w-[780px] w-[min(92vw,780px)]
+            rounded-2xl shadow-2xl border bg-[#f8f8fa]/90 backdrop-blur
+            p-4 pointer-events-auto
+            max-h-[60vh] overflow-y-auto">
+  <div class="flex items-center justify-between mb-2">
+    <div class="text-[10px] uppercase tracking-wide text-slate-500"></div>
 
-        <button
-          class="text-xs px-2 py-1 rounded border"
-          :class="$store.float.mode === 'ref' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700'"
-          @click="$store.float.setMode('ref')"
-          :disabled="!$store.float.ref || $store.float.ref.trim()===''"
-        >Referencia</button>
-      </div>
+    <div class="flex gap-1">
+      <button
+        class="text-xs px-2 py-1 rounded border"
+        :class="$store.float.mode === 'def' ? 'bg-slate-900 text-[#f8f8fa]' : 'bg-[#f8f8fa] text-slate-700'"
+        @click="$store.float.setMode('def')">
+        Definición
+      </button>
+      <button
+        class="text-xs px-2 py-1 rounded border"
+        :class="$store.float.mode === 'ref' ? 'bg-slate-900 text-[#f8f8fa]' : 'bg-[#f8f8fa] text-slate-700'"
+        @click="$store.float.setMode('ref')">
+        Referencia
+      </button>
     </div>
+  </div>
 
-    <div class="text-sm text-slate-800 whitespace-pre-wrap"
-         x-text="$store.float.text"></div>
+  <div class="text-sm text-slate-800 whitespace-pre-wrap"
+       x-text="$store.float ? $store.float.text : ''"></div>
 
-    <div class="mt-2 flex justify-end">
-      <button class="text-xs underline text-slate-600 hover:text-slate-900"
-              @click="$store.float.close()">Cerrar</button>
-    </div>
+  <div class="mt-2 flex justify-end">
+    <button class="text-xs underline text-slate-600 hover:text-slate-900"
+            @click="$store.float && $store.float.close()">Cerrar o con ESC</button>
   </div>
 </div>
 
+  </div>
   <!-- ===================================================================== -->
 
   <!-- GSAP (si lo usas) -->
@@ -228,48 +151,108 @@
   </script>
 
   <!-- ============= Store Alpine: flotante diccionario =================== -->
-<div
-  id="float-holder"
-  x-data
-  x-show="$store.float && $store.float.show"
-  x-transition.opacity.duration.120ms
-  class="fixed inset-0 z-[9999] pointer-events-none"
-  style="left:0; top:0;"
->
-  <div
-    id="float-card"
-    class="absolute pointer-events-auto max-w-[420px] w-[min(92vw,420px)] rounded-2xl shadow-2xl border bg-white/90 backdrop-blur p-3"
-    style="will-change: transform;"
-  >
-    <div class="flex items-center justify-between mb-2">
-      <div class="text-[10px] uppercase tracking-wide text-slate-500">Diccionario</div>
+<script>
+document.addEventListener('alpine:init', () => {
 
-      <div class="flex gap-1">
-        <button
-          class="text-xs px-2 py-1 rounded border"
-          :class="$store.float.mode === 'def' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700'"
-          @click="$store.float.setMode('def')"
-        >Definición</button>
+  Alpine.store('float', {
 
-        <button
-          class="text-xs px-2 py-1 rounded border"
-          :class="$store.float.mode === 'ref' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700'"
-          @click="$store.float.setMode('ref')"
-          :disabled="!$store.float.ref || $store.float.ref.trim()===''"
-        >Referencia</button>
-      </div>
-    </div>
+    show: false,
+    text: '',
+    def: '',
+    ref: '',
+    mode: 'def',
+    x: 0, y: 0,
 
-    <div class="text-sm text-slate-800 whitespace-pre-wrap"
-         x-text="$store.float.text"></div>
+    openFor(el, palabra) {
+      const word = (palabra ?? '').toString().trim();
+      this.mode = 'def';
+      this.text = word ? 'Cargando…' : 'Sin palabra. Demo del flotante.';
+      this.show = true;
 
-    <div class="mt-2 flex justify-end">
-      <button class="text-xs underline text-slate-600 hover:text-slate-900"
-              @click="$store.float.close()">Cerrar</button>
-    </div>
-  </div>
-</div>
+      if (!word) return;
 
+      const ep = (window.DIC_EP ?? '/diccionario/buscar');
+      fetch(`${ep}?palabra=${encodeURIComponent(word)}`)
+        .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status)))
+        .then(d => {
+          if (d && d.found) {
+            this.def = d.definicion || 'Sin definición disponible.';
+            this.ref = d.ejemplo    || '';
+          } else {
+            this.def = `No encontramos la definición de “${word}”.`;
+            this.ref = '';
+          }
+          this.applyMode();
+        })
+        .catch(err => {
+          console.warn('Diccionario error:', err);
+          this.def = 'Error consultando el diccionario.';
+          this.ref = '';
+          this.applyMode();
+        });
+    },
+
+    setMode(m) {
+      this.mode = (m === 'ref') ? 'ref' : 'def';
+      this.applyMode();
+    },
+
+    applyMode() {
+      this.text = (this.mode === 'ref')
+        ? (this.ref && this.ref.trim() !== '' ? this.ref : 'Sin referencia disponible.')
+        : this.def;
+    },
+
+
+    positionNear(el) {
+      return;
+    },
+
+    close() {
+      this.show = false;
+      this.text = '';
+      this.def  = '';
+      this.ref  = '';
+      this.mode = 'def';
+    }
+  });
+
+});
+
+// Cerrar con ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && window.Alpine?.store('float')) {
+    Alpine.store('float').close();
+  }
+
+});
+
+//========ANIMACION TEXTOS ==================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const elements = document.querySelectorAll('.reveal-scroll');
+
+    if (!('IntersectionObserver' in window)) {
+        // Navegadores viejitos: mostrar todo sin animación
+        elements.forEach(el => el.classList.add('is-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target); // solo una vez por elemento
+            }
+        });
+    }, {
+        threshold: 0.2  // se activa cuando ~20% del elemento es visible
+    });
+
+    elements.forEach(el => observer.observe(el));
+});
+
+</script>
 
   <!-- =================================================================== -->
   <div x-data @keydown.escape.window="$store.float.close()"></div>

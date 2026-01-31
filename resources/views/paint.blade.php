@@ -99,23 +99,11 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             margin: 0 auto;
         }
 
-        /* Marco */
-
-#stage {
-    position: relative;
-    aspect-ratio: 5232 / 4193;  /* proporción real */
-    width: 100%;
-}
-#frame {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-}
-
-
+        #stage {
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+        }
 
         /* Selfie */
         #bg {
@@ -150,6 +138,20 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             pointer-events: auto;
             touch-action: none;
         }
+
+        /* Marco */
+        #frame {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill !important;
+            /* o 'fill' si quieres que se estire exacto */
+            z-index: 15;
+            pointer-events: none;
+        }
+
+
 
         /* === Botones generales === */
         .btn {
@@ -1241,7 +1243,7 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
         <div id="finalOverlay" class="overlay hidden">
             <div class="modal-full">
                 <!-- Marco imagen: capa de fondo que NO bloquea clics/scroll -->
-                <img src="{{ asset('img/tocador2.png') }}?v=3" alt="" class="modal-frame">
+                <img src="{{ asset('img/tocador2.png') }}" alt="" class="modal-frame">
 
                 <!-- Contenido -->
 
@@ -1309,8 +1311,8 @@ Ajusta si quieres: h-[140px] / h-[160px] / h-[180px] --}}
             </div>
 
             <!-- Marco por encima (no bloquea eventos) -->
-            <img id="frame" src="{{ asset('img/tocador.png') }}?v=3" alt="Marco"
-            style=" pointer-events:none;">
+            <img id="frame" src="{{ asset('img/tocador.png') }}" alt="Marco" style="position:absolute; inset:0; width:100%; height:100%;
+                    object-fit:contain; z-index:15; pointer-events:none;">
         </div>
 
         <!-- ============ /ESCENARIO ============ -->
