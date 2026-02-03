@@ -44,63 +44,51 @@
 <body class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-[#f8f8fa] text-[#111827]' }}">
 <header class="fixed top-0 left-0 w-full bg-[#34113F] z-50">
   <div class="px-2 sm:px-4 py-3">
-    <nav id="menu" class="w-full z-50 opacity-0 pointer-events-none transition-all duration-300">
-      <ul class="flex flex-nowrap justify-start sm:justify-center gap-3
-                 w-full max-w-6xl mx-auto
-                 overflow-x-auto overscroll-x-contain
-                 px-2 sm:px-0
-                 [-webkit-overflow-scrolling:touch]">
+   <nav id="menu" class="w-full z-50 opacity-0 pointer-events-none transition-all duration-300">
+  <!-- carril scrolleable -->
+  <div class="w-full overflow-x-auto overscroll-x-contain px-2 [-webkit-overflow-scrolling:touch]">
+    <!-- contenido -->
+    <ul class="flex w-max gap-3 sm:w-full sm:justify-center max-w-6xl mx-auto py-2">
+      <li class="shrink-0">
+        <a href="#home"
+           class="min-h-[44px] flex items-center justify-center
+                  px-3 sm:px-4 py-2 rounded border font-bold
+                  text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+          Espejito, espejito
+        </a>
+      </li>
 
-        <li class="shrink-0">
-          <a href="#home"
-             class="min-h-[44px] flex items-center justify-center
-                    text-center px-3 sm:px-4 py-2
-                    rounded border font-bold
-                    text-sm sm:text-lg
-                    whitespace-nowrap leading-none
-                    hover:underline">
-            Espejito, espejito
-          </a>
-        </li>
+      <li class="shrink-0">
+        <a href="{{ route('hitos.index') }}" class="min-h-[44px] flex items-center justify-center
+           px-3 sm:px-4 py-2 rounded border font-bold text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+          Entramado
+        </a>
+      </li>
 
-        <li class="shrink-0">
-          <a href="{{ route('hitos.index') }}"
-             class="min-h-[44px] flex items-center justify-center
-                    text-center px-3 sm:px-4 py-2 rounded border font-bold
-                    text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
-            Entramado
-          </a>
-        </li>
+      <li class="shrink-0">
+        <a href="{{ route('entrevistas.index') }}" class="min-h-[44px] flex items-center justify-center
+           px-3 sm:px-4 py-2 rounded border font-bold text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+          Salón de espejos
+        </a>
+      </li>
 
-        <li class="shrink-0">
-          <a href="{{ route('entrevistas.index') }}"
-             class="min-h-[44px] flex items-center justify-center
-                    text-center px-3 sm:px-4 py-2 rounded border font-bold
-                    text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
-            Salón de espejos
-          </a>
-        </li>
+      <li class="shrink-0">
+        <a href="{{ route('espejo.paint') }}" class="min-h-[44px] flex items-center justify-center
+           px-3 sm:px-4 py-2 rounded border font-bold text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+          Tocador
+        </a>
+      </li>
 
-        <li class="shrink-0">
-          <a href="{{ route('espejo.paint') }}"
-             class="min-h-[44px] flex items-center justify-center
-                    text-center px-3 sm:px-4 py-2 rounded border font-bold
-                    text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
-            Tocador
-          </a>
-        </li>
+      <li class="shrink-0">
+        <a href="{{ route('detras.many', ['ids' => '11,12,13']) }}" class="min-h-[44px] flex items-center justify-center
+           px-3 sm:px-4 py-2 rounded border font-bold text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+          Tejedoras
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-        <li class="shrink-0">
-          <a href="{{ route('detras.many', ['ids' => '11,12,13']) }}"
-             class="min-h-[44px] flex items-center justify-center
-                    text-center px-3 sm:px-4 py-2 rounded border font-bold
-                    text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
-            Tejedoras
-          </a>
-        </li>
-
-      </ul>
-    </nav>
   </div>
 </header>
 
