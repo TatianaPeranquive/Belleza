@@ -379,7 +379,7 @@
                         </li>
 
                         <!-- Que todo esté en su lugar -->
-                        <li class="absolute top-40 md:top-44 left-[70%]">
+                        <li class="absolute top-60 md:top-44 left-[70%]">
                             <button type="button" data-value="NO TANTO" class="opcion2 inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
                    border-2 border-[#C9BDEB] bg-[#34113F] text-[#f8f8fa]
