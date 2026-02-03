@@ -115,15 +115,15 @@
 
 
         /* Selfie */
+
         #bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            z-index: 1;
-        }
+  box-sizing: border-box;
+  padding-left: 24px;
+  padding-right: 24px;
+  object-fit: contain;
+  object-position: center;
+}
+
 
         /* Vidrio */
         #glass {
@@ -1411,7 +1411,7 @@
 
                     const baseW = hasSelfie
                         ? bg.naturalWidth
-                        : (frame?.naturalWidth || 1120);
+                        : (frame?.naturalWidth || 723);
 
                     const baseH = hasSelfie
                         ? bg.naturalHeight
@@ -1428,7 +1428,7 @@
                     const maxH_vp = Math.floor((window.innerHeight - headerH) * 0.8);
 
                     const boxRect = stage.parentElement.getBoundingClientRect();
-                    const maxW = Math.max(320, Math.min(maxW_vp, boxRect.width));
+                    const maxW = Math.max(240, Math.min(maxW_vp, boxRect.width));
                     const maxH = Math.max(240, Math.min(maxH_vp, 2000));
 
                     // -------------- 3) Tamaño final del stage --------------
@@ -1460,7 +1460,7 @@
                     frame.style.pointerEvents = 'none';
 
                     // -------------- 5) Hueco interior del PNG --------------
-                    const FRAME_W = 1120;
+                    const FRAME_W = 723;
                     const FRAME_H = 723;
 
                     const M_TOP = 98;
@@ -1979,6 +1979,8 @@
                     bg.style.objectFit = 'contain';        // la selfie cabe completa
                     bg.style.objectPosition = 'center center';  // centrada en el hueco
                     bg.style.zIndex = '1';
+                    bg.style.boxSizing = 'border-box';
+                    bg.style.padding = '0 24px';   // ← ajusta este valor
 
 
                     // ----- 4) MARCO: MARCO ADAPTADO AL HUECO EXACTO -----
