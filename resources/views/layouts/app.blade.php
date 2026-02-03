@@ -42,32 +42,68 @@
   </style>
 </head>
 <body class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-[#f8f8fa] text-[#111827]' }}">
+<header class="fixed top-0 left-0 w-full bg-[#34113F] z-50">
+  <div class="px-2 sm:px-4 py-3">
+    <nav id="menu" class="w-full z-50 opacity-0 pointer-events-none transition-all duration-300">
+      <ul class="flex flex-nowrap justify-start sm:justify-center gap-3
+                 w-full max-w-6xl mx-auto
+                 overflow-x-auto overscroll-x-contain
+                 px-2 sm:px-0
+                 [-webkit-overflow-scrolling:touch]">
 
-  <header class="fixed top-0 left-0 w-full bg-[#34113F] z-50">
-    <div class="flex justify-between items-center p-4 text--[#f8f8fa]">
-      <div class="font-bold text-lg"></div>
-      <div class="flex justify-between items-center p-4 text-[#f8f8fa]"></div>
-      <nav id="menu" class="fixed top-0 left-0 w-full z-50 opacity-0 pointer-events-none transition-all duration-300">
-        <ul class="flex justify-center gap-4 w-full max-w-6xl mx-auto">
-          <li class="flex-1">
-            <a href="#home" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Espejito, espejito</a>
-          </li>
-          <li class="flex-1">
-            <a href="{{ route('hitos.index') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Entramado</a>
-          </li>
-          <li class="flex-1">
-            <a href="{{ route('entrevistas.index') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Salón de espejos</a>
-          </li>
-          <li class="flex-1">
-            <a href="{{ route('espejo.paint') }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tocador</a>
-          </li>
-          <li class="flex-1">
-            <a href="{{ route('detras.many', ['ids' => '11,12,13']) }}" class="block w-full text-center px-4 py-2 rounded border font-bold text-lg hover:underline">Tejedoras</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+        <li class="shrink-0">
+          <a href="#home"
+             class="min-h-[44px] flex items-center justify-center
+                    text-center px-3 sm:px-4 py-2
+                    rounded border font-bold
+                    text-sm sm:text-lg
+                    whitespace-nowrap leading-none
+                    hover:underline">
+            Espejito, espejito
+          </a>
+        </li>
+
+        <li class="shrink-0">
+          <a href="{{ route('hitos.index') }}"
+             class="min-h-[44px] flex items-center justify-center
+                    text-center px-3 sm:px-4 py-2 rounded border font-bold
+                    text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+            Entramado
+          </a>
+        </li>
+
+        <li class="shrink-0">
+          <a href="{{ route('entrevistas.index') }}"
+             class="min-h-[44px] flex items-center justify-center
+                    text-center px-3 sm:px-4 py-2 rounded border font-bold
+                    text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+            Salón de espejos
+          </a>
+        </li>
+
+        <li class="shrink-0">
+          <a href="{{ route('espejo.paint') }}"
+             class="min-h-[44px] flex items-center justify-center
+                    text-center px-3 sm:px-4 py-2 rounded border font-bold
+                    text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+            Tocador
+          </a>
+        </li>
+
+        <li class="shrink-0">
+          <a href="{{ route('detras.many', ['ids' => '11,12,13']) }}"
+             class="min-h-[44px] flex items-center justify-center
+                    text-center px-3 sm:px-4 py-2 rounded border font-bold
+                    text-sm sm:text-lg whitespace-nowrap leading-none hover:underline">
+            Tejedoras
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</header>
+
 
   <main class="min-h-screen pt-16">
     @yield('content')
@@ -233,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const elements = document.querySelectorAll('.reveal-scroll');
 
     if (!('IntersectionObserver' in window)) {
-        // Navegadores viejitos: mostrar todo sin animación
+
         elements.forEach(el => el.classList.add('is-visible'));
         return;
     }
