@@ -29,10 +29,10 @@
     /* Área del espejo: contenedor relativo para superponer el canvas */
     .mirror-wrap { position: relative; width: 320px; margin: 0 auto; }
     .mirror-img   { width: 100%; height: auto; display:block; }
-    /* Canvas centrado dentro del “cristal” (ajusta estos inset a tu gráfico) */
+    /* Canvas centrado dentro del “cristal” */
     .mirror-canvas {
       position:absolute; inset: 18% 20% 22% 20%;  /* top right bottom left */
-      border-radius: 9999px; /* simulamos óvalo */
+      border-radius: 9999px; /* simula óvalo */
       background: transparent;
     }
     /* Vista previa del selfie recortada en óvalo (opcional) */

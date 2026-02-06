@@ -171,17 +171,15 @@
                 60% {
                     opacity: 1;
                     transform: translateY(-6px);
-                    /* sube un poquito de más */
                 }
 
                 100% {
                     opacity: 1;
                     transform: translateY(0);
-                    /* se “cuadra” en su sitio */
                 }
             }
 
-            /* Un pequeño delay si quieres escalonar el segundo */
+            /* Delay*/
             .reveal-delay-1.is-visible {
                 animation-delay: 0.15s;
             }
@@ -189,32 +187,27 @@
     </head>
 
     <body class="overflow-x-hidden">
-       <section id="home" class="bg-[#34113F] py-10 flex flex-col justify-start">
+        <section id="home" class="bg-[#34113F] py-10 flex flex-col justify-start">
 
-  <div class="relative w-full
-              h-[45vh]           /* 📱 móvil */
-              md:h-[90vh]        /* 💻 desktop */
+            <div class="relative w-full
+              h-[45vh]
+              md:h-[90vh]
               overflow-hidden">
 
-    <video
-      src="EspejoPortada1.mp4"
-      autoplay
-      muted
-      playsinline
-      class="w-full h-full object-cover">
-    </video>
+                <video src="EspejoPortada1.mp4" autoplay muted playsinline class="w-full h-full object-cover">
+                </video>
 
-  </div>
+            </div>
 
-  <div id="hero-sentinel" class="relative h-px"></div>
+            <div id="hero-sentinel" class="relative h-px"></div>
 
-</section>
+        </section>
 
 
         <section id="about" class="bg-[#f8f8fa] py-10 min-h-screen flex flex-col justify-start">
-             <div class="relative w-full md:h-[90vh] md:flex md:items-center md:justify-center">
+            <div class="relative w-full md:h-[90vh] md:flex md:items-center md:justify-center">
 
-              <h1 class="
+                <h1 class="
   relative md:absolute
   mt-10 md:mt-0
   px-6 md:px-0
@@ -223,80 +216,81 @@
   md:top-14 md:left-12
   text-center md:text-left
 ">
-  Espejito,espejito
-</h1>
+                    Espejito,espejito
+                </h1>
 
 
-            <img src="portada1.png"
-            class="mx-auto w-auto h-[60vh] md:h-[90vh] object-contain lg:translate-x-[-50px] reveal-scroll">
+                <img src="portada1.png"
+                    class="mx-auto w-auto h-[60vh] md:h-[90vh] object-contain lg:translate-x-[-50px] reveal-scroll">
 
-            <div class="mt-6 px-6 text-center md:mt-0 md:px-0 md:text-right
+                <div class="mt-6 px-6 text-center md:mt-0 md:px-0 md:text-right
                         md:absolute md:bottom-20 md:right-16">
-            <h2 class="text-4xl md:text-6xl lg:text-5xl font-semibold text-[#34113F] leading-tight reveal-scroll-delay-2">
-                ¿Qué es la belleza?
-            </h2>
-            <p class="text-xl md:text-3xl lg:text-4xl font-medium text-[#34113F]/80 mt-2 reveal-scroll-delay-2">
-                Historias orales <br> de mujeres colombianas
-            </p>
+                    <h2
+                        class="text-4xl md:text-6xl lg:text-5xl font-semibold text-[#34113F] leading-tight reveal-scroll-delay-2">
+                        ¿Qué es la belleza?
+                    </h2>
+                    <p class="text-xl md:text-3xl lg:text-4xl font-medium text-[#34113F]/80 mt-2 reveal-scroll-delay-2">
+                        Historias orales <br> de mujeres colombianas
+                    </p>
+                </div>
             </div>
-        </div>
         </section>
 
 
-<section id="work" class="bg-[#f8f8fa] py-20 text-[#34113F] leading-snug">
+        <section id="work" class="bg-[#f8f8fa] py-20 text-[#34113F] leading-snug">
 
-  <div class="max-w-7xl mx-auto px-8
+            <div class="max-w-7xl mx-auto px-8
               grid grid-cols-1 gap-10
               lg:grid-cols-3 lg:grid-rows-2 lg:gap-12 items-center">
 
-    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug text-center
+                <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug text-center
               lg:col-start-1 lg:row-start-1 lg:self-start reveal-scroll">
-      Había una vez una mujer,
-      que le preguntó al espejo
-      si era la más bonita.
-    </p>
+                    Había una vez una mujer,
+                    que le preguntó al espejo
+                    si era la más bonita.
+                </p>
 
-    <div class="flex justify-center lg:col-start-2 lg:row-span-2 lg:self-center">
-      <img src="Portada2.png" alt="Mujer frente al espejo"
-           class="max-h-[520px] lg:max-h-[650px] object-contain reveal-scroll">
-    </div>
+                <div class="flex justify-center lg:col-start-2 lg:row-span-2 lg:self-center">
+                    <img src="Portada2.png" alt="Mujer frente al espejo"
+                        class="max-h-[520px] lg:max-h-[650px] object-contain reveal-scroll">
+                </div>
 
-    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug text-center
+                <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug text-center
               lg:col-start-3 lg:row-start-2 lg:self-end reveal-scroll">
-      Cuando el espejo le dijo que no,
-      la mujer condenó
-      a quien le había quitado su lugar.
-    </p>
+                    Cuando el espejo le dijo que no,
+                    la mujer condenó
+                    a quien le había quitado su lugar.
+                </p>
 
-  </div>
+            </div>
 
-  <!-- TEXTO SUPERIOR -->
-  <div class="max-w-5xl mx-auto px-8 text-center mt-20 mb-16">
-    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug reveal-scroll-delay-2">
-      Los actos para retomar su título<br>
-      fueron en vano, nadie quiso matar<br>
-      a la inocente belleza.
-    </p>
-  </div>
+            <!-- TEXTO SUPERIOR -->
+            <div class="max-w-5xl mx-auto px-8 text-center mt-20 mb-16">
+                <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug reveal-scroll-delay-2">
+                    Los actos para retomar su título<br>
+                    fueron en vano, nadie quiso matar<br>
+                    a la inocente belleza.
+                </p>
+            </div>
 
-  <!-- DOS COLUMNAS -->
-  <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 place-items-center">
+            <!-- DOS COLUMNAS -->
+            <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 place-items-center">
 
-    <div class="text-left">
-      <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug reveal-scroll">
-        Así, con su deseo insatisfecho,<br>
-        la mujer fue castigada con la<br>
-        muerte.
-      </p>
-    </div>
+                <div class="text-left">
+                    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug reveal-scroll">
+                        Así, con su deseo insatisfecho,<br>
+                        la mujer fue castigada con la<br>
+                        muerte.
+                    </p>
+                </div>
 
-    <div class="flex justify-center">
-      <img src="Portada3.png" alt="" class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
-    </div>
+                <div class="flex justify-center">
+                    <img src="Portada3.png" alt="" class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
+                </div>
 
-  </div>
+            </div>
 
-</section>
+        </section>
 
 
         <section id="about3" class="flex bg-[#34113F] text-[#f8f8fa] py-16">
@@ -339,76 +333,74 @@
 
 
         <section id="flex contact33" class="flex py-24 bg-[#f8f8fa] text-[#34113F]">
-          <div class="max-w-5xl mx-auto px-6 space-y-12 overflow-x-hidden">
+            <div class="max-w-5xl mx-auto px-6 space-y-12 overflow-x-hidden">
                 <!-- Pregunta superior -->
                 <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
-                      Cuando te miras al espejo, <i>¿qué ves?</i>
+                    Cuando te miras al espejo, <i>¿qué ves?</i>
                 </p>
 
                 <!-- OPCIONES flotadas -->
-   <div class="relative w-full mx-auto h-auto md:h-[450px] lg:h-[280px]">
+                <div class="relative w-full mx-auto h-auto md:h-[450px] lg:h-[280px]">
 
-             <ul id="opciones2"
-    class="flex flex-col gap-4 items-center
+                    <ul id="opciones2" class="flex flex-col gap-4 items-center
            md:block md:relative md:w-full md:h-full">
 
                         <!--Las imperfecciones -->
-                       <li class="
+                        <li class="
     md:absolute md:top-0 md:left-[2%]
 ">
-  <button class="opcion2 px-4 py-2 min-w-[12rem]
+                            <button class="opcion2 px-4 py-2 min-w-[12rem]
                  border-2 border-[#C9BDEB] bg-white text-[#34113F]
                  rounded-2xl text-xl md:text-2xl shadow-sm">
-    Que todo esté en su lugar
-  </button>
-</li>
+                                Que todo esté en su lugar
+                            </button>
+                        </li>
 
-<li class="
+                        <li class="
     md:absolute md:top-32 md:left-[28%]
 ">
-  <button class="opcion2 px-4 py-2 min-w-[12rem]
+                            <button class="opcion2 px-4 py-2 min-w-[12rem]
                  border-2 border-[#C9BDEB] bg-white text-[#34113F]
                  rounded-2xl text-xl md:text-2xl shadow-sm">
-    El paso del tiempo
-  </button>
-</li>
+                                El paso del tiempo
+                            </button>
+                        </li>
 
 
                         <!-- Lo malo y lo bueno -->
-              <li class="
+                        <li class="
     md:absolute md:top-16 md:left-[15%]
 ">
-  <button class="opcion2 px-4 py-2 min-w-[12rem]
+                            <button class="opcion2 px-4 py-2 min-w-[12rem]
                  border-2 border-[#C9BDEB] bg-white text-[#34113F]
                  rounded-2xl text-xl md:text-2xl shadow-sm">
-    Lo malo y lo bueno
-  </button>
-</li>
+                                Lo malo y lo bueno
+                            </button>
+                        </li>
 
 
-                      <li class="
+                        <li class="
     md:absolute md:top-48
      md:left-[62%] lg:left-[50%]
 ">
-  <button class="opcion2 px-4 py-2 min-w-[12rem]
+                            <button class="opcion2 px-4 py-2 min-w-[12rem]
                  border-2 border-[#C9BDEB] bg-white text-[#34113F]
                  rounded-2xl text-xl md:text-2xl shadow-sm
                  whitespace-normal md:whitespace-nowrap">
-    Las imperfecciones
-  </button>
-</li>
+                                Las imperfecciones
+                            </button>
+                        </li>
 
                     </ul>
                 </div>
             </div>
         </section>
 
-         <section id="rta4" class="flex py-2 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+        <section id="rta4" class="flex py-2 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="text-center ">
-                       <!-- Respuesta -->
+                <!-- Respuesta -->
                 <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll">
-                    <span id="respuesta2"
-                        class="inline-block min-w-[150px] border-b border-[#f8f8fa] align-middle">
+                    <span id="respuesta2" class="inline-block min-w-[150px] border-b border-[#f8f8fa] align-middle">
                     </span>
                 </p>
             </div>
@@ -424,61 +416,60 @@
                 </p>
 
                 <!-- Opciones flotadas -->
-<div class="relative w-full mx-auto h-auto md:h-[450px] lg:h-[280px]">
+                <div class="relative w-full mx-auto h-auto md:h-[450px] lg:h-[280px]">
 
-             <ul id="opciones1"
-    class="flex flex-col gap-4 items-center
+                    <ul id="opciones1" class="flex flex-col gap-4 items-center
            md:block md:relative md:w-full md:h-full">
 
 
-    <!-- Casi nunca -->
-    <li class="md:absolute md:top-0 md:left-[1%]">
-      <button type="button" class="opcion inline-flex justify-center items-center
+                        <!-- Casi nunca -->
+                        <li class="md:absolute md:top-0 md:left-[1%]">
+                            <button type="button" class="opcion inline-flex justify-center items-center
              px-4 py-2 min-w-[12rem]
              border-2 border-[#C9BDEB] bg-white text-[#34113F]
              rounded-2xl text-xl md:text-2xl shadow-sm">
-        Casi nunca
-      </button>
-    </li>
+                                Casi nunca
+                            </button>
+                        </li>
 
-    <!-- Todo el tiempo -->
-    <li class="md:absolute md:top-14 md:left-[17%]">
-      <button type="button" class="opcion inline-flex justify-center items-center
+                        <!-- Todo el tiempo -->
+                        <li class="md:absolute md:top-14 md:left-[17%]">
+                            <button type="button" class="opcion inline-flex justify-center items-center
              px-4 py-2 min-w-[12rem]
              border-2 border-[#C9BDEB] bg-white text-[#34113F]
              rounded-2xl text-xl md:text-2xl shadow-sm">
-        Todo el tiempo
-      </button>
-    </li>
+                                Todo el tiempo
+                            </button>
+                        </li>
 
-    <!-- A ratos -->
-    <li class="md:absolute md:top-28 md:left-[39%]">
-      <button type="button" class="opcion inline-flex justify-center items-center
+                        <!-- A ratos -->
+                        <li class="md:absolute md:top-28 md:left-[39%]">
+                            <button type="button" class="opcion inline-flex justify-center items-center
              px-4 py-2 min-w-[12rem]
              border-2 border-[#C9BDEB] bg-white text-[#34113F]
              rounded-2xl text-xl md:text-2xl shadow-sm">
-        A ratos
-      </button>
-    </li>
+                                A ratos
+                            </button>
+                        </li>
 
-    <!-- Qué hay que pensar -->
-    <li class="md:absolute md:top-44 md:left-[62%]">
-      <button type="button" class="opcion inline-flex justify-center items-center
+                        <!-- Qué hay que pensar -->
+                        <li class="md:absolute md:top-44 md:left-[62%]">
+                            <button type="button" class="opcion inline-flex justify-center items-center
              px-4 py-2 min-w-[12rem]
              border-2 border-[#C9BDEB] bg-white text-[#34113F]
              rounded-2xl text-xl md:text-2xl shadow-sm
              max-w-[88vw] md:max-w-none whitespace-normal md:whitespace-nowrap leading-tight">
-        Qué hay que pensar
-      </button>
-    </li>
+                                Qué hay que pensar
+                            </button>
+                        </li>
 
-  </ul>
-</div>
+                    </ul>
+                </div>
 
         </section>
-  <section id="rta2" class="flex py-2 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+        <section id="rta2" class="flex py-2 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="text-center ">
-                     <!-- Línea de respuesta -->
+                <!-- Línea de respuesta -->
                 <p id="respuesta"
                     class="text-xl md:text-3xl lg:text-4xl text-center text-bold italic reveal-scroll reveal-delay-1 !mt-2">
 
@@ -487,7 +478,7 @@
 
         <section id="about4" class="flex py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="text-center ">
-                     <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
+                <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
                     Pues, este proyecto quiere hacerte reflexionar sobre la belleza de otra manera.
                 </p>
             </div>
@@ -507,10 +498,9 @@
 </section>
 
 <section id="contact5" class="py-10 bg-[#f8f8fa] text-[#34113F]">
-  <div class="flex justify-center">
-    <img src="Portada8.png" alt=""
-         class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
-  </div>
+    <div class="flex justify-center">
+        <img src="Portada8.png" alt="" class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
+    </div>
 </section>
 
 
@@ -533,8 +523,7 @@
 
 <section id="contact8" class="py-20 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
-        <h2
-        class="text-5xl md:text-6xl lg:text-5xl tracking-wide reveal-scroll reveal-delay-2"> Entra al espejo</h2>
+        <h2 class="text-5xl md:text-6xl lg:text-5xl tracking-wide reveal-scroll reveal-delay-2"> Entra al espejo</h2>
     </div>
 </section>
 

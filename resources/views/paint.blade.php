@@ -373,7 +373,7 @@
             overflow: auto;
         }
 
-        /* Animaciones helper (usamos Web Animations en JS, pero estos son útiles si precisas fallback) */
+        /* Animaciones helper */
         @keyframes flyIn {
             0% {
                 transform: translateX(-100px) scale(.92);
@@ -432,7 +432,7 @@
             text-align: center;
         }
 
-        /* Oculto por defecto (si ya aceptó antes) */
+        /* Oculto por defecto */
         .hidden {
             display: none !important;
         }
@@ -467,8 +467,6 @@
                 0 4px 12px rgba(2, 6, 23, .06);
             padding: 20px;
         }
-
-        /* (Opcional) Si usas .q-fly de antes, mantiene estilo */
         .q-fly {
             background: #fff;
             border: 1px solid #e2e8f0;
@@ -482,7 +480,7 @@
             gap: 10px;
         }
 
-        /* Botones base (si no los tienes ya) */
+
         .btn {
             padding: .45rem .8rem;
             border: 1px solid #cbd5e1;
@@ -637,7 +635,7 @@
             transform: translate(-50%, -4px);
         }
 
-        /* En pantallas táctiles puedes mantener el tooltip visible al tocar */
+        /* En pantallas táctiles mantiene el tooltip visible al tocar */
         @media (hover: none) {
             .tooltip-text {
                 display: none;
@@ -751,7 +749,6 @@
 
         /* Fondo Reflexión Fullscreen real: ancho completo */
 
-        /* === FULLSCREEN A PRUEBA DE FRAMEWORKS para el modal final === */
         #finalOverlay {
             position: fixed !important;
             inset: 0 !important;
@@ -872,7 +869,6 @@
         }
 
         /* imagen fondo reflexion*/
-        /* Fondo de la modal (mantiene todo fullscreen) */
         #finalOverlay .modal {
             position: fixed;
             inset: 0;
