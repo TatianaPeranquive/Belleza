@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Espejo – Menú con contraste automático</title>
 
-        <!-- Tailwind + GSAP (igual que tus ejemplos) -->
+        <!-- Tailwind + GSAP -->
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
@@ -186,113 +186,92 @@
                 animation-delay: 0.15s;
             }
         </style>
-
-        </style>
     </head>
 
     <body class="overflow-x-hidden">
-
-
-        <!-- HERO -->
-        <section id="home" class="h-screen flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
-
-            <video src="EspejoPortada1.mp4" autoplay muted playsinline class="w-full h-auto max-h-screen object-cover">
-            </video>
-            <div id="hero-sentinel" style="position: relative; height: 1px;"></div>
-
+       <section id="home" class="h-screen bg-[#34113F]">
+        <video src="EspejoPortada1.mp4"
+                autoplay muted playsinline
+                class="w-full h-full object-cover">
+        </video>
+        <div id="hero-sentinel" class="relative h-px"></div>
         </section>
 
-        <section id="about" class="bg-[#f8f8fa]  py-10 mt-16 min-h-screen flex flex-col justify-start">
+        <section id="about" class="bg-[#f8f8fa] py-10 min-h-screen flex flex-col justify-start">
 
-            <div class="relative w-full h-[90vh] flex items-center justify-center">
+        <div class="relative w-full md:h-[90vh] md:flex md:items-center md:justify-center">
 
-                <h1 class="absolute top-14 left-12
-                 text-5xl md:text-6xl lg:text-6xl
-                   font-bold text-[#34113F] reveal-scroll ">
-                    Espejito,espejito
-                </h1>
+            <img src="portada1.png"
+            class="mx-auto w-auto h-[60vh] md:h-[90vh] object-contain lg:translate-x-[-50px] reveal-scroll">
 
-                <img src="portada1.png"
-                    class="w-auto h-[90vh] object-contain transform lg:translate-x-[-50px] reveal-scroll">
-
-
-                <div class="absolute bottom-20 right-16 text-right">
-                    <h2
-                        class="text-5xl md:text-6xl lg:text-5xl font-semi text-[#34113F] leading-tight reveal-scroll-delay-2">
-                        ¿Qué es la belleza?
-                    </h2>
-                    <p
-                        class="text-xl md:text-3xl lg:text-4xl font-medium text-[#34113F]/80 mt-2  reveal-scroll-delay-2">
-                        Historias orales <br> de mujeres colombianas
-                    </p>
-                </div>
-            justify-center
-
-        </section>
-
-
-
-        <section id="work" class="flex bg-[#f8f8fa] py-20">
-            <div class="max-w-7xl mx-auto px-8
-           grid grid-cols-1 gap-10
-           lg:grid-cols-3 lg:grid-rows-2 lg:gap-12 items-center">
-
-                <!-- Texto arriba izquierda -->
-                <p class="italic text-xl md:text-3xl lg:text-4xl text-[#34113F] leading-snug text-center
-             lg:col-start-1 lg:row-start-1 lg:self-start reveal-scroll ">
-                    Había una vez una mujer,
-                    que le preguntó al espejo
-                    si era la más bonita.
-                </p>
-
-                <!-- Imagen centrada, protagonista -->
-                <div class="flex justify-center
-             lg:col-start-2 lg:row-span-2 lg:self-center">
-                    <img src="Portada2.png" alt="Mujer frente al espejo"
-                        class="max-h-[520px] lg:max-h-[650px] object-contain reveal-scroll ">
-                </div>
-
-                <!-- Texto abajo derecha -->
-                <p class="italic text-xl md:text-3xl lg:text-4xl text-[#34113F] leading-snug text-center
-             lg:col-start-3 lg:row-start-2 lg:self-end reveal-scroll ">
-                    Cuando el espejo le dijo que no,
-                    la mujer condenó
-                    a quien le había quitado su lugar.
-                </p>
-
+            <div class="mt-6 px-6 text-center md:mt-0 md:px-0 md:text-right
+                        md:absolute md:bottom-20 md:right-16">
+            <h2 class="text-4xl md:text-6xl lg:text-5xl font-semibold text-[#34113F] leading-tight reveal-scroll-delay-2">
+                ¿Qué es la belleza?
+            </h2>
+            <p class="text-xl md:text-3xl lg:text-4xl font-medium text-[#34113F]/80 mt-2 reveal-scroll-delay-2">
+                Historias orales <br> de mujeres colombianas
+            </p>
             </div>
+        </div>
         </section>
-        <section id="about2" class="flex bg-[#f8f8fa] py-20 text-[#34113F] reveal-scroll ">
 
-            <!-- TEXTO SUPERIOR (CENTRADO) -->
-            <div class="text-center mb-16">
-                <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug reveal-scroll ">
-                    Los actos para retomar su título<br>
-                    fueron en vano, nadie quiso matar<br>
-                    a la inocente belleza.
-                </p>
-            </div>
 
-            <!-- TABLA DE DOS COLUMNAS -->
-            <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 place-items-center ">
+<section id="work" class="bg-[#f8f8fa] py-20 text-[#34113F] leading-snug">
 
-                <!-- COLUMNA IZQUIERDA → TEXTO -->
-                <div class="text-left">
-                    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug reveal-scroll ">
-                        Así, con su deseo insatisfecho,<br>
-                        la mujer fue castigada con la<br>
-                        muerte.
-                    </p>
-                </div>
+  <div class="max-w-7xl mx-auto px-8
+              grid grid-cols-1 gap-10
+              lg:grid-cols-3 lg:grid-rows-2 lg:gap-12 items-center">
 
-                <!-- COLUMNA DERECHA → IMAGEN REDUCIDA -->
-                <div class="flex justify-center">
-                    <img src="Portada3.png" alt=" " class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
-                </div>
+    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug text-center
+              lg:col-start-1 lg:row-start-1 lg:self-start reveal-scroll">
+      Había una vez una mujer,
+      que le preguntó al espejo
+      si era la más bonita.
+    </p>
 
-            </div>
+    <div class="flex justify-center lg:col-start-2 lg:row-span-2 lg:self-center">
+      <img src="Portada2.png" alt="Mujer frente al espejo"
+           class="max-h-[520px] lg:max-h-[650px] object-contain reveal-scroll">
+    </div>
 
-        </section>
+    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug text-center
+              lg:col-start-3 lg:row-start-2 lg:self-end reveal-scroll">
+      Cuando el espejo le dijo que no,
+      la mujer condenó
+      a quien le había quitado su lugar.
+    </p>
+
+  </div>
+
+  <!-- TEXTO SUPERIOR -->
+  <div class="max-w-5xl mx-auto px-8 text-center mt-20 mb-16">
+    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug">
+      Los actos para retomar su título<br>
+      fueron en vano, nadie quiso matar<br>
+      a la inocente belleza.
+    </p>
+  </div>
+
+  <!-- DOS COLUMNAS -->
+  <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 place-items-center">
+
+    <div class="text-left">
+      <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug reveal-scroll">
+        Así, con su deseo insatisfecho,<br>
+        la mujer fue castigada con la<br>
+        muerte.
+      </p>
+    </div>
+
+    <div class="flex justify-center">
+      <img src="Portada3.png" alt="" class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
+    </div>
+
+  </div>
+
+</section>
+
 
         <section id="about3" class="flex bg-[#34113F] text-[#f8f8fa] py-16">
 
@@ -332,76 +311,81 @@
 
         </section>
 
-        <section id="flex contact33" class="py-24 ">
 
-            <div class="max-w-5xl mx-auto px-6 space-y-12">
-
+        <section id="flex contact33" class="flex py-24 bg-[#f8f8fa] text-[#34113F]">
+          <div class="max-w-5xl mx-auto px-6 space-y-12 overflow-x-hidden">
                 <!-- Pregunta superior -->
-                <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll">
-                    Cuando te miras al espejo, <i>¿qué ves?</i>
+                <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
+                      Cuando te miras al espejo, <i>¿qué ves?</i>
                 </p>
 
                 <!-- OPCIONES flotadas -->
-                <div class="relative h-40 md:h-80 mx-auto">
+       <div class="relative w-full h-48 md:h-[420px] lg:h-[260px] mx-auto">
 
-                    <ul id="opciones2" class="relative w-full h-full">
+  <ul id="opciones2" class="relative w-full h-full">
 
                         <!--Las imperfecciones -->
                         <li class="absolute top-0 left-[2%]">
                             <button type="button" data-value="UN POCO" class="opcion2 inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-[#34113F] text-[#f8f8fa]
+                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
                    rounded-2xl text-xl md:text-2xl shadow-sm">
                                 Las imperfecciones
                             </button>
                         </li>
 
                         <!-- El paso del tiempo -->
-                        <li class="absolute top-28 left-[48%]">
+                        <li class="absolute top-32 left-[28%]">
                             <button type="button" data-value="UN MONTÓN" class="opcion2 inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-[#34113F] text-[#f8f8fa]
+                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
                    rounded-2xl text-xl md:text-2xl shadow-sm">
                                 El paso del tiempo
                             </button>
                         </li>
 
                         <!-- Lo malo y lo bueno -->
-                        <li class="absolute top-14 left-[25%]">
-                            <button type="button" data-value="NO LO HABÍA PENSADO" class="opcion2 inline-flex justify-center items-center
+                        <li class="absolute top-16 left-[15%]">
+                            <button type="button" class="opcion2 inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-[#34113F] text-[#f8f8fa]
+                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
                    rounded-2xl text-xl md:text-2xl shadow-sm">
                                 Lo malo y lo bueno
                             </button>
                         </li>
 
                         <!-- Que todo esté en su lugar -->
-                        <li class="absolute top-40 md:top-44 left-[70%]">
-                            <button type="button" data-value="NO TANTO" class="opcion2 inline-flex justify-center items-center
-                   px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-[#34113F] text-[#f8f8fa]
-                   rounded-2xl text-xl md:text-2xl shadow-sm whitespace-nowrap">
-                                Que todo esté en su lugar
-                            </button>
+                         <li class="absolute top-44 md:top-44 lg:top-48 right-2 md:right-auto md:left-[62%] lg:left-[50%]">
+
+<button
+  class="opcion2 inline-flex justify-center items-center
+         px-4 py-2 min-w-[12rem]
+         border-2 border-[#C9BDEB] bg-white text-[#34113F]
+         rounded-2xl text-xl md:text-2xl shadow-sm
+         whitespace-normal md:whitespace-nowrap leading-tight">
+  Que todo esté en su lugar
+</button>
+
                         </li>
                     </ul>
                 </div>
+            </div>
+        </section>
 
-                <!-- Respuesta -->
+         <section id="rta4" class="flex py-2 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+            <div class="text-center ">
+                       <!-- Respuesta -->
                 <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll">
                     <span id="respuesta2"
                         class="inline-block min-w-[150px] border-b border-[#f8f8fa] align-middle">
                     </span>
                 </p>
-
             </div>
-
         </section>
 
         <section id="contact4" class="flex py-24 bg-[#f8f8fa] text-[#34113F]">
 
-            <div class="max-w-5xl mx-auto px-6 space-y-12">
+            <div class="max-w-5xl mx-auto px-6 space-y-6">
 
                 <!-- Pregunta superior -->
                 <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
@@ -409,9 +393,11 @@
                 </p>
 
                 <!-- Opciones flotadas -->
-                <div class="relative h-40 md:h-80 mx-auto">
 
-                    <ul id="opciones1" class="relative w-full h-full">
+                <div class="relative w-full h-48 md:h-[420px] lg:h-[280px] mx-auto">
+
+  <ul id="opciones1" class="relative w-full h-full">
+
 
                         <!-- Casi nunca -->
                         <li class="absolute top-0 left-[1%]">
@@ -451,7 +437,7 @@
                             <button type="button" class="opcion inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                   rounded-2xl text-xl md:text-2xl shadow-sm whitespace-nowrap">
+                   rounded-2xl text-xl md:text-2xl shadow-sm max-w-[88vw] md:max-w-none whitespace-normal leading-tight">
                                 Qué hay que pensar
                             </button>
                         </li>
@@ -459,29 +445,22 @@
                     </ul>
                 </div>
 
-                <!-- Línea de respuesta -->
+                </div>
+        </section>
+  <section id="rta2" class="flex py-2 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+            <div class="text-center ">
+                     <!-- Línea de respuesta -->
                 <p id="respuesta"
                     class="text-xl md:text-3xl lg:text-4xl text-center text-bold italic reveal-scroll reveal-delay-1 !mt-2">
 
-
-                    <!-- Texto final -->
-                <p class="text-xl md:text-3xl lg:text-4xl text-center  text-bold reveal-delay-1 !mt-10">
-                    Pues, este proyecto quiere hacerte reflexionar<br>
-                    sobre la belleza de otra manera.
-                </p>
-
             </div>
-
         </section>
 
-
-        <section id="about4" class="flex  justify-center items-center text-4xl">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto items-center">
-                <!-- Texto (centrado siempre) -->
-                <div class="div2 text-center space-y-4">
-
-
-                </div>
+        <section id="about4" class="flex py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+            <div class="text-center ">
+                     <p class="text-xl md:text-3xl lg:text-4xl text-center reveal-scroll reveal-delay-1 !mt-2">
+                    Pues, este proyecto quiere hacerte reflexionar sobre la belleza de otra manera.
+                </p>
             </div>
         </section>
 
@@ -557,7 +536,7 @@
         </div>
     </div>
 </section>
-<br><br><br>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // -------------------------------
@@ -731,7 +710,6 @@
 
 </html>
 </div>
-<div class="pb-40"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
