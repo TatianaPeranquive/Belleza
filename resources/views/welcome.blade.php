@@ -189,17 +189,24 @@
     </head>
 
     <body class="overflow-x-hidden">
-       <section id="home" class="h-screen bg-[#34113F]">
+       <section id="home" class="h-screen bg-[#34113F]  py-10 min-h-screen flex flex-col justify-start">
+          <div class="relative w-full md:h-[90vh] md:flex md:items-center md:justify-center"></div>
         <video src="EspejoPortada1.mp4"
                 autoplay muted playsinline
                 class="w-full h-full object-cover">
         </video>
+        </div>
         <div id="hero-sentinel" class="relative h-px"></div>
         </section>
 
         <section id="about" class="bg-[#f8f8fa] py-10 min-h-screen flex flex-col justify-start">
+             <div class="relative w-full md:h-[90vh] md:flex md:items-center md:justify-center">
 
-        <div class="relative w-full md:h-[90vh] md:flex md:items-center md:justify-center">
+                 <h1 class="absolute top-14 left-12
+                 text-5xl md:text-6xl lg:text-6xl
+                   font-bold text-[#34113F] reveal-scroll ">
+                    Espejito,espejito
+                </h1>
 
             <img src="portada1.png"
             class="mx-auto w-auto h-[60vh] md:h-[90vh] object-contain lg:translate-x-[-50px] reveal-scroll">
@@ -246,7 +253,7 @@
 
   <!-- TEXTO SUPERIOR -->
   <div class="max-w-5xl mx-auto px-8 text-center mt-20 mb-16">
-    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug">
+    <p class="italic text-xl md:text-3xl lg:text-4xl leading-snug reveal-scroll-delay-2">
       Los actos para retomar su título<br>
       fueron en vano, nadie quiso matar<br>
       a la inocente belleza.
@@ -320,7 +327,7 @@
                 </p>
 
                 <!-- OPCIONES flotadas -->
-       <div class="relative w-full h-48 md:h-[420px] lg:h-[260px] mx-auto">
+       <div class="relative w-full h-48 md:h-[420px] lg:h-[280px] mx-auto">
 
   <ul id="opciones2" class="relative w-full h-full">
 
@@ -330,7 +337,7 @@
                    px-4 py-2 min-w-[12rem]
                     border-2 border-[#C9BDEB] bg-white text-[#34113F]
                    rounded-2xl text-xl md:text-2xl shadow-sm">
-                                Las imperfecciones
+                               Que todo esté en su lugar
                             </button>
                         </li>
 
@@ -356,16 +363,14 @@
 
                         <!-- Que todo esté en su lugar -->
                          <li class="absolute top-44 md:top-44 lg:top-48 right-2 md:right-auto md:left-[62%] lg:left-[50%]">
-
-<button
-  class="opcion2 inline-flex justify-center items-center
-         px-4 py-2 min-w-[12rem]
-         border-2 border-[#C9BDEB] bg-white text-[#34113F]
-         rounded-2xl text-xl md:text-2xl shadow-sm
-         whitespace-normal md:whitespace-nowrap leading-tight">
-  Que todo esté en su lugar
-</button>
-
+                            <button
+                            class="opcion2 inline-flex justify-center items-center
+                                    px-4 py-2 min-w-[12rem]
+                                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                                    rounded-2xl text-xl md:text-2xl shadow-sm
+                                    whitespace-normal md:whitespace-nowrap leading-tight">
+                             Las imperfecciones
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -411,7 +416,7 @@
                         </li>
 
                         <!-- A ratos -->
-                        <li class="absolute top-28 left-[46%]">
+                        <li class="absolute top-28 left-[42%]">
 
                             <button type="button" class="opcion inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
@@ -422,7 +427,7 @@
                         </li>
 
                         <!-- Todo el tiempo -->
-                        <li class="absolute top-14 left-[23%]">
+                        <li class="absolute top-14 left-[20%]">
                             <button type="button" class="opcion inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
@@ -432,7 +437,7 @@
                         </li>
 
                         <!-- Qué hay que pensar -->
-                        <li class="absolute top-40 md:top-44 left-[68%]">
+                        <li class="absolute top-40 md:top-44 left-[65%]">
 
                             <button type="button" class="opcion inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
