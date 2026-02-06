@@ -346,9 +346,11 @@
                 </p>
 
                 <!-- OPCIONES flotadas -->
-   <div class="relative w-full h-48 md:h-[450px] lg:h-[280px] mx-auto">
+   <div class="relative w-full mx-auto h-auto md:h-[450px] lg:h-[280px]">
 
-  <ul id="opciones2" class="relative w-full h-full">
+             <ul id="opciones2"
+    class="flex flex-col gap-4 items-center
+           md:block md:relative md:w-full md:h-full">
 
                         <!--Las imperfecciones -->
                        <li class="
