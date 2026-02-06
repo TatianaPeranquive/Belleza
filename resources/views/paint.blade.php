@@ -5,7 +5,12 @@
 {{ $tituloPagina ?? ($nombre ?? "Entrevista") }}
 @endsection @section('content')
 {{-- Barra fija de "Volver" SIEMPRE por encima del header global --}}
-
+<nav
+    class="fixed
+     top-0 left-0 w-full h-16 md:h-20 flex items-center px-4 z-[9999] bg-[#34113F]/80 backdrop-blur pointer-events-auto">
+    <a href="{{ route($volverRoute ?? 'entrevistas.index') }}" class="text-[#f8f8fa] font-bold text-lg">&larr; Espejito,
+        espejito</a>
+</nav>
 
 <div class="h-[160px] md:h-[100px]"></div>
 
