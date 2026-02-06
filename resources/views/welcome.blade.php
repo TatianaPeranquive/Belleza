@@ -189,24 +189,43 @@
     </head>
 
     <body class="overflow-x-hidden">
-       <section id="home" class="h-screen bg-[#34113F]  py-10 min-h-screen flex flex-col justify-start">
-          <div class="relative w-full md:h-[90vh] md:flex md:items-center md:justify-center"></div>
-        <video src="EspejoPortada1.mp4"
-                autoplay muted playsinline
-                class="w-full h-full object-cover">
-        </video>
-        </div>
-        <div id="hero-sentinel" class="relative h-px"></div>
-        </section>
+       <section id="home" class="bg-[#34113F] py-10 flex flex-col justify-start">
+
+  <div class="relative w-full
+              h-[45vh]           /* 📱 móvil */
+              md:h-[90vh]        /* 💻 desktop */
+              overflow-hidden">
+
+    <video
+      src="EspejoPortada1.mp4"
+      autoplay
+      muted
+      playsinline
+      class="w-full h-full object-cover">
+    </video>
+
+  </div>
+
+  <div id="hero-sentinel" class="relative h-px"></div>
+
+</section>
+
 
         <section id="about" class="bg-[#f8f8fa] py-10 min-h-screen flex flex-col justify-start">
              <div class="relative w-full md:h-[90vh] md:flex md:items-center md:justify-center">
 
-                 <h1 class="absolute top-14 left-12
-                 text-5xl md:text-6xl lg:text-6xl
-                   font-bold text-[#34113F] reveal-scroll ">
-                    Espejito,espejito
-                </h1>
+              <h1 class="
+  relative md:absolute
+  mt-10 md:mt-0
+  px-6 md:px-0
+  text-5xl md:text-6xl lg:text-6xl
+  font-bold text-[#34113F] reveal-scroll
+  md:top-14 md:left-12
+  text-center md:text-left
+">
+  Espejito,espejito
+</h1>
+
 
             <img src="portada1.png"
             class="mx-auto w-auto h-[60vh] md:h-[90vh] object-contain lg:translate-x-[-50px] reveal-scroll">
@@ -327,7 +346,8 @@
                 </p>
 
                 <!-- OPCIONES flotadas -->
-       <div class="relative w-full h-48 md:h-[420px] lg:h-[280px] mx-auto">
+   <div class="relative w-full h-[280px] md:h-[420px] lg:h-[330px] mx-auto">
+
 
   <ul id="opciones2" class="relative w-full h-full">
 
@@ -484,7 +504,7 @@
 
 <section id="contact5" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
-        <img src="Portada8.png" alt=" " class="max-h-[500px] object-contain reveal-scroll">
+        <img src="Portada8.png" alt=" " class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
     </div>
 </section>
 
