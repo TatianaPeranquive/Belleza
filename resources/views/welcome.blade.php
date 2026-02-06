@@ -192,16 +192,14 @@
 
     <body class="overflow-x-hidden">
 
-        <section id="home0"></section>
+
         <!-- HERO -->
-        <section id="home" class="h-screen justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
+        <section id="home" class="h-screen flex justify-center items-center text-4xl bg-[#34113F] text-[#f8f8fa]">
 
             <video src="EspejoPortada1.mp4" autoplay muted playsinline class="w-full h-auto max-h-screen object-cover">
             </video>
             <div id="hero-sentinel" style="position: relative; height: 1px;"></div>
 
-            <br><br> <br><br>
-            <!-- MENÚ FIJO -->
         </section>
 
         <section id="about" class="bg-[#f8f8fa]  py-10 mt-16 min-h-screen flex flex-col justify-start">
@@ -228,13 +226,13 @@
                         Historias orales <br> de mujeres colombianas
                     </p>
                 </div>
-            </div>
+            justify-center
 
         </section>
 
 
 
-        <section id="work" class="bg-[#f8f8fa] py-20">
+        <section id="work" class="flex bg-[#f8f8fa] py-20">
             <div class="max-w-7xl mx-auto px-8
            grid grid-cols-1 gap-10
            lg:grid-cols-3 lg:grid-rows-2 lg:gap-12 items-center">
@@ -264,7 +262,7 @@
 
             </div>
         </section>
-        <section id="about2" class="bg-[#f8f8fa] py-20 text-[#34113F] reveal-scroll ">
+        <section id="about2" class="flex bg-[#f8f8fa] py-20 text-[#34113F] reveal-scroll ">
 
             <!-- TEXTO SUPERIOR (CENTRADO) -->
             <div class="text-center mb-16">
@@ -296,7 +294,7 @@
 
         </section>
 
-        <section id="about3" class="bg-[#34113F] text-[#f8f8fa] py-16">
+        <section id="about3" class="flex bg-[#34113F] text-[#f8f8fa] py-16">
 
             <div class="max-w-6xl mx-auto px-8 space-y-6">
 
@@ -334,7 +332,7 @@
 
         </section>
 
-        <section id="contact33" class="py-24 ">
+        <section id="flex contact33" class="py-24 ">
 
             <div class="max-w-5xl mx-auto px-6 space-y-12">
 
@@ -379,7 +377,7 @@
                         </li>
 
                         <!-- Que todo esté en su lugar -->
-                        <li class="absolute top-60 md:top-44 left-[70%]">
+                        <li class="absolute top-40 md:top-44 left-[70%]">
                             <button type="button" data-value="NO TANTO" class="opcion2 inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
                    border-2 border-[#C9BDEB] bg-[#34113F] text-[#f8f8fa]
@@ -387,7 +385,6 @@
                                 Que todo esté en su lugar
                             </button>
                         </li>
-
                     </ul>
                 </div>
 
@@ -402,7 +399,7 @@
 
         </section>
 
-        <section id="contact4" class="py-24 bg-[#f8f8fa] text-[#34113F]">
+        <section id="contact4" class="flex py-24 bg-[#f8f8fa] text-[#34113F]">
 
             <div class="max-w-5xl mx-auto px-6 space-y-12">
 
@@ -489,7 +486,7 @@
         </section>
 
 
-        <section id="contact4" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+        <section id="contact4" class="flex py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="text-center ">
                 <br>
                 <p class="text-xl md:text-3xl lg:text-4xl text-center max-w-prose mx-auto reveal-scroll">
@@ -524,14 +521,14 @@
     </div>
 </section>
 
-<section id="contact8" class="py-20 justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+<section id="contact8" class="py-20 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
         <h2
         class="text-5xl md:text-6xl lg:text-5xl tracking-wide reveal-scroll reveal-delay-2"> Entra al espejo</h2>
     </div>
 </section>
 
-<section id="contact5" class="flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
+<section id="contact5" class="flex flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
 
     <div class="relative max-w-5xl mx-auto">
         <!-- Imagen -->

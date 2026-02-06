@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="overflow-x-hidden">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -41,14 +41,17 @@
 
   </style>
 </head>
-<body class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-[#f8f8fa] text-[#111827]' }}">
+<body class="overflow-x-hidden" class="{{ $theme === 'dark' ? 'bg-[#111827] text-[#F9FAFB]' : 'bg-[#f8f8fa] text-[#111827]' }}">
+
 <header class="fixed top-0 left-0 w-full bg-[#34113F] z-50">
   <div class="px-2 sm:px-4 py-3">
-   <nav id="menu" class="w-full z-50 opacity-0 pointer-events-none transition-all duration-300">
-  <!-- carril scrolleable -->
-  <div class="w-full overflow-x-auto overscroll-x-contain px-2 [-webkit-overflow-scrolling:touch]">
-    <!-- contenido -->
-    <ul class="flex w-max gap-3 sm:w-full sm:justify-center max-w-6xl mx-auto py-2">
+    <nav id="menu" class="w-full z-50 opacity-0 pointer-events-none transition-all duration-300">
+      <div class="min-w-0 w-full overflow-x-auto overscroll-x-contain px-1
+                  [-webkit-overflow-scrolling:touch] [touch-action:pan-x]">
+        <ul class="flex flex-nowrap gap-3 w-max py-2
+                   sm:w-full sm:justify-center sm:max-w-6xl sm:mx-auto">
+          <!-- li/a iguales, shrink-0 + nowrap -->
+
       <li class="shrink-0">
         <a href="#home"
            class="min-h-[44px] flex items-center justify-center
@@ -85,15 +88,15 @@
           Tejedoras
         </a>
       </li>
-    </ul>
-  </div>
-</nav>
 
+        </ul>
+      </div>
+    </nav>
   </div>
 </header>
 
 
-  <main class="min-h-screen pt-16">
+  <main class="overflow-x-hidden" class="min-h-screen pt-16">
     @yield('content')
   </main>
 
