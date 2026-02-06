@@ -346,8 +346,7 @@
                 </p>
 
                 <!-- OPCIONES flotadas -->
-   <div class="relative w-full h-[280px] md:h-[420px] lg:h-[330px] mx-auto">
-
+<div class="relative w-full h-48 md:h-[450px] lg:h-[280px] mx-auto">
 
   <ul id="opciones2" class="relative w-full h-full">
 
@@ -419,7 +418,7 @@
 
                 <!-- Opciones flotadas -->
 
-                <div class="relative w-full h-48 md:h-[420px] lg:h-[280px] mx-auto">
+                <div class="relative w-full h-48 md:h-[450px] lg:h-[280px] mx-auto">
 
   <ul id="opciones1" class="relative w-full h-full">
 
@@ -436,7 +435,7 @@
                         </li>
 
                         <!-- A ratos -->
-                        <li class="absolute top-28 left-[42%]">
+                        <li class="absolute top-28 left-[39%]">
 
                             <button type="button" class="opcion inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
@@ -447,7 +446,7 @@
                         </li>
 
                         <!-- Todo el tiempo -->
-                        <li class="absolute top-14 left-[20%]">
+                        <li class="absolute top-14 left-[17%]">
                             <button type="button" class="opcion inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
@@ -457,7 +456,7 @@
                         </li>
 
                         <!-- Qué hay que pensar -->
-                        <li class="absolute top-40 md:top-44 left-[65%]">
+                        <li class="absolute top-40 md:top-44 left-[62%]">
 
                             <button type="button" class="opcion inline-flex justify-center items-center
                    px-4 py-2 min-w-[12rem]
