@@ -346,16 +346,9 @@
                 </p>
 
                 <!-- OPCIONES flotadas -->
-<!-- OPCIONES -->
-<div class="relative w-full mx-auto
-            h-auto md:h-[450px] lg:h-[280px]">
+   <div class="relative w-full h-48 md:h-[450px] lg:h-[280px] mx-auto">
 
-  <ul id="opciones2"
-      class="
-        flex flex-col gap-4 items-center
-        md:block md:relative md:w-full md:h-full
-      ">
-
+  <ul id="opciones2" class="relative w-full h-full">
 
                         <!--Las imperfecciones -->
                        <li class="
@@ -513,11 +506,13 @@
 </div>
 </section>
 
-<section id="contact5" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
-    <div class="text-center ">
-        <img src="Portada8.png" alt=" " class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
-    </div>
+<section id="contact5" class="py-10 bg-[#f8f8fa] text-[#34113F]">
+  <div class="flex justify-center">
+    <img src="Portada8.png" alt=""
+         class="max-h-[420px] md:max-h-[480px] object-contain reveal-scroll">
+  </div>
 </section>
+
 
 <section id="contact6" class=" py-10 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
     <div class="text-center ">
