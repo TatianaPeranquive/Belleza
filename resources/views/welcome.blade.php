@@ -422,59 +422,56 @@
                 </p>
 
                 <!-- Opciones flotadas -->
+<div class="relative w-full mx-auto h-auto md:h-[450px] lg:h-[280px]">
 
-                <div class="relative w-full h-48 md:h-[450px] lg:h-[280px] mx-auto">
+  <ul id="opciones1"
+      class="flex flex-col gap-4 items-center
+             md:block md:relative md:w-full md:h-full">
 
-  <ul id="opciones1" class="relative w-full h-full">
+    <!-- Casi nunca -->
+    <li class="md:absolute md:top-0 md:left-[1%]">
+      <button type="button" class="opcion inline-flex justify-center items-center
+             px-4 py-2 min-w-[12rem]
+             border-2 border-[#C9BDEB] bg-white text-[#34113F]
+             rounded-2xl text-xl md:text-2xl shadow-sm">
+        Casi nunca
+      </button>
+    </li>
 
+    <!-- Todo el tiempo -->
+    <li class="md:absolute md:top-14 md:left-[17%]">
+      <button type="button" class="opcion inline-flex justify-center items-center
+             px-4 py-2 min-w-[12rem]
+             border-2 border-[#C9BDEB] bg-white text-[#34113F]
+             rounded-2xl text-xl md:text-2xl shadow-sm">
+        Todo el tiempo
+      </button>
+    </li>
 
-                        <!-- Casi nunca -->
-                        <li class="absolute top-0 left-[1%]">
+    <!-- A ratos -->
+    <li class="md:absolute md:top-28 md:left-[39%]">
+      <button type="button" class="opcion inline-flex justify-center items-center
+             px-4 py-2 min-w-[12rem]
+             border-2 border-[#C9BDEB] bg-white text-[#34113F]
+             rounded-2xl text-xl md:text-2xl shadow-sm">
+        A ratos
+      </button>
+    </li>
 
-                            <button type="button" class="opcion inline-flex justify-center items-center
-                   px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                   rounded-2xl text-xl md:text-2xl shadow-sm">
-                                Casi nunca
-                            </button>
-                        </li>
+    <!-- Qué hay que pensar -->
+    <li class="md:absolute md:top-44 md:left-[62%]">
+      <button type="button" class="opcion inline-flex justify-center items-center
+             px-4 py-2 min-w-[12rem]
+             border-2 border-[#C9BDEB] bg-white text-[#34113F]
+             rounded-2xl text-xl md:text-2xl shadow-sm
+             max-w-[88vw] md:max-w-none whitespace-normal md:whitespace-nowrap leading-tight">
+        Qué hay que pensar
+      </button>
+    </li>
 
-                        <!-- A ratos -->
-                        <li class="absolute top-28 left-[39%]">
+  </ul>
+</div>
 
-                            <button type="button" class="opcion inline-flex justify-center items-center
-                   px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                   rounded-2xl text-xl md:text-2xl shadow-sm">
-                                A ratos
-                            </button>
-                        </li>
-
-                        <!-- Todo el tiempo -->
-                        <li class="absolute top-14 left-[17%]">
-                            <button type="button" class="opcion inline-flex justify-center items-center
-                   px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                   rounded-2xl text-xl md:text-2xl shadow-sm">
-                                Todo el tiempo
-                            </button>
-                        </li>
-
-                        <!-- Qué hay que pensar -->
-                        <li class="absolute top-40 md:top-44 left-[62%]">
-
-                            <button type="button" class="opcion inline-flex justify-center items-center
-                   px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                   rounded-2xl text-xl md:text-2xl shadow-sm max-w-[88vw] md:max-w-none whitespace-normal leading-tight">
-                                Qué hay que pensar
-                            </button>
-                        </li>
-
-                    </ul>
-                </div>
-
-                </div>
         </section>
   <section id="rta2" class="flex py-2 flex justify-center items-center text-4xl bg-[#f8f8fa] text-[#34113F]">
             <div class="text-center ">
