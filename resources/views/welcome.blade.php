@@ -346,51 +346,63 @@
                 </p>
 
                 <!-- OPCIONES flotadas -->
-<div class="relative w-full h-48 md:h-[450px] lg:h-[280px] mx-auto">
+<!-- OPCIONES -->
+<div class="relative w-full mx-auto
+            h-auto md:h-[450px] lg:h-[280px]">
 
-  <ul id="opciones2" class="relative w-full h-full">
+  <ul id="opciones2"
+      class="
+        flex flex-col gap-4 items-center
+        md:block md:relative md:w-full md:h-full
+      ">
+
 
                         <!--Las imperfecciones -->
-                        <li class="absolute top-0 left-[2%]">
-                            <button type="button" data-value="UN POCO" class="opcion2 inline-flex justify-center items-center
-                   px-4 py-2 min-w-[12rem]
-                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                   rounded-2xl text-xl md:text-2xl shadow-sm">
-                               Que todo esté en su lugar
-                            </button>
-                        </li>
+                       <li class="
+    md:absolute md:top-0 md:left-[2%]
+">
+  <button class="opcion2 px-4 py-2 min-w-[12rem]
+                 border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                 rounded-2xl text-xl md:text-2xl shadow-sm">
+    Que todo esté en su lugar
+  </button>
+</li>
 
-                        <!-- El paso del tiempo -->
-                        <li class="absolute top-32 left-[28%]">
-                            <button type="button" data-value="UN MONTÓN" class="opcion2 inline-flex justify-center items-center
-                   px-4 py-2 min-w-[12rem]
-                   border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                   rounded-2xl text-xl md:text-2xl shadow-sm">
-                                El paso del tiempo
-                            </button>
-                        </li>
+<li class="
+    md:absolute md:top-32 md:left-[28%]
+">
+  <button class="opcion2 px-4 py-2 min-w-[12rem]
+                 border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                 rounded-2xl text-xl md:text-2xl shadow-sm">
+    El paso del tiempo
+  </button>
+</li>
+
 
                         <!-- Lo malo y lo bueno -->
-                        <li class="absolute top-16 left-[15%]">
-                            <button type="button" class="opcion2 inline-flex justify-center items-center
-                   px-4 py-2 min-w-[12rem]
-                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                   rounded-2xl text-xl md:text-2xl shadow-sm">
-                                Lo malo y lo bueno
-                            </button>
-                        </li>
+              <li class="
+    md:absolute md:top-16 md:left-[15%]
+">
+  <button class="opcion2 px-4 py-2 min-w-[12rem]
+                 border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                 rounded-2xl text-xl md:text-2xl shadow-sm">
+    Lo malo y lo bueno
+  </button>
+</li>
 
-                        <!-- Que todo esté en su lugar -->
-                         <li class="absolute top-44 md:top-44 lg:top-48 right-2 md:right-auto md:left-[62%] lg:left-[50%]">
-                            <button
-                            class="opcion2 inline-flex justify-center items-center
-                                    px-4 py-2 min-w-[12rem]
-                                    border-2 border-[#C9BDEB] bg-white text-[#34113F]
-                                    rounded-2xl text-xl md:text-2xl shadow-sm
-                                    whitespace-normal md:whitespace-nowrap leading-tight">
-                             Las imperfecciones
-                            </button>
-                        </li>
+
+                      <li class="
+    md:absolute md:top-48
+     md:left-[62%] lg:left-[50%]
+">
+  <button class="opcion2 px-4 py-2 min-w-[12rem]
+                 border-2 border-[#C9BDEB] bg-white text-[#34113F]
+                 rounded-2xl text-xl md:text-2xl shadow-sm
+                 whitespace-normal md:whitespace-nowrap">
+    Las imperfecciones
+  </button>
+</li>
+
                     </ul>
                 </div>
             </div>
