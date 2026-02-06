@@ -424,9 +424,10 @@
                 <!-- Opciones flotadas -->
 <div class="relative w-full mx-auto h-auto md:h-[450px] lg:h-[280px]">
 
-  <ul id="opciones1"
-      class="flex flex-col gap-4 items-center
-             md:block md:relative md:w-full md:h-full">
+             <ul id="opciones1"
+    class="flex flex-col gap-4 items-center
+           md:block md:relative md:w-full md:h-full">
+
 
     <!-- Casi nunca -->
     <li class="md:absolute md:top-0 md:left-[1%]">
